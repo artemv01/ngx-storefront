@@ -1,0 +1,9 @@
+i.material-icons {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+:host {
+    display: flex;
+    align-items: center;
+}

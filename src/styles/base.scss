@@ -1,0 +1,35 @@
+@import 'support.scss';
+
+html,
+body {
+    overflow-x: hidden;
+    background-color: var(--bgBody);
+    min-height: 100vh;
+}
+body {
+    color: var(--txPrimary);
+}
+* {
+    box-sizing: border-box;
+}
+*:focus {
+    outline: none;
+}
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1280px;
+
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    @include min-sm() {
+        padding-right: 3rem;
+        padding-left: 3rem;
+    }
+}

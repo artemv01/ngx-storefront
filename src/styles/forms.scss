@@ -1,0 +1,59 @@
+.form-input {
+    @apply h-12 border-t-2 border-brInput bg-bgInput text-txInput px-4 py-2 w-full;
+}
+.form-input:focus {
+    @apply border-bgPrimary;
+}
+input[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+.form-err-container {
+    @apply mt-1 text-xs text-red-600;
+}
+input:not(.no-validate).ng-dirty.ng-invalid,
+input:not(.no-validate).ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid textarea.ng-dirty.ng-invalid {
+    @apply border-bgDanger;
+}
+input:not(.no-validate).ng-dirty.ng-valid,
+input:not(.no-validate).ng-touched.ng-valid,
+textarea.ng-touched.ng-valid,
+textarea.ng-dirty.ng-valid {
+    @apply border-bgSuccess;
+}
+label.required::after {
+    content: ' *';
+    color: var(--bgDanger);
+}
+
+.btn {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    padding: 0 1.25rem;
+}
+.btn:focus {
+    outline: none;
+}
+.btn-primary {
+    background: var(--bgPrimary);
+    &:not([disabled]):hover {
+        background-color: var(--bgPrimaryDark);
+    }
+}
+.btn-secondary {
+    background-color: var(--bgPrimary);
+    &:not([disabled]):hover {
+        background-color: var(--bgPrimaryDark);
+    }
+}
+.btn[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

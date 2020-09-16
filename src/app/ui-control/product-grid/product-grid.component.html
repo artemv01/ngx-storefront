@@ -1,0 +1,49 @@
+<div class="wrap">
+    <div class="grid-wrap flex  w-full flex-wrap flex-row ">
+        <!--  -->
+        <!-- mb-12 px-4 lg:mb-8  -->
+        <div class="grid-item mb-8 "
+            *ngFor="let product of products; let i = index;"
+            [@fadeIn]>
+            <div class="block no-underline mb-4">
+                <div class="product-image rounded mb-4 cursor-pointer"
+                    [routerLink]="['/product', product._id]">
+                    <div *ngIf="!product.image"
+                        class="no-image">
+                        <i class="material-icons">insert_photo</i>
+                    </div>
+                    <img *ngIf="product.image"
+                        [src]="uploadsUrl + product.image"
+                        alt=""
+                        class="no-image w-full mb-2">
+                </div>
+                <div class="mb-4 text-center  break-words text-xl tracking-wide">{{product.name}}
+                </div>
+                <div class="flex flex-no-wrap justify-center w-full mb-4"
+                    *ngIf="product.rating">
+                    <app-star-rating [rating]="product.rating"></app-star-rating>
+                </div>
+                <div class="text-center flex justify-center mb-4">
+                    <app-sale-label></app-sale-label>
+                </div>
+                <div class="w-full flex justify-center">
+                    <div class="text-sm pr-4 line-through text-txInfo text-center">
+                        {{product.price  | currency:'USD':'':'1.2-2':'en-us'}}$</div>
+                    <div class="text-sm  text-center">
+                        {{product.salePrice  | currency:'USD':'':'1.2-2':'en-us'}}$</div>
+                </div>
+
+            </div>
+            <div class="flex justify-center">
+                <c-button id="addToCartBtn"
+                    (onClick)="addToCart(product); addedToCart[i] = true"
+                    addClass="mx-auto btn-primary">Add to cart</c-button>
+                <!--  <c-button id="viewCartBtn"
+                    addClass="btn-secondary ml-2"
+                    [routerLink]="['/cart']"
+                    *ngIf="addedToCart[i]">View cart <span
+                        class="material-icons pl-1">arrow_right_alt</span></c-button> -->
+            </div>
+        </div>
+    </div>
+</div>

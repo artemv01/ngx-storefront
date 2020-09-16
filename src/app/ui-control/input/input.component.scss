@@ -1,0 +1,32 @@
+.ap-input {
+    border: 0;
+    border-top: 2px solid var(--brInput);
+    border-radius: 0;
+}
+.ap-input {
+    border: 0;
+    border-top: 2px solid var(--brInput);
+    border-radius: 0;
+}
+.ap-input:focus {
+    border-top-color: var(--bgPrimary);
+}
+.ap-input.ng-dirty.ng-invalid,
+.ap-input.ng-touched.ng-invalid {
+    border-top-color: var(--bgDanger);
+}
+.ap-input.ng-dirty.ng-valid,
+.ap-input.ng-touched.ng-valid {
+    border-top-color: var(--bgSuccess);
+}
+
+// .algolia-places-nostyle {
+//     display: block !important;
+//     position: static;
+// }
+
+input[type='number'].no-spin::-webkit-inner-spin-button,
+input[type='number'].no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

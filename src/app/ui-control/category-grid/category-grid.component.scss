@@ -1,0 +1,29 @@
+.grid-item {
+    max-width: 310px;
+    width: 100%;
+}
+.grid-wrap {
+    align-items: center;
+    flex-flow: column;
+}
+@media screen and (min-width: 700px) {
+    .grid-item {
+        max-width: none;
+        flex: 0 1 50%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .grid-wrap {
+        flex-flow: row wrap;
+        align-items: flex-start;
+    }
+    .wrap {
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+}
+@media screen and (min-width: 992px) {
+    .grid-item {
+        flex: 0 1 33.333%;
+    }
+}

@@ -1,0 +1,186 @@
+<main class="container mt-6 mb-16">
+    <div class="hidden md:block">
+        <app-breadcrumbs [navs]="breadcrumbs"
+            class=""></app-breadcrumbs>
+    </div>
+    <div class="flex flex-col xl:flex-row mt-12 xl:mt-20 ">
+        <div class="w-full xl:w-9/12">
+            <div class="flex flex-col lg:flex-row">
+                <div class="mb-6 lg:hidden">
+                    <app-sale-label></app-sale-label>
+                </div>
+                <div class="rounded mb-6 lg:w-2/5 zoomImg bg-no-repeat"
+                    [class.is-image]="product.image"
+                    (mousemove)="zoomImage($event)"
+                    [style.background-image]="product.image ? 'url('+ uploadsUrl + product.image + ')' : ''">
+                    <!--  -->
+                    <div *ngIf="!product.image"
+                        class="no-image">
+                        <i class="material-icons">insert_photo</i>
+                    </div>
+                    <img *ngIf="product.image"
+                        [src]="uploadsUrl + product.image"
+                        alt=""
+                        class="no-image w-full h-full object-cover object-center">
+                    <i class="hidden material-icons bg-white rounded"
+                        style="font-size:36px; top:12px; right:12px; position:absolute">zoom_in</i>
+                </div>
+                <div class="product-desc lg:pl-12 lg:w-3/5">
+                    <div class="mb-4 hidden lg:block"
+                        style="margin-top:2px;">
+                        <app-sale-label></app-sale-label>
+                    </div>
+                    <h1 class="product-title  leading-normal text-4xl font-header">{{product.name}}
+                    </h1>
+                    <div class="flex items-center text-sm mb-12"
+                        *ngIf="product.ratingCount">
+                        <app-star-rating [rating]="product.rating"></app-star-rating><span
+                            class="link-regular pl-2 font-bold cursor-pointer"
+                            (click)="scrollTo(reviews)">({{product.ratingCount}} customer
+                            reviews)</span>
+                    </div>
+                    <div class="text-2xl mb-8">
+                        <div>
+                            <span class="line-through text-txDark pr-2"
+                                *ngIf="product.onSale">
+                                <app-price addClass="sale-price"
+                                    [price]="product.price"></app-price>
+                            </span>
+                            <app-price [price]="product.onSale ? product.salePrice : product.price">
+                            </app-price>
+                        </div>
+                    </div>
+                    <div class="mb-6">Sit esse minim do Lorem eiusmod fugiat voluptate eiusmod
+                        nostrud irure adipisicing nisi adipisicing voluptate. Pariatur dolore aliqua
+                        laboris ea. Deserunt culpa sit id proident enim enim exercitation eiusmod ea
+                        ex. Sit do proident id laboris.</div>
+                    <div class="flex my-6">
+                        <div class="text-center">
+                            <!-- <app-input type="number" [formControl]
+                                addClass="bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
+                            </app-input> -->
+                            <input type="number"
+                                min="1"
+                                [(ngModel)]="addToCartQuantity"
+                                name="quantity"
+                                class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
+                        </div>
+                        <c-button addClass="btn-secondary h-12"
+                            (click)="addToCart()"
+                            [disabled]="!addToCartQuantity">Add to cart</c-button>
+                    </div>
+                    <div class="border-t border-gray-300 pt-6"
+                        *ngIf="product.categories?.length"><span>Category: </span><span
+                            class="font-bold"
+                            *ngFor="let cat of product.categories; let i = index;">{{cat.name}}
+                            <span *ngIf="i !== product.categories.length - 1">, </span></span></div>
+                </div>
+
+            </div>
+            <div class="flex flex-col md:flex-row md:flex-no-wrap mt-12"
+                #reviews>
+                <div class="w-full hidden xl:block xl:w-2/5">
+                    <!-- <div class="product-dets  py-6 border-t border-b order-gray-400">Additional
+                        Information</div> -->
+                    <!-- <div class="product-dets active py-6 border-b  border-gray-400">Reviews</div> -->
+                </div>
+                <div class="w-full lg:w-3/5">
+                    <!-- <div class="md:pl-12 hidden">
+                        <h1 class="product-meta-head">Additional Information</h1>
+                        <div class="product-attributes">
+                            <div class=" flex">
+                                <div class="p-4 bg-bgInput w-1/3 break-words"><span
+                                        class="text-txDark font-bold">Weight</span></div>
+                                <div class="p-4 w-2/3 attr-val break-words">0.80 kg</div>
+                            </div>
+                            <div class=" flex">
+                                <div class="p-4 bg-bgInput w-1/3 break-words"><span
+                                        class="text-txDark font-bold">Dimension</span></div>
+                                <div class="p-4 w-2/3 attr-val break-words">26.70 x 15.60 x 48.00 cm
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="xl:pl-12 "
+                        id="reviews">
+                        <h1 class="text-2xl font-thin mb-6"
+                            *ngIf="product.ratingCount">{{product.ratingCount}} reviews for
+                            {{product.name}}.</h1>
+                        <h1 class="text-2xl font-thin mb-6"
+                            *ngIf="!product.ratingCount">No reviews for
+                            {{product.name}}.</h1>
+                        <app-reviews [reviews]="product.reviews"></app-reviews>
+                        <div class="mt-12 text-xl text-bgSuccess"
+                            *ngIf="isReviewSubmitted">Your review has been submitted!</div>
+                        <form class="bg-gray-100 p-8 mt-12"
+                            *ngIf="!isReviewSubmitted"
+                            [formGroup]="reviewForm"
+                            (submit)="submitReview()">
+                            <div class="mb-2">
+                                <label class="mb-2 text-txDark block required">Your rating</label>
+                                <app-rate-item [formControl]="rating"
+                                    ngDefaultControl></app-rate-item>
+                            </div>
+                            <div class="mb-4">
+                                <app-textarea [required]="true"
+                                    [validate]="validatorConfig['content']"
+                                    [control]="content"
+                                    placeholder="This product is..."
+                                    label="Your review"
+                                    cols="46"
+                                    rows="8"
+                                    addClass="h-auto"></app-textarea>
+                            </div>
+                            <div class="mb-4">
+                                <app-input [required]="true"
+                                    [validate]="validatorConfig['name']"
+                                    [control]="authorName"
+                                    placeholder="John Doe"
+                                    label="Your name"></app-input>
+                            </div>
+                            <div class="mb-4">
+                                <app-input [required]="true"
+                                    [validate]="validatorConfig['email']"
+                                    [control]="authorEmail"
+                                    label="Your email"
+                                    placeholder="johndoe@example.com"
+                                    type="email"></app-input>
+                            </div>
+                            <div class="mt-8">
+                                <c-button class="mt-8"
+                                    [disabled]="reviewForm.invalid || !rating.value"
+                                    addClass="btn-primary"
+                                    type="submit">Submit</c-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1 class="mt-12 text-2xl font-thin mb-6">Related products</h1>
+                <app-product-grid [products]="relatedProducts"
+                    [rating]="false"
+                    [columnsNumber]="2"
+                    (actionBtn)="addToCartFromGallery($event)"></app-product-grid>
+
+            </div>
+        </div>
+        <div class="w-full xl:w-3/12 xl:ml-20">
+            <h1 class="text-2xl font-thin pb-4 border-b border-gray-300 ">Cart</h1>
+            <app-cart></app-cart>
+            <!-- <div class="">
+                <h1 class="text-2xl font-thin pb-4 pt-6 border-b border-gray-300 mb-6">Product
+                    Categories
+                </h1>
+                <div>
+                    <div *ngFor="let cat of allCategories"
+                        class="mb-4 flex items-center cursor-pointer">
+                        <app-icon class="pr-2">folder</app-icon><span
+                            class="link-regular">{{cat.name}}</span>
+                    </div>
+
+                </div>
+            </div> -->
+        </div>
+    </div>
+</main>

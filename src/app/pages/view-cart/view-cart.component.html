@@ -1,0 +1,93 @@
+<main class="container mb-16 mt-16 flex-grow">
+    <h1 class="page-header">Cart</h1>
+    <div class="overflow-auto cart-table-wrap mb-4">
+        <table style="min-width:768px;"
+            class="table-auto border-collapse w-full bg-bgGrayLight table-striped">
+            <thead class="bg-bgInput">
+                <tr class="h-16 text-left">
+                    <th class="p-4"></th>
+                    <th class="p-4"></th>
+                    <th class="p-4 font-semibold">Product</th>
+                    <th class="p-4 font-semibold">Price</th>
+                    <th class="p-4 font-semibold">Quantity</th>
+                    <th class="p-4 font-semibold">Total</th>
+                </tr>
+            </thead>
+            <tbody class="text-txDark">
+                <tr class="text-left"
+                    *ngFor="let  product of cart.cartContent | keyvalue">
+                    <td class="p-4">
+                        <app-icon (click)="cart.delete(product.key)">cancel</app-icon>
+                    </td>
+                    <td class="p-4"><img [src]="uploadsUrl + product.value.image"
+                            class="object-cover object-center h-12 w-12"
+                            alt=""></td>
+                    <td class="p-4"><a [routerLink]="['/product', product.value._id]"
+                            class="hover:underline text-bgPrimary hover:text-bgPrimaryDark ">{{product.value.name}}</a>
+                    </td>
+                    <td class="p-4"><span>
+                            <app-price [price]="product.value.price"></app-price>
+                        </span></td>
+
+
+                    <td class="p-4"><input type="number"
+                            min="1"
+                            [(ngModel)]="product.value.quantity"
+                            name="quantity"
+                            class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
+                    </td>
+                    <td class="p-4"><span>
+                            <app-price [price]="product.value.price * product.value.quantity">
+                            </app-price>
+                        </span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex flex-col md:flex-row mb-12">
+        <div class="flex flex-col md:flex-row w-full mb-6 md:w-1/2 md:mb-0">
+            <div class="hidden">
+                <input type="text"
+                    placeholder="Your coupon code"
+                    class="form-input w-full mb-4 md:w-auto md:mb-0">
+                <button
+                    class="btn btn-primary w-full flex-shrink-0 md:w-auto md:h-auto md:ml-2">Apply
+                    coupon</button>
+            </div>
+        </div>
+        <!-- <div class="flex justify-end md:w-1/2 pt-4 border border-bgSeparator md:border-0 md:pt-0 ">
+            <c-button addClass="btn-primary" (click)="cart.update()">Update cart</c-button>
+        </div> -->
+    </div>
+    <div class="flex md:justify-end">
+        <div class="w-full md:w-1/2">
+            <div class="flex justify-between w-full">
+                <h1 class="text-2xl font-thin mb-4">Cart totals</h1>
+                <span
+                    class="p-2 bg-bgSecondary text-white text-sm rounded self-start cursor-pointer select-none hover:bg-bgSecondaryDark"
+                    (click)="updateTotals()">Update totals</span>
+            </div>
+            <table class="table-auto w-full mb-4">
+                <tbody>
+                    <tr>
+                        <td class="p-4 font-semibold bg-gray-100">Subtotal</td>
+                        <td class="p-4">
+                            <app-price [price]="cart.totalPrice"></app-price>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-4 font-semibold bg-gray-100">Total</td>
+                        <td class="p-4">
+                            <app-price [price]="cart.totalPrice"></app-price>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <c-button addClass="btn-secondary h-16 w-full text-2xl"
+                (click)="goToCheckout()"
+                routerLinkActive="router-link-active">Proceed
+                to checkout</c-button>
+
+        </div>
+    </div>
+</main>

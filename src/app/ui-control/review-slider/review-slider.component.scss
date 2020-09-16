@@ -1,0 +1,26 @@
+#reviewCarousel {
+    position: relative;
+    width: 100%;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    .slide-nav {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        i {
+            color: white;
+            background-color: var(--bgPrimary);
+            font-size: 36px;
+        }
+        i:hover {
+            background-color: var(--bgPrimaryDark);
+        }
+    }
+    .slide {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

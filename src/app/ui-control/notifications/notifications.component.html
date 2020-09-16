@@ -1,0 +1,30 @@
+<div id="notifications">
+    <div *ngFor="let notification of notifications; let i = index;"
+        class="flex notification relative"
+        [@slide]>
+        <div class="flex-col  items-start md:items-center md:flex-row flex-grow mb-4 p-8 text-white rounded  flex "
+            [class]="typeMap[notification.type]">
+            <div class="mb-4 md:mb-0 flex items-center justify-start ">
+                <i class="material-icons"
+                    style="font-size:2rem;padding-right: 6px;">{{iconMap[notification.type]}}</i><span
+                    class="font-semibold pr-4">{{messageMap[notification.type]}}</span>
+            </div> <span *ngIf="!notification.showMessage"
+                class="message"
+                [innerHtml]="notification.message"></span>
+            <ng-container *ngIf="notification.showMessage">
+                <ng-container [ngSwitch]="notification.showMessage">
+                    <span *ngSwitchCase="'addToCartSuccess'"
+                        class="message">The product has been added to your cart. <span
+                            class="cursor-pointer hover:underline"
+                            [routerLink]="['/cart']">Click here to view the cart</span></span>
+                </ng-container>
+            </ng-container>
+            <div class="close-btn absolute"
+                (click)="close(i)">
+                <div class="arr1">
+                    <div class="arr2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,311 @@
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, switchMap, takeUntil, tap, delay } from 'rxjs/operators';
+
+import {
+  animate,
+  animateChild,
+  group,
+  query,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AlertService } from '@app/service/alert.service';
+import { ApiService } from '@app/service/api.service';
+import { LoadingService } from '@app/service/loading.service';
+import { SearchService } from '@app/service/search.service';
+import { Category } from '@app/type/category';
+import { PaginationParams } from '@app/type/pagination-params';
+import { Product } from '@app/type/product';
+import { ProductFilterQuery } from '@app/type/product-filter-query';
+import { RouterOutlet } from '@angular/router';
+import { NotificationService } from '@app/service/notification.service';
+
+@Component({
+  selector: 'app-shop',
+  templateUrl: './shop.component.html',
+  styleUrls: ['./shop.component.scss'],
+
+  animations: [
+    trigger('routerTransition', [
+      transition('* => *', [
+        query(
+          ':enter, :leave',
+          style({ position: 'fixed', width: '100%', height: '100%' })
+        ),
+        query(':enter', style({ transform: 'translateX(100%)' })),
+
+        group([
+          query(':leave', [
+            style({ transform: 'translateX(0%)' }),
+            animate(
+              '1.0s ease-in-out',
+              style({ transform: 'translateX(-100%)' })
+            ),
+          ]),
+          query(':enter', [
+            animate('1.0s ease-in-out', style({ transform: 'translateX(0%)' })),
+            animateChild(),
+          ]),
+        ]),
+      ]),
+    ]),
+    trigger('fadeAnimation', [
+      transition('* => *', [
+        query(':enter', [style({ opacity: 0 })], { optional: true }),
+
+        query(
+          ':leave',
+          [style({ opacity: 1 }), animate('0.5s', style({ opacity: 0 }))],
+          { optional: true }
+        ),
+
+        query(
+          ':enter',
+          [style({ opacity: 0 }), animate('0.5s', style({ opacity: 1 }))],
+          { optional: true }
+        ),
+      ]),
+    ]),
+    trigger('routeAnimation', [
+      transition('* => *', [
+        style({ position: 'relative', height: '100vh' }),
+        query(
+          ':enter, :leave',
+          [
+            style({
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              //   height: '100vh',
+              width: '100%',
+            }),
+          ]
+          //   { optional: true }
+        ),
+        query(':enter', [style({ opacity: 0 })], { optional: true }),
+
+        query(
+          ':leave',
+          [
+            style({ opacity: 1 }),
+            animate('0.2s ease-in-out', style({ opacity: 0 })),
+          ],
+          { optional: true }
+        ),
+
+        query(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('0.2s ease-in-out', style({ opacity: 1 })),
+          ],
+          { optional: true }
+        ),
+      ]),
+    ]),
+    trigger('modalBg', [
+      transition(':enter', [
+        style({ opacity: 0, display: 'flex' }),
+        animate('100ms', style({ opacity: 0.6 })),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 })),
+        style({ display: 'none' }),
+      ]),
+    ]),
+    trigger('modalWindow', [
+      transition(':enter', [
+        style({ opacity: 0, display: 'flex' }),
+        animate('100ms', style({ opacity: 0.6 })),
+      ]),
+      transition(':leave', [
+        animate('100ms', style({ opacity: 0 })),
+        style({ display: 'none' }),
+      ]),
+    ]),
+    trigger('loadingScreen', [
+      state('in', style({ opacity: 1 })),
+
+      transition(':enter', [style({ opacity: 0 }), animate(200)]),
+
+      transition(':leave', animate(200, style({ opacity: 0 }))),
+    ]),
+    trigger('loadingScreen', [
+      state('in', style({ opacity: 1 })),
+
+      //   transition(':enter', [style({ opacity: 0 }), animate(600)]),
+
+      transition(':leave', animate(500, style({ opacity: 0 }))),
+    ]),
+  ],
+})
+export class ShopComponent implements OnInit, OnDestroy {
+  filtersChanged: Subject<any> = new Subject();
+  destroy: Subject<any> = new Subject();
+  routeChange$: Subject<null> = new Subject();
+  searchLoading = true;
+  searchMode = false;
+  searchText = '';
+  pagesTotal = 0;
+  currentPage = 0;
+
+  products: any = [];
+  showPagination: boolean;
+  filterParams: ProductFilterQuery = {
+    sortOrder: 'desc',
+    sortType: 'ratingCount',
+    search: '',
+  };
+  paginationParams: PaginationParams = {
+    page: 1,
+    limit: 9,
+  };
+  itemsTotal = 0;
+
+  selectedAction = 'Sort by popularity';
+  actions = [
+    'Sort by popularity',
+    'Sort by rating',
+    'Sort by price (from low to high)',
+    'Sort by price (from high to low)',
+  ];
+
+  allCategories: Category[] = [];
+
+  constructor(
+    public loading: LoadingService,
+    public search: SearchService,
+    public api: ApiService,
+    public alertService: AlertService,
+    private notify: NotificationService
+  ) {}
+
+  ngOnInit(): void {
+    this.api
+      .getCategories()
+      .subscribe((result) => (this.allCategories = result));
+    this.search.searchInput.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.searchMode = true;
+          this.searchLoading = true;
+        }),
+        switchMap((searchText) => {
+          this.filterParams.search = searchText;
+          return this.api
+            .getProductsFiltered({
+              ...this.filterParams,
+              ...this.paginationParams,
+            })
+            .pipe(takeUntil(this.filtersChanged));
+        })
+      )
+      .pipe(takeUntil(this.destroy))
+
+      .subscribe((searchResult) => {
+        this.products = searchResult.products;
+        this.pagesTotal = searchResult.pages;
+        this.currentPage = searchResult.page;
+        this.itemsTotal = searchResult.total;
+        if (searchResult.pages > 1) {
+          this.showPagination = true;
+        } else {
+          this.showPagination = false;
+        }
+        this.searchLoading = false;
+      });
+    // this.search.searchInput.setValue('a');
+  }
+  sortBy(key: string, order = 'desc') {
+    this.filterParams.sortType = key;
+    this.filterParams.sortOrder = order;
+    this.filtersChanged.next(null);
+    this.filterProducts();
+  }
+  sort(key: string) {
+    switch (key) {
+      case 'Sort by popularity':
+        this.sortBy('ratingCount');
+        break;
+      case 'Sort by rating':
+        this.sortBy('rating');
+        break;
+      case 'Sort by price (from low to high)':
+        this.sortBy('price', 'asc');
+        break;
+      case 'Sort by price (from high to low)':
+        this.sortBy('ratingCount', 'desc');
+        break;
+    }
+  }
+  filterProducts() {
+    this.searchLoading = true;
+    this.api
+      .getProductsFiltered({
+        ...this.filterParams,
+        ...this.paginationParams,
+      })
+      .pipe(takeUntil(this.filtersChanged))
+      .subscribe((searchResult) => {
+        this.products = searchResult.products;
+        this.pagesTotal = searchResult.pages;
+        this.currentPage = searchResult.page;
+        this.itemsTotal = searchResult.total;
+
+        if (this.filterParams.sortType === 'price') {
+          this.products.sort((p1: Product, p2: Product) => {
+            const price1 = p1.onSale ? p1.salePrice : p1.price;
+            const price2 = p2.onSale ? p2.salePrice : p2.price;
+            if (price1 > price2) {
+              return -1;
+            } else if (price1 < price2) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          if (this.filterParams.sortOrder === 'desc') {
+            this.products.reverse();
+          }
+        }
+
+        if (searchResult.pages > 1) {
+          this.showPagination = true;
+        } else {
+          this.showPagination = false;
+        }
+        this.searchLoading = false;
+      });
+  }
+
+  paginationChange(data: number) {
+    this.paginationParams.page = data;
+    this.filtersChanged.next(null);
+
+    this.filterProducts();
+  }
+
+  cancelSearch() {
+    this.searchMode = false;
+  }
+
+  onRouteActivate() {
+    this.searchMode = false;
+    this.notify.dismissAll();
+    this.routeChange$.next(null);
+  }
+
+  prepareRoute(outlet) {
+    return (
+      outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
+    );
+  }
+
+  ngOnDestroy() {
+    this.destroy.next(null);
+  }
+}

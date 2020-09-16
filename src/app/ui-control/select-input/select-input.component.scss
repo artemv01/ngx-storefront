@@ -1,0 +1,31 @@
+// input options
+.input-select-arrow {
+    right: 11px;
+    top: 10px;
+}
+.input-select-btn {
+    height: 2.5rem;
+}
+
+.input-select-wrap {
+    height: auto;
+    background: white;
+    position: absolute;
+}
+.input-select-options {
+    transition: height 0.2s ease-in;
+    max-height: 5rem;
+    height: 0;
+    div {
+        height: 2.5rem;
+    }
+}
+:host {
+    height: 2.5rem;
+}
+
+:host([disabled='true']) {
+    .input-select-btn {
+        color: #ccc;
+    }
+}

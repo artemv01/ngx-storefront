@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+@import 'styles/theme_new.scss';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'styles/forms.scss';
+@import 'tailwindcss/utilities';
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.no-list-style {
+    list-style-type: none;
+}
+
+.input-focus {
+    border-left: 2px solid transparent !important;
+    border-right: 2px solid transparent !important;
+    border-bottom: 2px solid transparent !important;
+    &:focus {
+        border: 2px solid var(--bgPrimary);
+    }
+}
+
+.table-striped {
+    tr:nth-child(even) {
+        background-color: var(--bgTableStripedRow);
+    }
+}
+
+// @import 'styles/support.scss';
+// @import 'styles/base.scss';
+// @import 'styles/components.scss';
+// @import 'header';
+// @import 'footer';
+// @import 'main';
+// @import './tailwind-bundle';

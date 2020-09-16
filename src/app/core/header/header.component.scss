@@ -1,0 +1,200 @@
+@import '../../../styles/support.scss';
+header {
+    background: var(--bgHeader);
+    padding: 20px 0px 20px 0px;
+
+    color: var(--txPrimary);
+    @media screen and (min-width: 768px) {
+        padding: 2rem 0px 0px 0px;
+    }
+}
+
+.search-form {
+    width: 22rem;
+    position: relative;
+    app-icon {
+        position: absolute;
+        left: 0.5rem;
+        top: 0.9rem;
+    }
+}
+.search-input {
+    width: 100%;
+    background: transparent;
+    border-top: 4px solid var(--txPrimary);
+    border-radius: 0;
+    padding: 0.5rem 2rem;
+    &::placeholder {
+        color: var(--txPrimary);
+        opacity: 0.5;
+    }
+    i {
+        opacity: 0.5;
+    }
+}
+
+.mobile-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.15s ease-in-out;
+    .search-form {
+        width: 100%;
+    }
+}
+.menu-active .mobile-menu {
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+}
+/* .bottom-bar {
+    margin-top: 2rem;
+    @include display-md(flex);
+    .category-list-desktop {
+        display: flex;
+        flex-flow: row wrap;
+        margin: 0;
+        // max-width: calc(100% - 250px);
+        li {
+            font-weight: 300;
+            color: var(--txSecondary);
+            padding: 1rem;
+            cursor: pointer;
+        }
+        li:first-child {
+            padding-left: 0;
+        }
+        li:hover {
+            color: var(--bgPrimary);
+        }
+    }
+    i:hover {
+        color: var(--txPrimary);
+        cursor: pointer;
+    }
+
+    .cart-info {
+        position: relative;
+        padding-top: 1rem;
+        padding-bottom: 25px;
+        .price {
+            margin-right: 0.5rem;
+        }
+        .cart-content {
+            display: none;
+            width: 100%;
+            background-color: #1d1e24;
+            position: absolute;
+            top: 100%;
+        }
+        .cart-items {
+            padding: 1rem;
+            .cart-item {
+                font-size: 0.875rem;
+                width: 100%;
+                margin-bottom: 1.5rem;
+                i {
+                    font-size: 14px;
+                    color: var(--txInfo);
+                }
+                .desc {
+                    min-width: calc(100% - 56px);
+                    padding-left: 0.5rem;
+                    padding-right: 0.5rem;
+                }
+                img {
+                    width: rem(40px);
+                    border-radius: 4px;
+                }
+            }
+        }
+        .cart-footer {
+            background: #222329;
+        }
+    }
+    .cart-info:hover {
+        .cart-content {
+            display: block;
+        }
+    }
+} */
+
+#burgerIcon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-top: 6px;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+#burgerIcon span {
+    display: block;
+    position: absolute;
+    height: 6px;
+    width: 100%;
+    background: var(--txLogo);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+}
+
+#burgerIcon span:nth-child(1) {
+    top: 0px;
+}
+
+#burgerIcon span:nth-child(2),
+#burgerIcon span:nth-child(3) {
+    top: 13px;
+}
+
+#burgerIcon span:nth-child(4) {
+    top: 26px;
+}
+
+.menu-active {
+    #burgerIcon span:nth-child(1) {
+        top: 18px;
+        width: 0%;
+        left: 50%;
+    }
+
+    #burgerIcon span:nth-child(2) {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    #burgerIcon span:nth-child(3) {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    #burgerIcon span:nth-child(4) {
+        top: 18px;
+        width: 0%;
+        left: 50%;
+    }
+}
+
+.cat-link.active-link {
+    span {
+        color: var(--bgPrimary);
+    }
+}

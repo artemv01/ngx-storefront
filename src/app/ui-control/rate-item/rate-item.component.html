@@ -1,0 +1,10 @@
+<div class="flex flex-no-wrap cursor-pointer" (mouseleave)="rate()">
+    <div *ngFor="let star of ratingState; let i=  index;" class="relative text-yellow-500"><i
+            [style]="'font-size:'+ starWidth + 'px;'"
+            class="material-icons ">{{star}}</i>
+        <div style="left:0;" (mouseenter)="hoverRate(i, 'star_half')" (click)="rate(i + 0.5)"
+            class="half"></div>
+        <div style="left:12px;" (mouseenter)="hoverRate(i, 'star')" (click)="rate(i + 1)"
+            class="full"></div>
+    </div>
+</div>

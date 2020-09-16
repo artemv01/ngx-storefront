@@ -1,0 +1,29 @@
+<div #inputBulkActionsWrapper
+    class="input-select-container   {{addClassWrapper}}"
+    [style.width]="width">
+    <div class="input-select-wrap border-2 border-primary bg-transparent text-txPrimary text-left  overflow-hidden {{addClass}}"
+        [style.width]="width">
+        <button #titleBtn
+            type="button"
+            (click)="expandBulkActions()"
+            class="input-select-btn focus:outline-none text-left relative pl-4 w-full">{{selectedOption}}<i
+                class="material-icons text-txPrimary absolute input-select-arrow"
+                #arrowDown
+                [hidden]="isActive">keyboard_arrow_down</i><i
+                class="material-icons text-txPrimary absolute input-select-arrow"
+                #arrowUp
+                [hidden]="!isActive">keyboard_arrow_up</i></button>
+        <div #inputBulkActions
+            class="input-select-options "
+            [class.overflow-y-scroll]="autoWidth">
+            <ng-container>
+                <ng-container *ngFor="let opt of options; let i = index;">
+                    <div class="cursor-pointer text-txDark  px-4 flex items-center hover:bg-gray-200 no-breaks "
+                        [class.bg-gray-200]="opt === selectedOption"
+                        (click)="selectedOption !== opt ? doChange(opt) : null">
+                        {{opt}}</div>
+                </ng-container>
+            </ng-container>
+        </div>
+    </div>
+</div>

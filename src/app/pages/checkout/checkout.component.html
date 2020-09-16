@@ -1,0 +1,163 @@
+<main class="container mt-16 mb-16 flex-grow">
+    <h1 class="page-header">Checkout</h1>
+    <!-- <div class="h-16 flex mb-12">
+        <div class="w-3 bg-bgAlertInfoDark h-full rounded-l"></div>
+        <div class="h-full flex-grow bg-bgAlertInfo p-8 text-white rounded-r items-center flex">Have a coupon? <a
+                href="#" class="pl-1 underline hover:no-underline">Click here to enter your code</a></div>
+    </div>
+    <div class="flex flex-col md:flex-row">
+        <input type="text" placeholder="Your coupon code" class="form-input md:w-1/2">
+        <div class="w-full md:w-1/2 pl-12">
+            <button class="btn btn-primary">Apply coupon</button>
+        </div>
+    </div> -->
+
+    <form action=""
+        (submit)="submitOrder()"
+        class="checkout-form w-full flex flex-col xl:flex-row mt-12">
+        <div class="xl:w-1/2">
+            <h1 class="text-3xl font-thin mb-6">Billing details</h1>
+            <div class="flex flex-col md:flex-row mb-6">
+                <div class="flex-1 mb-6 md:mb-0">
+                    <app-input required
+                        [control]="firstName"
+                        label="First name"
+                        placeholder="John"
+                        el-id="first_name"
+                        [validate]="validate.firstName"></app-input>
+                </div>
+                <div class="md:pl-12 flex-1">
+                    <app-input required
+                        [control]="lastName"
+                        el-id="last_name"
+                        label="Last name"
+                        placeholder="Doe"
+                        [validate]="validate.lastName"></app-input>
+                </div>
+            </div>
+            <div class=" mb-6">
+                <app-input required
+                    [control]="country"
+                    [placesConfig]="placesConfigs.country"
+                    label="Country"
+                    el-id="country"
+                    placeholder="Your country"
+                    [validate]="validate.country"></app-input>
+            </div>
+            <div class="mb-6">
+                <label for=""
+                    class="mb-2 text-txDark block">Street address</label>
+                <app-input required
+                    [control]="addressLine1"
+                    el-id="address_line1"
+                    [placesConfig]="placesConfigs.address"
+                    placeholder="House number and street name"
+                    [validate]="validate.addressLine1"></app-input>
+                <app-input addClass="mt-4"
+                    [control]="addressLine2"
+                    placeholder="Apartment, suite, unit etc. (optional)"></app-input>
+            </div>
+            <div class="mb-6">
+                <app-input [control]="city"
+                    required
+                    el-id="address_line2"
+                    label="Town / City"
+                    placeholder="Town / City"
+                    [placesConfig]="placesConfigs.city"
+                    [validate]="validate.city"></app-input>
+
+            </div>
+            <div class="mb-6">
+                <app-input [control]="state"
+                    placeholder="State"
+                    el-id="state"
+                    label="State"></app-input>
+
+            </div>
+            <div class="mb-6">
+                <app-input [control]="zip"
+                    required
+                    el-id="zip"
+                    type="number"
+                    noSpin
+                    label="Postcode / ZIP"
+                    placeholder="Postcode / ZIP"
+                    [validate]="validate.zip"></app-input>
+            </div>
+            <div class="flex flex-col md:flex-row mb-6">
+                <div class="flex-1 mb-6 md:mb-0">
+                    <app-input [control]="phone"
+                        required
+                        label="Phone"
+                        type="number"
+                        el-id="phone"
+                        noSpin
+                        placeholder="Phone"
+                        [validate]="validate.phone"></app-input>
+                </div>
+                <div class="md:pl-12 flex-1">
+                    <app-input [control]="email"
+                        required
+                        label="Email"
+                        type="email"
+                        el-id="email"
+                        placeholder="Email"
+                        [validate]="validate.email"></app-input>
+
+                </div>
+            </div>
+            <div class="mb-6">
+                <app-textarea label="Additional information"
+                    cols="2"
+                    rows="5"
+                    [control]="notes"
+                    placeholder="Notes about your order"
+                    el-id="notes"
+                    addClass="form-input h-auto"></app-textarea>
+            </div>
+        </div>
+        <div class="xl:w-1/2 xl:pl-12">
+            <h1 class="text-3xl font-thin mb-6">Your order</h1>
+            <div class="mb-12">
+                <div class=" flex">
+                    <div class="p-4 bg-bgInput w-2/5 break-words"><span
+                            class="text-txDark font-bold">Product</span></div>
+                    <div class="p-4 bg-bgInput w-3/5 break-words"><span
+                            class="text-txDark font-bold">Total</span>
+                    </div>
+                </div>
+                <div class=" flex bg-gray-100"
+                    *ngFor="let product of cart.cartContent | keyvalue">
+                    <div class="p-6 w-2/5  break-words"><span>{{product.value.name}}</span><span
+                            class="font-bold opacity-50"> x {{product.value.quantity}}</span></div>
+                    <div class="p-6 w-3/5  break-words">
+                        <app-price [price]="product.value.quantity * product.value.price">
+                        </app-price>
+                    </div>
+                </div>
+                <div class=" flex">
+                    <div class="p-6 bg-bgInput w-2/5 break-words"><span
+                            class="text-txDark font-bold">Subtotal</span></div>
+                    <div class="p-6 w-3/5  break-words">
+                        <app-price [price]="cart.totalPrice"></app-price>
+                    </div>
+                </div>
+                <div class=" flex">
+                    <div class="p-6 bg-bgInput w-2/5 break-words"><span
+                            class="text-txDark font-bold">Total</span>
+                    </div>
+                    <div class="p-6 w-3/5  break-words">
+                        <app-price [price]="cart.totalPrice"></app-price>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 bg-gray-100">
+                <c-button class="w-full"
+                    addClass="h-16 w-full btn-secondary font-bold text-2xl block"
+                    type="submit">Place
+                    order</c-button>
+            </div>
+        </div>
+    </form>
+
+</main>

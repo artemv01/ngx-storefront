@@ -1,0 +1,24 @@
+<div class="pagination-wrap justify-between flex ">
+
+    <div class="flex">
+        <div class="px-4 cursor-pointer pagination-item pagination-arrow"
+            [class.inactive]="!showPrevBtn"
+            (click)="showPrevBtn ? getPrevPage() : null">
+            <i class="material-icons">keyboard_arrow_left</i>
+        </div>
+        <div class="px-4 cursor-pointer pagination-item"
+            [class.range-symbol]="btn === rangeSymbol"
+            [class.current]="btn === currentPage"
+            *ngFor="let btn of paginationButtons"
+            (click)="btn === currentPage ? null : goToPage(btn)">
+            <span>{{btn}}</span>
+        </div>
+        <div class="px-4 cursor-pointer pagination-item pagination-arrow"
+            [class.inactive]="!showNextBtn"
+            (click)="showNextBtn ? getNextPage() : null">
+            <i class="material-icons">keyboard_arrow_right</i>
+        </div>
+
+    </div>
+
+</div>

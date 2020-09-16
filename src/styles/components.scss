@@ -1,0 +1,244 @@
+@import 'support.scss';
+.ap-footer {
+    svg {
+        display: inline !important;
+    }
+}
+section {
+    margin-bottom: 3rem;
+    h1 {
+        font-size: 2rem;
+        margin: 0 auto 2.25rem;
+        // font-family: 'Montserrat';
+        text-align: center;
+    }
+}
+
+.page-header {
+    @apply text-5xl font-light text-txDark break-words tracking-wide mb-12;
+}
+
+.sale-price {
+    opacity: 0.5;
+}
+
+.category-wrap {
+    display: flex;
+    flex-flow: column;
+    @include min-md {
+        flex-flow: row wrap;
+    }
+    .category-card {
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        margin-bottom: 2rem;
+        @include min-md {
+            width: 25%;
+            padding: 0 1rem;
+        }
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.testimonial-slider {
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    .slider-nav {
+        position: absolute;
+        right: 0;
+        color: var(--txPrimary);
+    }
+}
+
+.border--top {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+// .quantity-input {
+//     &:focus {
+//         border: 3px solid var(--bgPrimary);
+//     }
+// }
+
+.product-dets.active {
+    border-bottom: 2px solid var(--bgPrimary);
+    border-top: 2px solid var(--bgPrimary);
+}
+.product-attributes {
+    .attr-val {
+        background-color: #fdfdfd;
+    }
+}
+
+.link-regular {
+    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
+    font-size: 0.875rem;
+}
+
+.checkout-form .countries {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: white !important;
+    color: var(--txDark);
+    li {
+        border: 1px solid transparent;
+
+        box-sizing: border-box;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+    li:hover {
+        border: 1px solid var(--bgPrimary);
+    }
+}
+
+ul.pagination li {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i.material-icons {
+        font-size: 20px;
+    }
+}
+
+.product-image {
+    height: 320px;
+    // max-width: 310px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    img:not(.no-mage) {
+        transform: scale(1);
+        transition: 0.3s ease-in-out;
+    }
+    img:not(.no-mage):hover {
+        transform: scale(1.3);
+    }
+    img {
+        @apply h-full object-center object-cover;
+    }
+}
+
+.bottom-menu {
+    display: flex;
+    @include hide-md(flex);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 4rem;
+    i {
+        font-size: 36px;
+    }
+    // .menu-items {
+    //     display: flex;
+    // }
+    // input {
+    //     height: 3rem;
+    // }
+}
+
+.no-image {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background: #e0e0e0;
+    align-items: center;
+    i {
+        font-size: 144px;
+        color: white;
+    }
+}
+
+.close-btn {
+    top: 7px;
+    right: 14px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    .arr1 {
+        height: 15px;
+        width: 1px;
+        margin-left: 12px;
+        background-color: #fff;
+        transform: rotate(45deg);
+        z-index: 1;
+    }
+
+    .arr2 {
+        height: 15px;
+        width: 1px;
+        background-color: #fff;
+        transform: rotate(90deg);
+        z-index: 2;
+    }
+}
+
+#loadingScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--bgBody);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+#searchLoading {
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#loadingAnimation {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+#loadingAnimation div {
+    position: absolute;
+    border: 4px solid var(--bgPrimary);
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+#loadingAnimation div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
+}

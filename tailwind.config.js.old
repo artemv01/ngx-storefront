@@ -1,0 +1,30 @@
+module.exports = {
+  prefix: '',
+  separator: '',
+  theme: {
+    colors: {
+      'bgPrimaryDark':'var(--bgPrimaryDark)',
+      'txPrimary':'var(--txPrimary)',
+      'txDark':'var(--txDark)',
+      'txSecondary':'var(--txSecondary)',
+      'bgSecondary':'var(--bgSecondary)',
+      'txInfo':'var(--txInfo)', 
+      'bgInfo':'var(--bgInfo)', 
+      'bgPrimaryDark':'var(--bgPrimaryDark)',
+      'bgSecondaryDark':'var(--bgSecondaryDark)',
+      'bgBody':'var(--bgBody)', 
+      'bgFooter':'var(--bgFooter)', 
+      'bgHeader':'var(--bgHeader)', 
+      'bgInput':'var(--bgInput)',
+      'brInput':'var(--brInput)',
+      'txInput':'var(--txInput)',
+      'bgAlertInfo':'var(--bgAlertInfo)',
+      'bgAlertInfoDark':'var(--bgAlertInfoDark)',
+      'bgDanger':'var(--bgDanger)',
+      'bgDangerDark':'var(--bgDangerDark)',
+      'bgSeparator':'var(--bgSeparator)',
+      'bgGrayLight':'var(--bgGrayLight)',
+  
+    }
+  }
+}

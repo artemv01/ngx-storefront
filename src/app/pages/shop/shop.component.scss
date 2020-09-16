@@ -1,0 +1,34 @@
+#shopApp {
+    min-height: 100vh;
+}
+
+#routerWrap {
+    // transition: all 1s ease-in-out;
+}
+
+.alert-modal {
+    position: absolute;
+    top: 20rem;
+    min-height: 14rem;
+    width: 100%;
+    max-width: 38rem;
+}
+.loading-screen,
+.loading-screen-alert {
+    position: fixed;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    max-height: 100vh;
+    overflow: hidden;
+}
+.loading-screen-alert {
+    align-items: flex-start;
+    background-color: rgba(0, 0, 0, 0.6);
+}

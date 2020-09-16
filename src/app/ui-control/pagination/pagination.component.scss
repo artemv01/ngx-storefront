@@ -1,0 +1,32 @@
+.pagination-item {
+    @apply w-8 h-8 flex  select-none items-center justify-center  cursor-pointer transition duration-200;
+}
+.pagination-item:hover {
+    @apply bg-bgPrimary;
+}
+.range-symbol:hover {
+    @apply bg-transparent  cursor-default;
+}
+.pagination-item.current {
+    @apply bg-gray-200 cursor-default;
+}
+.pagination-arrow.inactive {
+    i {
+        color: #ccc;
+    }
+    &:hover {
+        background: transparent;
+        cursor: not-allowed;
+        i {
+            cursor: not-allowed;
+        }
+    }
+}
+:host([disabled='true']) {
+    .pagination-item {
+        color: #ccc !important;
+    }
+    .pagination-item:hover {
+        background-color: transparent !important;
+    }
+}

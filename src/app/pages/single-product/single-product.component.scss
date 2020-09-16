@@ -1,0 +1,33 @@
+.product-title {
+    @apply leading-normal text-4xl;
+}
+
+.zoomImg {
+    img {
+        height: auto;
+        max-width: 500px;
+    }
+    @media screen and (max-width: 991px) {
+        background-image: none !important;
+    }
+}
+@media screen and (min-width: 992px) {
+    .zoomImg.is-image {
+        & img:hover {
+            opacity: 0;
+        }
+        img {
+            transition: opacity 0.5s;
+            display: block;
+            height: 100%;
+            width: 100%;
+            max-width: none;
+        }
+        background-size: cover;
+        background-position: 50% 50%;
+        position: relative;
+        overflow: hidden;
+
+        cursor: zoom-in;
+    }
+}

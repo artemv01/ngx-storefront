@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>NGXStorefront</title>
+    <base href="/">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+    <link rel="icon"
+        type="image/x-icon"
+        href="favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQTFF8TmYHDSue7E4oNJ-7KV5jZDbOS_4"></script>
+    <style>
+        #appLoadAnimation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: var(--bgBody);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            left: 0;
+        }
+
+        #appLoadAnimation>#loadingAnimation {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        #appLoadAnimation>#loadingAnimation div {
+            position: absolute;
+            border: 4px solid #96588a;
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+
+        #appLoadAnimation>#loadingAnimation div:nth-child(2) {
+            animation-delay: -0.5s;
+        }
+
+        @keyframes lds-ripple {
+            0% {
+                top: 36px;
+                left: 36px;
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+
+            100% {
+                top: 0px;
+                left: 0px;
+                width: 72px;
+                height: 72px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="appLoadAnimation">
+        <div id="loadingAnimation">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <app-root></app-root>
+</body>
+
+</html>

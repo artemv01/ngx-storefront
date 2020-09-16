@@ -1,0 +1,96 @@
+<header #header
+    class="relative">
+    <app-notifications></app-notifications>
+
+    <div class="container">
+        <div class="flex justify-between items-center">
+            <div>
+                <div class=" "><a
+                        class="text-txLogo select-none cursor-pointer font-semibold text-4xl"
+                        [routerLink]="['/']"
+                        routerLinkActive="router-link-active">Storefront</a>
+                    <div class="text-sm text-txHeader -mt-1 italic">eCommerce on
+                        Angular
+                    </div>
+                </div>
+            </div>
+            <div class="md:hidden flex items-center cursor-pointer"
+                (click)="header.classList.toggle('menu-active')">
+                <div id="burgerIcon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="flex-no-wrap hidden md:flex flex-auto justify-end">
+                <form class="search-form mr-6 "
+                    [formGroup]="searchService.searchForm"><input type="text"
+                        class="search-input no-validate"
+                        [formControl]="searchService.searchInput"
+                        placeholder="Search products">
+                    <app-icon>search</app-icon>
+                </form>
+                <div class="flex items-center">
+                    <app-icon size='sm'
+                        [routerLink]="['/cart']">shopping_cart</app-icon>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-menu flex flex-col md:hidden mt-6"
+            #mobileMenu>
+            <div class="flex-no-wrap flex flex-auto justify-end">
+                <form class="search-form "
+                    [formGroup]="searchService.searchForm"><input type="text"
+                        class="search-input no-validate"
+                        [formControl]="searchService.searchInput"
+                        placeholder="Search products">
+                    <app-icon>search</app-icon>
+                </form>
+                <!-- <div class="flex items-center"><i
+                        class="material-icons hover:text-bgPrimary cursor-pointer"
+                        style="font-size:24px;">shopping_cart</i></div> -->
+            </div>
+            <div class="mt-4 font-semibold flex justify-end items-center"><a
+                    class="flex items-center"
+                    [routerLink]="['/cart']">
+                    <span>View cart</span>
+                    <span class="material-icons pl-1">arrow_right_alt</span>
+                </a></div>
+            <ul>
+                <li *ngFor="let cat of categoryList"
+                    [routerLink]="['/category', cat._id]"
+                    class="font-thin  cursor-pointer leading-8"
+                    routerLinkActive="active-link"><span>{{cat.name}}</span></li>
+
+            </ul>
+        </nav>
+        <ul class="flex-wrap list-none mt-4 pb-8 text-txHeader hidden md:flex"
+            id="headerCategoryList">
+            <li *ngFor="let cat of categoryList"
+                class="font-thin  cursor-pointer mr-4 leading-8"
+                [routerLink]="['/category', cat._id]"
+                routerLinkActive="active-link"><span>{{cat.name}}</span></li>
+
+        </ul>
+        <!--     <div class="bottom-bar flex justify-between">
+            <ul class="category-list-desktop flex-no-wrap md:w-9/12">
+                <li *ngFor="let cat of categoryList"
+                    class="cat-link"
+                    [routerLink]="['/category', cat._id]"
+                    routerLinkActive="active-link"><span>{{cat.name}}</span></li>
+            </ul>
+            <div class="cart-info flex justify-between md:w-3/12 ml-20">
+                <div><span class="price">
+                        <app-price [price]="cart.totalPrice"></app-price>
+                    </span><span class="text-sm text-bgInfo text-bgInfo">{{cart.totalQuantity}}
+                        items</span></div>
+                <i class="material-icons">shopping_cart</i>
+                <div class="cart-content p-4 z-50">
+                    <app-cart [isDark]="true"></app-cart>
+                </div>
+
+            </div>
+        </div> -->
+    </div>
+</header>

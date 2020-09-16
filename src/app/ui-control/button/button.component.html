@@ -1,0 +1,7 @@
+<button [disabled]="disabled"
+    (click)="onClick.emit(null)"
+    class="btn rounded"
+    [class]="addClass"
+    [type]="type">
+    <ng-content></ng-content>
+</button>

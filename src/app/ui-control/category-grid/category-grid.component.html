@@ -1,0 +1,42 @@
+<!-- <div class="flex flex-col w-full lg:flex-wrap lg:flex-row lg:-mx-4">
+    <div class="w-full mb-12 lg:px-4 lg:w-1/3 lg:mb-8"
+        *ngFor="let cat of categories">
+        <div class="block no-underline">
+            <div class="product-image mb-6 cursor-pointer"
+                [routerLink]="['/category', cat._id]">
+                <img *ngIf="cat.image"
+                    [src]="uploadsUrl + cat.image"
+                    alt=""
+                    class="w-full mb-2">
+                <div *ngIf="!cat.image"
+                    class="no-image">
+                    <i class="material-icons">insert_photo</i>
+                </div>
+            </div>
+            <div class="mb-2 text-center text-sm break-words"><span>{{cat.name}}</span><span
+                    class="font-bold pl-1">({{cat.productNumber}})</span></div>
+        </div>
+    </div>
+</div> -->
+
+<div class="wrap">
+    <div class="grid-wrap flex  w-full flex-wrap flex-row ">
+        <div class="grid-item mb-8 "
+            *ngFor="let category of categories; let i = index;">
+            <div class="block no-underline mb-4">
+                <div class="product-image mb-4 cursor-pointer"
+                    [routerLink]="['/category', category._id]">
+                    <div *ngIf="!category.image"
+                        class="no-image">
+                        <i class="material-icons">insert_photo</i>
+                    </div>
+                    <img *ngIf="category.image"
+                        [src]="uploadsUrl + category.image"
+                        alt=""
+                        class="no-image w-full mb-2">
+                </div>
+                <div class="mb-4 text-center  break-words text-xl">{{category.name}}</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<ng-container *ngIf="cart.totalQuantity">
+    <div class="flex text-sm py-4 "
+        [class]="isDark ? '' : 'border-b border-gray-300'"
+        [@fadeIn]
+        *ngFor="let product of cart.cartContent | keyvalue">
+        <div>
+            <app-icon (click)="cart.delete(product.value._id)"
+                size="xs">cancel</app-icon>
+        </div>
+
+        <div class="flex-grow pl-2">
+            <div><a class=" hover:underline font-semibold text-sm break-words mb-2"
+                    [class]="isDark ? 'hover:text-white text-gray-200' : 'text-bgPrimary hover:text-bgPrimaryDark'"
+                    [routerLink]="['/product', product.value._id]">{{product.value.name}}</a>
+            </div>
+            <div><span
+                    [class]="isDark ? 'text-gray-200' : 'text-txDark' ">{{product.value.quantity}} x
+                    <app-price [price]="product.value.price"></app-price> </span></div>
+        </div>
+        <div class="flex-shrink-0"><img [src]="uploadsUrl + product.value.image"
+                class=" object-cover h-12 w-12 object-center"
+                alt=""></div>
+    </div>
+    <div class="text-center text-sm py-4"
+        [class]="isDark ? '' : 'border-b border-gray-300'">
+        <span class="font-bold">Subtotal: </span><span>
+            <app-price [price]="cart.totalPrice"></app-price>
+        </span>
+    </div>
+    <div>
+        <button class="btn btn-primary rounded  w-full mb-3"
+            [routerLink]="['/cart']"><span class="pr-2">View cart </span>
+            <app-icon size="sm"
+                color="white">arrow_right_alt</app-icon>
+        </button>
+        <button class="btn btn-secondary rounded  w-full mb-3"
+            [routerLink]="['/checkout']"><span class="pr-2">Checkout </span>
+            <app-icon size="sm"
+                color="white">arrow_right_alt</app-icon>
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="!cart.totalQuantity">
+    <div class="mt-4 text-sm">No products in the cart.</div>
+</ng-container>

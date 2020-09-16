@@ -1,0 +1,37 @@
+.notification {
+    & > div {
+        border-left: 12px solid;
+        border-radius: 4px;
+        padding: 12px;
+        text-overflow: break-word;
+    }
+    & > div.bg-bgSuccess {
+        border-color: var(--bgSuccessDark);
+    }
+    & > div.bg-bgInfo {
+        border-color: var(--bgInfoDark);
+    }
+    & > div.bg-bgDanger {
+        border-color: var(--bgDangerDark);
+    }
+
+    @media screen and (min-width: 768px) {
+        .message {
+            max-width: 70%;
+        }
+    }
+}
+#notifications {
+    width: calc(100% - 2rem);
+    max-width: 30rem;
+    opacity: 0.9;
+    position: fixed;
+    right: 1.5rem;
+    top: 1.5rem;
+    z-index: 500;
+    .notification {
+        // position: absolute;
+        // width: 100%;
+        // right: -40rem;
+    }
+}
