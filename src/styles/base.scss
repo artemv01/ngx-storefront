@@ -11,7 +11,11 @@ body {
 }
 * {
     box-sizing: border-box;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
 }
+
 *:focus {
     outline: none;
 }

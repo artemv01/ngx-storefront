@@ -20,7 +20,12 @@ import { Category } from '@app/type/category';
 import { PaginationParams } from '@app/type/pagination-params';
 import { Product } from '@app/type/product';
 import { ProductFilterQuery } from '@app/type/product-filter-query';
-import { RouterOutlet } from '@angular/router';
+import {
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { NotificationService } from '@app/service/notification.service';
 
 @Component({
@@ -180,10 +185,21 @@ export class ShopComponent implements OnInit, OnDestroy {
     public search: SearchService,
     public api: ApiService,
     public alertService: AlertService,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    /* this.router.events.subscribe((event) => {
+      console.log('start lazy load');
+
+      if (event instanceof RouteConfigLoadStart) {
+        console.log('start lazy load');
+        this.loading.show();
+      } else if (event instanceof RouteConfigLoadEnd) {
+        this.loading.show();
+      }
+    }); */
     this.api
       .getCategories()
       .subscribe((result) => (this.allCategories = result));
@@ -218,7 +234,6 @@ export class ShopComponent implements OnInit, OnDestroy {
         }
         this.searchLoading = false;
       });
-    // this.search.searchInput.setValue('a');
   }
   sortBy(key: string, order = 'desc') {
     this.filterParams.sortType = key;
@@ -238,7 +253,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.sortBy('price', 'asc');
         break;
       case 'Sort by price (from high to low)':
-        this.sortBy('ratingCount', 'desc');
+        this.sortBy('price', 'desc');
         break;
     }
   }
@@ -255,7 +270,6 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.pagesTotal = searchResult.pages;
         this.currentPage = searchResult.page;
         this.itemsTotal = searchResult.total;
-
         if (this.filterParams.sortType === 'price') {
           this.products.sort((p1: Product, p2: Product) => {
             const price1 = p1.onSale ? p1.salePrice : p1.price;

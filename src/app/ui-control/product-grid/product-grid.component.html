@@ -27,10 +27,15 @@
                     <app-sale-label></app-sale-label>
                 </div>
                 <div class="w-full flex justify-center">
-                    <div class="text-sm pr-4 line-through text-txInfo text-center">
+                    <div *ngIf="product.onSale"
+                        class="text-sm pr-4 line-through text-txInfo text-center">
                         {{product.price  | currency:'USD':'':'1.2-2':'en-us'}}$</div>
-                    <div class="text-sm  text-center">
+                    <div *ngIf="product.onSale"
+                        class="text-sm  text-center">
                         {{product.salePrice  | currency:'USD':'':'1.2-2':'en-us'}}$</div>
+                    <div *ngIf="!product.onSale"
+                        class="text-sm pr-4 text-center">
+                        {{product.price  | currency:'USD':'':'1.2-2':'en-us'}}$</div>
                 </div>
 
             </div>

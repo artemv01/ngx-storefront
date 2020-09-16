@@ -1,10 +1,15 @@
-<div class="flex flex-no-wrap cursor-pointer" (mouseleave)="rate()">
-    <div *ngFor="let star of ratingState; let i=  index;" class="relative text-yellow-500"><i
-            [style]="'font-size:'+ starWidth + 'px;'"
+<div class="flex flex-no-wrap cursor-pointer"
+    (mouseleave)="isTouchScreen() ? null : rate();">
+    <div *ngFor="let star of ratingState; let i=  index;"
+        class="relative text-yellow-500"><i [style]="'font-size:'+ starWidth + 'px;'"
             class="material-icons ">{{star}}</i>
-        <div style="left:0;" (mouseenter)="hoverRate(i, 'star_half')" (click)="rate(i + 0.5)"
+        <div style="left:0;"
+            (mouseenter)="isTouchScreen() ? null : hoverRate(i, 'star_half');"
+            (click)="rate(i + 0.5);"
             class="half"></div>
-        <div style="left:12px;" (mouseenter)="hoverRate(i, 'star')" (click)="rate(i + 1)"
+        <div style="left:12px;"
+            (mouseenter)="isTouchScreen() ? null : hoverRate(i, 'star');"
+            (click)="rate(i + 1);"
             class="full"></div>
     </div>
 </div>

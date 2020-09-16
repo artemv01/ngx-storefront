@@ -110,9 +110,7 @@
                             *ngIf="!product.ratingCount">No reviews for
                             {{product.name}}.</h1>
                         <app-reviews [reviews]="product.reviews"></app-reviews>
-                        <div class="mt-12 text-xl text-bgSuccess"
-                            *ngIf="isReviewSubmitted">Your review has been submitted!</div>
-                        <form class="bg-gray-100 p-8 mt-12"
+                        <form class="bg-gray-100  mt-12"
                             *ngIf="!isReviewSubmitted"
                             [formGroup]="reviewForm"
                             (submit)="submitReview()">
@@ -147,8 +145,7 @@
                                     type="email"></app-input>
                             </div>
                             <div class="mt-8">
-                                <c-button class="mt-8"
-                                    [disabled]="reviewForm.invalid || !rating.value"
+                                <c-button [disabled]="reviewForm.invalid || !rating.value"
                                     addClass="btn-primary"
                                     type="submit">Submit</c-button>
                             </div>

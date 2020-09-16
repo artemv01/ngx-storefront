@@ -1,8 +1,8 @@
-<footer class=" bg-bgFooter p-12 text-txDark">
-    <div class="container mx-auto">
-        <h1 class="page-header">Contacts</h1>
+<footer class=" bg-bgFooter px-4 py-12 text-txDark sm:px-8">
+    <div class="container mx-auto px-0">
+        <h1 class="page-header break-words">Contacts</h1>
         <div class="flex  items-stretch  flex-col md:justify-between md:flex-row">
-            <div class="md:mr-24 flex-auto flex flex-col">
+            <div class="mb-8 md:mr-24 md:mb-0 flex-auto flex flex-col">
                 <div class="flex items-center text-sm mb-4">
                     <app-icon color='#ccc'
                         class="pr-2">mail</app-icon> <a
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div>
-                <google-map width="300px"
+                <google-map width="280px"
                     height="300px"
                     [zoom]="mapOptions.zoom"
                     [center]="mapOptions.center">

@@ -14,6 +14,7 @@ import { ApiService } from '../../service/api.service';
 import { CartService } from '@app/service/cart.service';
 import { SearchService } from '@app/service/search.service';
 import { NotificationService } from '@app/service/notification.service';
+import { Router } from '@angular/router';
 
 interface Category {
   _id: string;
@@ -39,11 +40,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private api: ApiService,
     public cart: CartService,
     public searchService: SearchService,
-    public notify: NotificationService
+    public notify: NotificationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.routeChange$.pipe(takeUntil(this.destroy)).subscribe(() => {
+    this.router.events.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.header.nativeElement.classList.remove('menu-active');
     });
     this.api.getCategories('_id name').subscribe((cats: Category[]) => {

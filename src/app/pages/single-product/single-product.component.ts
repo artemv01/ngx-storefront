@@ -121,10 +121,11 @@ export class SingleProductComponent
       .subscribe((result) => {
         // this.isReviewSubmitted = true;
         this.reviewForm.reset();
-        this.loading.hide();
         this.product.reviews = result.reviews;
         this.product.ratingCount = result.ratingCount;
         this.product.rating = result.rating;
+        this.loading.hide();
+        this.notify.push({ message: 'Your review has been submitted!' });
       });
   }
 

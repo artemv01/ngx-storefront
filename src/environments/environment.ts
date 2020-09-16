@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:4500/',
   uploadsUrl: 'http://localhost:4500/uploads/',
+  /* apiUrl: 'https://ngx-storefront-backend.herokuapp.com/',
+  uploadsUrl: 'https://ngx-storefront-backend.herokuapp.com/uploads/', */
 };
 
 /*

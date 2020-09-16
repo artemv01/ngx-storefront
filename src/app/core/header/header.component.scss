@@ -5,7 +5,26 @@ header {
 
     color: var(--txPrimary);
     @media screen and (min-width: 768px) {
-        padding: 2rem 0px 0px 0px;
+        padding: 2rem 0px 2rem 0px;
+    }
+}
+
+#desktopMenu,
+#mobileMenu {
+    li:hover,
+    li.active-link {
+        span:after {
+            width: 100%;
+        }
+    }
+    span:after {
+        display: block;
+        width: 0;
+        height: 3px;
+        margin-top: -3px;
+        content: '';
+        background-color: var(--txPrimary);
+        transition: all 0.2s ease-in;
     }
 }
 
@@ -40,9 +59,14 @@ header {
     .search-form {
         width: 100%;
     }
+    ul {
+        max-height: 400px;
+        overflow: auto;
+    }
 }
 .menu-active .mobile-menu {
     max-height: 500px;
+    margin-bottom: 1.5rem;
     transition: max-height 0.25s ease-in;
 }
 /* .bottom-bar {

@@ -36,6 +36,9 @@ export class RateItemComponent implements OnInit, ControlValueAccessor {
     this.onTouched = () => {};
     this.disabled = false;
   }
+  isTouchScreen() {
+    return 'ontouchstart' in document.documentElement;
+  }
 
   ngOnInit(): void {
     this.buildStars();

@@ -1,10 +1,14 @@
-<div class="flex mb-6" *ngFor="let review of reviews">
+<div class="flex mb-6"
+    *ngFor="let review of reviews">
     <div class="w-12 h-12 md:w-16 md:h-16 flex-shrink-0"><img src="/assets/img/person.png"
-            class="w-full h-full rounded" alt=""></div>
+            class="w-full h-full rounded-full"
+            alt=""></div>
     <div class="pl-8 text-sm max-w-full">
-        <div class="font-bold text-txPrimary mb-1 break-words max-w-full">{{review.authorName}}</div>
+        <div class="font-bold text-txPrimary mb-1 break-words max-w-full">{{review.authorName}}
+        </div>
         <div class="text-sm text-txInfo mb-1">{{review.createdAt |  date: 'd MMM yyyy HH:mm'}}</div>
-        <app-star-rating *ngIf="review.rating"  [rating]="review.rating"></app-star-rating>
+        <app-star-rating *ngIf="review.rating"
+            [rating]="review.rating"></app-star-rating>
         <div class="mt-4 break-words max-w-full">{{review.content}}</div>
     </div>
 </div>

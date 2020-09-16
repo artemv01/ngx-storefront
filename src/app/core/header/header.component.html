@@ -37,10 +37,10 @@
                 </div>
             </div>
         </div>
-        <nav class="mobile-menu flex flex-col md:hidden mt-6"
-            #mobileMenu>
+        <nav class="mobile-menu flex flex-col md:hidden">
             <div class="flex-no-wrap flex flex-auto justify-end">
-                <form class="search-form "
+                <form class="search-form mt-4"
+                    (submit)="header.classList.remove('menu-active')"
                     [formGroup]="searchService.searchForm"><input type="text"
                         class="search-input no-validate"
                         [formControl]="searchService.searchInput"
@@ -57,21 +57,20 @@
                     <span>View cart</span>
                     <span class="material-icons pl-1">arrow_right_alt</span>
                 </a></div>
-            <ul>
+            <ul id="mobileMenu"
+                class="flex flex-col items-start">
                 <li *ngFor="let cat of categoryList"
                     [routerLink]="['/category', cat._id]"
-                    class="font-thin  cursor-pointer leading-8"
+                    class="font-thin  cursor-pointer leading-8 text-lg"
                     routerLinkActive="active-link"><span>{{cat.name}}</span></li>
-
             </ul>
         </nav>
-        <ul class="flex-wrap list-none mt-4 pb-8 text-txHeader hidden md:flex"
-            id="headerCategoryList">
+        <ul class="flex-wrap list-none mt-4 text-txHeader hidden md:flex"
+            id="desktopMenu">
             <li *ngFor="let cat of categoryList"
-                class="font-thin  cursor-pointer mr-4 leading-8"
+                class="font-thin  cursor-pointer mr-4 leading-8 text-lg"
                 [routerLink]="['/category', cat._id]"
                 routerLinkActive="active-link"><span>{{cat.name}}</span></li>
-
         </ul>
         <!--     <div class="bottom-bar flex justify-between">
             <ul class="category-list-desktop flex-no-wrap md:w-9/12">
