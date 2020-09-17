@@ -13,14 +13,14 @@ module.exports = {
             require('postcss-import'),
             require('tailwindcss')('./tailwind.config.js'),
             require('autoprefixer'),
-            
+            purgecss({
+              content:  ['./**/*.html', './**/*.ts', './**/*.scss'], 
+              defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+            })
+         
           ]
         }
       }
     ]
   }
 };
-// purgecss({
-//   content: ['./**/*.html', './**/*.ts', './**/*.scss'],
-//   defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-// }),
