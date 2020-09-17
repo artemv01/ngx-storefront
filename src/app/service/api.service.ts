@@ -9,6 +9,7 @@ import { Product } from '../type/product';
 import { Review } from '@app/type/review';
 import { AlertService } from './alert.service';
 import { LoadingService } from './loading.service';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +17,8 @@ export class ApiService {
   constructor(
     private http: HttpClient,
     private alertService: AlertService,
-    public loading: LoadingService
+    public loading: LoadingService,
+    private router: Router
   ) {}
 
   getCategories(fields = ''): Observable<any> {
@@ -83,8 +85,9 @@ export class ApiService {
   }
 
   handleError(err: HttpErrorResponse, errMsg?: Record<number, any>) {
-    let errorMessage = 'Oops! Sorry, something went wrong.';
-    this.loading.showPermanent();
+    this.router.navigate(['/error']);
+    return throwError(err);
+    /* let errorMessage = 'Oops! Sorry, something went wrong.';
     if (!err.status) {
       this.alertService.show(errorMessage);
       return throwError(errorMessage);
@@ -97,6 +100,6 @@ export class ApiService {
     }
 
     this.alertService.show(errorMessage);
-    return throwError(err);
+    return throwError(err); */
   }
 }

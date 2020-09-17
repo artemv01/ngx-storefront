@@ -58,6 +58,16 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'error',
+    data: {
+      animation: 'error',
+    },
+    loadChildren: () =>
+      import('./core/error-page/error-page.module').then(
+        (m) => m.ErrorPageModule
+      ),
+  },
+  {
     path: '**',
     data: {
       animation: 'notfound',
