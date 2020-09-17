@@ -30,4 +30,7 @@ export class LoadingService {
       setTimeout(() => this.display$.next(false), 0);
     }
   }
+  forceHide() {
+    setTimeout(() => this.display$.next(false), 0);
+  }
 }

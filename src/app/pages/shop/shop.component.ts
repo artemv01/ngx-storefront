@@ -76,20 +76,15 @@ import { NotificationService } from '@app/service/notification.service';
     ]),
     trigger('routeAnimation', [
       transition('* => *', [
-        style({ position: 'relative', height: '100vh' }),
-        query(
-          ':enter, :leave',
-          [
-            style({
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              //   height: '100vh',
-              width: '100%',
-            }),
-          ]
-          //   { optional: true }
-        ),
+        style({ position: 'relative', height: '100vh', overflow: 'hidden' }),
+        query(':enter, :leave', [
+          style({
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+          }),
+        ]),
         query(':enter', [style({ opacity: 0 })], { optional: true }),
 
         query(
@@ -190,16 +185,13 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    /* this.router.events.subscribe((event) => {
-      console.log('start lazy load');
-
+    this.router.events.subscribe((event) => {
       if (event instanceof RouteConfigLoadStart) {
-        console.log('start lazy load');
         this.loading.show();
       } else if (event instanceof RouteConfigLoadEnd) {
-        this.loading.show();
+        this.loading.forceHide();
       }
-    }); */
+    });
     this.api
       .getCategories()
       .subscribe((result) => (this.allCategories = result));

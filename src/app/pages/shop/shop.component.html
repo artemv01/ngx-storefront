@@ -1,6 +1,6 @@
 <div id="shopApp"
     class="flex flex-col"
-    [style.overflow]="(loading.display$ | async) ? 'hidden' : 'auto'">
+    [class.app-loading]="(loading.display$ | async)">
     <div class="loading-screen-alert"
         *ngIf="(alertService.display | async)"
         (click)="alertService.hide()"
