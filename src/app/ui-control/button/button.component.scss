@@ -1,0 +1,29 @@
+.btn-loading {
+    display: none;
+    width: 24px;
+    height: 24px;
+    margin-left: 0.8rem;
+}
+.btn-loading:after {
+    content: ' ';
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: btn-loading 1.2s linear infinite;
+}
+@keyframes btn-loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+:host.loading {
+    .btn-loading {
+        display: inline-block;
+    }
+}

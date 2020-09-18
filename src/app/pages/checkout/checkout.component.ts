@@ -1,26 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ReconfigurableOptions } from 'places.js';
 import { CartService } from '@app/service/cart.service';
 import { ApiService } from '@app/service/api.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: '0' }),
+        animate('.5s ease-out', style({ opacity: '1' })),
+      ]),
+    ]),
+  ],
 })
 export class CheckoutComponent implements OnInit {
+  @ViewChild('submitBtn', { read: ElementRef }) submitBtn: ElementRef;
+
+  formSubmitted = false;
+
   addressForm = this.fb.group({
-    first_name: ['', [Validators.required]],
-    last_name: ['', [Validators.required]],
-    address_line1: ['', [Validators.required]],
+    first_name: ['Artem', [Validators.required]],
+    last_name: ['Artemev', [Validators.required]],
+    address_line1: ['Kolotushkovo', [Validators.required]],
     address_line2: [''],
-    zip: ['', [Validators.required]],
-    country: ['', [Validators.required]],
-    city: ['', [Validators.required]],
+    zip: ['213213', [Validators.required]],
+    country: ['Russia', [Validators.required]],
+    city: ['Moscow', [Validators.required]],
     state: [''],
-    email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required]],
-    notes: [''],
+    email: ['artem@example.com', [Validators.required, Validators.email]],
+    phone: ['21321321', [Validators.required]],
+    notes: ['he hey hey'],
   });
   validate = {
     firstName: {
@@ -107,6 +120,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {}
 
   submitOrder() {
+    (this.submitBtn.nativeElement as HTMLElement).classList.add('loading');
     const { notes, ...address } = this.addressForm.value;
     const billingAddress = address;
     const shippingAddress = address;
@@ -118,6 +132,11 @@ export class CheckoutComponent implements OnInit {
         notes,
         cart,
       })
-      .subscribe((result) => {});
+      .subscribe((result) => {
+        this.formSubmitted = true;
+        (this.submitBtn.nativeElement as HTMLElement).classList.remove(
+          'loading'
+        );
+      });
   }
 }

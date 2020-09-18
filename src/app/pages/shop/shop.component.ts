@@ -21,6 +21,7 @@ import { PaginationParams } from '@app/type/pagination-params';
 import { Product } from '@app/type/product';
 import { ProductFilterQuery } from '@app/type/product-filter-query';
 import {
+  NavigationStart,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
   Router,
@@ -186,6 +187,12 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.loading.forceHide();
+        this.searchMode = false;
+        this.notify.dismissAll();
+        this.routeChange$.next(null);
+      }
       if (event instanceof RouteConfigLoadStart) {
         this.loading.show();
       } else if (event instanceof RouteConfigLoadEnd) {
@@ -203,13 +210,14 @@ export class ShopComponent implements OnInit, OnDestroy {
           this.searchLoading = true;
         }),
         switchMap((searchText) => {
+          this.paginationParams.page = 1;
           this.filterParams.search = searchText;
           return this.api
             .getProductsFiltered({
               ...this.filterParams,
               ...this.paginationParams,
             })
-            .pipe(takeUntil(this.filtersChanged));
+            .pipe(takeUntil(this.filtersChanged), delay(2000));
         })
       )
       .pipe(takeUntil(this.destroy))
@@ -262,23 +270,6 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.pagesTotal = searchResult.pages;
         this.currentPage = searchResult.page;
         this.itemsTotal = searchResult.total;
-        if (this.filterParams.sortType === 'price') {
-          this.products.sort((p1: Product, p2: Product) => {
-            const price1 = p1.onSale ? p1.salePrice : p1.price;
-            const price2 = p2.onSale ? p2.salePrice : p2.price;
-            if (price1 > price2) {
-              return -1;
-            } else if (price1 < price2) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-          if (this.filterParams.sortOrder === 'desc') {
-            this.products.reverse();
-          }
-        }
-
         if (searchResult.pages > 1) {
           this.showPagination = true;
         } else {
@@ -299,11 +290,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.searchMode = false;
   }
 
-  onRouteActivate() {
-    this.searchMode = false;
-    this.notify.dismissAll();
-    this.routeChange$.next(null);
-  }
+  onRouteActivate() {}
 
   prepareRoute(outlet) {
     return (

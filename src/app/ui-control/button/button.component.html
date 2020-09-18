@@ -3,5 +3,11 @@
     class="btn rounded"
     [class]="addClass"
     [type]="type">
-    <ng-content></ng-content>
+    <div class="flex items-center justify-center">
+        <span>
+            <ng-content></ng-content>
+        </span>
+        <div class="btn-loading"></div>
+
+    </div>
 </button>

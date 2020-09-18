@@ -100,7 +100,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
         this.sortBy('price', 'asc');
         break;
       case 'Sort by price (from high to low)':
-        this.sortBy('ratingCount', 'desc');
+        this.sortBy('price', 'desc');
         break;
     }
   }
@@ -120,23 +120,6 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
         this.showPagination = searchResult.pages > 1 ? true : false;
         this.categoryName = searchResult.categoryName;
 
-        if (this.filterParams.sortType === 'price') {
-          this.products.sort((p1: Product, p2: Product) => {
-            const price1 = p1.onSale ? p1.salePrice : p1.price;
-            const price2 = p2.onSale ? p2.salePrice : p2.price;
-            if (price1 > price2) {
-              return -1;
-            } else if (price1 < price2) {
-              return 1;
-            } else {
-              return 0;
-            }
-          });
-          if (this.filterParams.sortOrder === 'desc') {
-            this.products.reverse();
-          }
-        }
-
         this.loading.hide();
         this.itemsLoading = false;
       });
@@ -152,7 +135,13 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   noticeChange(selected = '') {
     console.log(selected);
   }
-
+  scrollToElement($element): void {
+    $element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
   ngOnDestroy() {
     this.destroy.next(null);
   }

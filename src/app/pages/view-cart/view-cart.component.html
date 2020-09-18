@@ -1,6 +1,10 @@
 <main class="container mb-16 mt-16 flex-grow">
-    <h1 class="page-header">Cart</h1>
-    <div class="overflow-auto cart-table-wrap mb-4">
+    <h1 class="page-header mb-12">Cart</h1>
+    <div [@fadeIn]
+        *ngIf="isCartEmpty"
+        class="text-xl">Your cart is empty.</div>
+    <div *ngIf="!isCartEmpty"
+        class="overflow-auto cart-table-wrap mb-4">
         <table style="min-width:768px;"
             class="table-auto border-collapse w-full bg-bgGrayLight table-striped">
             <thead class="bg-bgInput">
@@ -15,7 +19,8 @@
             </thead>
             <tbody class="text-txDark">
                 <tr class="text-left"
-                    *ngFor="let  product of cart.cartContent | keyvalue">
+                    *ngFor="let  product of cart.cartContent | keyvalue"
+                    [@fadeIn]>
                     <td class="p-4">
                         <app-icon (click)="cart.delete(product.key)">cancel</app-icon>
                     </td>
@@ -44,7 +49,7 @@
             </tbody>
         </table>
     </div>
-    <div class="flex flex-col md:flex-row mb-12">
+    <!-- <div class="flex flex-col md:flex-row mb-12">
         <div class="flex flex-col md:flex-row w-full mb-6 md:w-1/2 md:mb-0">
             <div class="hidden">
                 <input type="text"
@@ -55,11 +60,13 @@
                     coupon</button>
             </div>
         </div>
-        <!-- <div class="flex justify-end md:w-1/2 pt-4 border border-bgSeparator md:border-0 md:pt-0 ">
+        <div class="flex justify-end md:w-1/2 pt-4 border border-bgSeparator md:border-0 md:pt-0 ">
             <c-button addClass="btn-primary" (click)="cart.update()">Update cart</c-button>
-        </div> -->
-    </div>
-    <div class="flex md:justify-end">
+        </div>
+    </div> -->
+    <div *ngIf="!isCartEmpty"
+        [@fadeIn]
+        class="flex md:justify-end">
         <div class="w-full md:w-1/2">
             <div class="flex justify-between w-full">
                 <h1 class="text-2xl font-thin mb-4">Cart totals</h1>

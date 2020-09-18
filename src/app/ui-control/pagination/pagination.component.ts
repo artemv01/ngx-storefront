@@ -57,7 +57,7 @@ export class PaginationComponent implements OnInit, OnChanges {
       if (mp === 0) {
         // we're in first range
         rangeStart = 1;
-        rangeEnd = this.pageRangeLimit;
+        rangeEnd = this.pageRangeLimit - 1;
       } else {
         rangeStart = mp * this.pageRangeLimit;
         rangeEnd = rangeStart + (this.pageRangeLimit - 1);

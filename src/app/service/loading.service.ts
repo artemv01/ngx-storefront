@@ -18,9 +18,9 @@ export class LoadingService {
   showPermanent(show = true) {
     this.permanent = show;
     if (this.permanent) {
-      this.display$.next(true);
+      setTimeout(() => this.display$.next(true), 0);
     } else {
-      this.display$.next(false);
+      setTimeout(() => this.display$.next(false), 0);
     }
   }
   hide() {
@@ -31,6 +31,7 @@ export class LoadingService {
     }
   }
   forceHide() {
+    this.displayIncrement = 0;
     setTimeout(() => this.display$.next(false), 0);
   }
 }
