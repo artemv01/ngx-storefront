@@ -8,6 +8,10 @@ type Price = number;
   providedIn: 'root',
 })
 export class CartService {
+  cartContent: Record<string, Product> = {};
+  totalPrice = 0;
+  totalQuantity = 0;
+
   constructor() {
     let cartContent = localStorage.getItem('cartContent');
     let totalPrice = localStorage.getItem('totalPrice');
@@ -16,10 +20,6 @@ export class CartService {
     this.totalPrice = totalPrice ? JSON.parse(totalPrice) : 0;
     this.totalQuantity = totalQuantity ? JSON.parse(totalQuantity) : 0;
   }
-
-  cartContent: Product[] = [];
-  totalPrice = 0;
-  totalQuantity = 0;
 
   add(product: Product) {
     if (this.cartContent[product._id]) {
@@ -71,6 +71,13 @@ export class CartService {
       cart[productId] = product.quantity;
     }
     return cart;
+  }
+
+  clean() {
+    this.cartContent = {};
+    this.totalPrice = 0;
+    this.totalQuantity = 0;
+    this.writeCart();
   }
 
   private writeCart() {

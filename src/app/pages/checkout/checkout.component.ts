@@ -133,6 +133,7 @@ export class CheckoutComponent implements OnInit {
         cart,
       })
       .subscribe((result) => {
+        this.cart.clean();
         this.formSubmitted = true;
         (this.submitBtn.nativeElement as HTMLElement).classList.remove(
           'loading'
