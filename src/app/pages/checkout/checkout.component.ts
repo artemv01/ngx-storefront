@@ -23,17 +23,17 @@ export class CheckoutComponent implements OnInit {
   formSubmitted = false;
 
   addressForm = this.fb.group({
-    first_name: ['Artem', [Validators.required]],
-    last_name: ['Artemev', [Validators.required]],
-    address_line1: ['Kolotushkovo', [Validators.required]],
+    first_name: ['', [Validators.required]],
+    last_name: ['', [Validators.required]],
+    address_line1: ['', [Validators.required]],
     address_line2: [''],
-    zip: ['213213', [Validators.required]],
-    country: ['Russia', [Validators.required]],
-    city: ['Moscow', [Validators.required]],
+    zip: ['', [Validators.required]],
+    country: ['', [Validators.required]],
+    city: ['', [Validators.required]],
     state: [''],
-    email: ['artem@example.com', [Validators.required, Validators.email]],
-    phone: ['21321321', [Validators.required]],
-    notes: ['he hey hey'],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required]],
+    notes: [''],
   });
   validate = {
     firstName: {
