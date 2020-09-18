@@ -146,6 +146,7 @@
                             </div>
                             <div class="mt-8">
                                 <c-button [disabled]="reviewForm.invalid || !rating.value"
+                                    #submitReviewBtn
                                     addClass="btn-primary"
                                     type="submit">Submit</c-button>
                             </div>

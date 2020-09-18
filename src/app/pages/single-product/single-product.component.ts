@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, exhaustMap, mergeMap, delay } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
@@ -23,6 +30,7 @@ import { Notification } from '@app/type/notification';
 })
 export class SingleProductComponent
   implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('submitReviewBtn', { read: ElementRef }) submitReviewBtn;
   breadcrumbs: Breadcrumbs[] = [];
   uploadsUrl = environment.uploadsUrl;
   destroy: Subject<null> = new Subject();
@@ -110,11 +118,13 @@ export class SingleProductComponent
   //   }
 
   submitReview() {
+    (this.submitReviewBtn.nativeElement as HTMLElement).classList.add(
+      'loading'
+    );
     const reviewData = {
       ...this.reviewForm.value,
       productId: this.productId,
     };
-    this.loading.show();
     this.api
       .submitReview(reviewData)
       .pipe(mergeMap(() => this.api.getReviewsForProduct(this.productId)))
@@ -124,8 +134,10 @@ export class SingleProductComponent
         this.product.reviews = result.reviews;
         this.product.ratingCount = result.ratingCount;
         this.product.rating = result.rating;
-        this.loading.hide();
         this.notify.push({ message: 'Your review has been submitted!' });
+        (this.submitReviewBtn.nativeElement as HTMLElement).classList.remove(
+          'loading'
+        );
       });
   }
 
