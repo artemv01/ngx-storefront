@@ -29,8 +29,6 @@ import { NotificationService } from '@app/service/notification.service';
   ],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-  notifications: Notification[] = [];
-
   typeMap = {
     success: 'bg-bgSuccess',
     info: 'bg-bgInfo',
@@ -50,26 +48,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   destroy: Subject<null> = new Subject();
   constructor(public notify: NotificationService) {}
 
-  ngOnInit(): void {
-    this.notify.dismiss
-      .pipe(takeUntil(this.destroy))
-      .subscribe(() => (this.notifications = []));
-    this.notify.emitter
-      .pipe(takeUntil(this.destroy))
-      .subscribe((data: Notification) => {
-        if (!data.type) {
-          data.type = 'success';
-        }
-        if (!data.message) {
-          data.message = '';
-        }
-        console.log(data);
-        let last = this.notifications.push({ ...data });
-      });
-  }
-  close(index: number) {
-    this.notifications.splice(index, 1);
-  }
+  ngOnInit(): void {}
+
   ngOnDestroy() {
     this.destroy.next(null);
   }
