@@ -24,7 +24,7 @@
                     <td class="p-4">
                         <app-icon (click)="cart.delete(product.key)">cancel</app-icon>
                     </td>
-                    <td class="p-4"><img [src]="uploadsUrl + product.value.image"
+                    <td class="p-4"><img [src]="product.value.image"
                             class="object-cover object-center h-12 w-12"
                             alt=""></td>
                     <td class="p-4"><a [routerLink]="['/product', product.value._id]"

@@ -18,7 +18,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ],
 })
 export class CartComponent implements OnInit {
-  uploadsUrl = environment.uploadsUrl;
   @Input('isDark') isDark: boolean = false;
   constructor(public cart: CartService) {}
   ngOnInit(): void {}

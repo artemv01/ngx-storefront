@@ -7,7 +7,6 @@ import { Category } from '@app/type/category';
   styleUrls: ['./category-grid.component.scss'],
 })
 export class CategoryGridComponent implements OnInit {
-  uploadsUrl = environment.uploadsUrl;
   @Input('categories') categories: Category[];
   constructor() {}
 

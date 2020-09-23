@@ -17,7 +17,7 @@
                     [class]="isDark ? 'text-gray-200' : 'text-txDark' ">{{product.value.quantity}} x
                     <app-price [price]="product.value.price"></app-price> </span></div>
         </div>
-        <div class="flex-shrink-0"><img [src]="uploadsUrl + product.value.image"
+        <div class="flex-shrink-0"><img [src]="product.value.image"
                 class=" object-cover h-12 w-12 object-center"
                 alt=""></div>
     </div>

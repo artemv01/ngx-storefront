@@ -12,14 +12,14 @@
                 <div class="rounded mb-6 lg:w-2/5 zoomImg bg-no-repeat"
                     [class.is-image]="product.image"
                     (mousemove)="zoomImage($event)"
-                    [style.background-image]="product.image ? 'url('+ uploadsUrl + product.image + ')' : ''">
+                    [style.background-image]="product.image ? 'url(' + product.image + ')' : ''">
                     <!--  -->
                     <div *ngIf="!product.image"
                         class="no-image">
                         <i class="material-icons">insert_photo</i>
                     </div>
                     <img *ngIf="product.image"
-                        [src]="uploadsUrl + product.image"
+                        [src]="product.image"
                         alt=""
                         class="no-image w-full h-full object-cover object-center">
                     <i class="hidden material-icons bg-white rounded"

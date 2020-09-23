@@ -32,7 +32,6 @@ export class SingleProductComponent
   implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('submitReviewBtn', { read: ElementRef }) submitReviewBtn;
   breadcrumbs: Breadcrumbs[] = [];
-  uploadsUrl = environment.uploadsUrl;
   destroy: Subject<null> = new Subject();
   productId: string;
   product: Product = {} as Product;

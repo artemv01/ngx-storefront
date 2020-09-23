@@ -19,7 +19,6 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  apiUrl = environment.uploadsUrl;
   categories: Category[] = [];
   reviews: Review[] = [];
   saleProducts: Product[] = [];

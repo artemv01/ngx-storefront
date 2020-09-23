@@ -20,8 +20,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ],
 })
 export class ViewCartComponent implements OnInit, OnDestroy {
-  uploadsUrl = environment.uploadsUrl;
-
   constructor(
     public cart: CartService,
     public router: Router,

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Product } from '@app/type/product';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CartService } from '@app/service/cart.service';
@@ -24,7 +23,6 @@ import { NotificationService } from '@app/service/notification.service';
   ],
 })
 export class ProductGridComponent implements OnInit {
-  uploadsUrl = environment.uploadsUrl;
   columns = '';
   addedToCart = {};
   @Input('products') products: Product[];
