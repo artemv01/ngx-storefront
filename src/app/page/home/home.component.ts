@@ -13,6 +13,7 @@ import { Category } from 'src/app/type/category';
 import { BehaviorSubject, forkJoin, Subject } from 'rxjs';
 import { LoadingService } from '@app/service/loading.service';
 import { tap } from 'rxjs/operators';
+import { TitleService } from '@app/service/title.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,7 +25,11 @@ export class HomeComponent implements OnInit {
   saleProducts: Product[] = [];
   //   slideConfig = { slidesToShow: 2, slidesToScroll: 2 };
 
-  constructor(private api: ApiService, private loading: LoadingService) {}
+  constructor(
+    private api: ApiService,
+    private loading: LoadingService,
+    private titleServ: TitleService
+  ) {}
   topRated: Product[] = [];
 
   ngOnInit(): void {
@@ -37,6 +42,7 @@ export class HomeComponent implements OnInit {
       this.saleProducts = onSale;
       this.topRated = topRated;
       this.reviews$.next(reviews);
+      this.titleServ.set('Home');
       this.loading.hide();
     });
   }

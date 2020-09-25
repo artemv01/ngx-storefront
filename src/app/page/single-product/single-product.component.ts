@@ -22,6 +22,7 @@ import { Review } from '@app/type/review';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Breadcrumbs } from '@app/type/breadcrumbs';
 import { Notification } from '@app/type/notification';
+import { TitleService } from '@app/service/title.service';
 
 @Component({
   selector: 'app-single-product',
@@ -79,7 +80,8 @@ export class SingleProductComponent
     private fb: FormBuilder,
     public loading: LoadingService,
     public cart: CartService,
-    public notify: NotificationService
+    public notify: NotificationService,
+    private titleServ: TitleService
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +105,7 @@ export class SingleProductComponent
           ]);
         }
         this.breadcrumbs.push([product.name, ['/products', product._id]]);
+        this.titleServ.set(product.name);
         this.loading.hide();
       });
     });

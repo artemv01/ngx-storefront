@@ -4,6 +4,7 @@ import { ReconfigurableOptions } from 'places.js';
 import { CartService } from '@app/service/cart.service';
 import { ApiService } from '@app/service/api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TitleService } from '@app/service/title.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -118,10 +119,13 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public cart: CartService,
-    private api: ApiService
+    private api: ApiService,
+    private titleServ: TitleService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleServ.set('Checkout');
+  }
 
   scrollTo($el) {
     $el.scrollIntoView({

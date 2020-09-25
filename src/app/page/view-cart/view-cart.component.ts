@@ -5,6 +5,7 @@ import { environment } from '@root/environments/environment';
 import { Router } from '@angular/router';
 import { NotificationService } from '@app/service/notification.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { TitleService } from '@app/service/title.service';
 
 @Component({
   selector: 'app-view-cart',
@@ -23,10 +24,13 @@ export class ViewCartComponent implements OnInit, OnDestroy {
   constructor(
     public cart: CartService,
     public router: Router,
-    private notify: NotificationService
+    private notify: NotificationService,
+    private titleServ: TitleService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.titleServ.set('Your Cart');
+  }
 
   get isCartEmpty() {
     return !Object.keys(this.cart.cartContent).length;

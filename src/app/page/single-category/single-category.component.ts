@@ -17,6 +17,8 @@ import { PaginationParams } from '@app/type/pagination-params';
 import { ProductFilterQuery } from '@app/type/product-filter-query';
 import { Category } from '@app/type/category';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { TitleService } from '@app/service/title.service';
 
 @Component({
   selector: 'app-single-category',
@@ -72,7 +74,8 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
     public loading: LoadingService,
     public search: SearchService,
     public api: ApiService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleServ: TitleService
   ) {}
 
   ngOnInit(): void {
@@ -119,6 +122,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
         this.itemsTotal = searchResult.total;
         this.showPagination = searchResult.pages > 1 ? true : false;
         this.categoryName = searchResult.categoryName;
+        this.titleServ.set(this.categoryName);
 
         this.loading.hide();
         this.itemsLoading = false;

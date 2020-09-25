@@ -7,8 +7,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ShopComponent } from './pages/shop/shop.component';
-import { HomeComponent } from './pages/home/home.component';
+import { ShopComponent } from './page/shop/shop.component';
+import { HomeComponent } from './page/home/home.component';
 import { HeaderComponent } from './core/header/header.component';
 import { UiControlModule } from './ui-control/ui-control.module';
 import { RouterModule } from '@angular/router';

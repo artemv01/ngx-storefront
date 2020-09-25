@@ -9,10 +9,10 @@ export class FooterComponent implements OnInit {
   constructor() {}
 
   mapOptions = {
-    zoom: 12,
+    zoom: 15,
     center: {
-      lat: 35.659907,
-      lng: 137.775487,
+      lat: 37.4220656,
+      lng: -122.0840897,
     },
     options: {
       mapTypeId: 'hybrid',
@@ -25,14 +25,14 @@ export class FooterComponent implements OnInit {
   };
   mapMarker = {
     position: {
-      lat: 35.659907,
-      lng: 137.775487,
+      lat: 37.4220656,
+      lng: -122.0840897,
     },
     label: {
       color: 'red',
-      text: 'WebShop',
+      text: 'Storefront',
     },
-    title: 'WebShop',
+    title: 'Storefront',
     options: { animation: google.maps.Animation.BOUNCE },
   };
 
