@@ -21,6 +21,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IconComponent } from './icon/icon.component';
 import { ReviewSliderComponent } from './review-slider/review-slider.component';
+import { LazyLoadDirective } from '@app/ui-control/lazy-load.directive';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ReviewSliderComponent } from './review-slider/review-slider.component';
     NotificationsComponent,
     IconComponent,
     ReviewSliderComponent,
+    LazyLoadDirective,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { ReviewSliderComponent } from './review-slider/review-slider.component';
     NotificationsComponent,
     IconComponent,
     ReviewSliderComponent,
+    LazyLoadDirective,
   ],
 })
 export class UiControlModule {}

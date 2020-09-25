@@ -175,7 +175,10 @@ section {
         transform: scale(1.3);
     }
     img {
-        @apply h-full object-center object-cover;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
     }
 }
 
