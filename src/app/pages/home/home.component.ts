@@ -74,13 +74,11 @@ export class HomeComponent implements OnInit {
     forkJoin({
       onSale: this.api.getProductsOnSale(),
       topRated: this.api.getTopRatedProducts(),
-      categories: this.api.getCategories(),
       reviews: this.api.getRecentReviews(),
-    }).subscribe(({ onSale, topRated, categories, reviews }) => {
+    }).subscribe(({ onSale, topRated, reviews }) => {
       this.saleProducts = onSale;
       this.topRated = topRated;
-      this.categories = categories;
-      this.reviews = this.REVIEWS as Review[];
+      this.reviews = reviews;
       this.loading.hide();
     });
   }

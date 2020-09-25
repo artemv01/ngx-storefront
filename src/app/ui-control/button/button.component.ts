@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'c-button',
+  selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })

@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.events.pipe(takeUntil(this.destroy)).subscribe(() => {
       this.header.nativeElement.classList.remove('menu-active');
     });
-    this.api.getCategories('_id name').subscribe((cats: Category[]) => {
+    this.api.getCategoriesBulk().subscribe((cats: Category[]) => {
       this.categoryList = cats;
     });
   }

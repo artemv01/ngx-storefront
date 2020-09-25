@@ -91,12 +91,10 @@ export class SingleProductComponent
       this.loading.show();
       forkJoin({
         product: this.api.getProduct(this.productId),
-        relatedProducts: this.api.getRelatedProducts(),
-        allCategories: this.api.getCategories('name _id'),
-      }).subscribe(({ product, relatedProducts, allCategories }) => {
+        relatedProducts: this.api.getRelatedProducts(this.productId),
+      }).subscribe(({ product, relatedProducts }) => {
         this.product = product;
         this.relatedProducts = relatedProducts;
-        this.allCategories = allCategories;
         this.breadcrumbs = [];
         if (product.categories?.length) {
           this.breadcrumbs.push([

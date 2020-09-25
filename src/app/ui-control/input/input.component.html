@@ -9,7 +9,7 @@
         [placeholder]="placeholder"
         [class]="additClass"
         [pattern]="pattern ? pattern : ''"
-        [id]="elId"></div>
+        [attr.id]="elId ? elId : null"></div>
 <div class="form-err-container"
     *ngIf="isValidate && control.invalid && (control.dirty || control.touched)">
     <ng-container *ngFor="let err of validate | keyvalue">

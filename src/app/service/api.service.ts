@@ -21,14 +21,6 @@ export class ApiService {
     private router: Router
   ) {}
 
-  getCategories(fields = ''): Observable<any> {
-    return this.http
-      .get<Category[]>(
-        env.apiUrl + `category/${fields ? '?fields=' + fields : ''}`
-      )
-      .pipe(catchError((err) => this.handleError(err)));
-  }
-
   getProductsOnSale(): Observable<any> {
     return this.http
       .get<Product[]>(env.apiUrl + `product/sale`)
@@ -39,21 +31,40 @@ export class ApiService {
       .get<Product[]>(env.apiUrl + `product/top-rated`)
       .pipe(catchError((err) => this.handleError(err)));
   }
-
-  getRecentReviews(): Observable<any> {
-    return this.http
-      .get<Review[]>(env.apiUrl + `review/?recent=true`)
-      .pipe(catchError((err) => this.handleError(err)));
-  }
-
   getProduct(id: string): Observable<any> {
     return this.http
       .get<Product[]>(env.apiUrl + `product/${id}`)
       .pipe(catchError((err) => this.handleError(err)));
   }
-  getRelatedProducts(): Observable<any> {
+  getRelatedProducts(id: string): Observable<any> {
     return this.http
-      .get<Product[]>(env.apiUrl + `product/related`)
+      .get<Product[]>(env.apiUrl + `product/${id}/related`)
+      .pipe(catchError((err) => this.handleError(err)));
+  }
+  getProductsFiltered(data: any): Observable<any> {
+    const params = new URLSearchParams();
+    for (const [key, val] of Object.entries(data)) {
+      params.set(key, val as string);
+    }
+    return this.http
+      .get<any>(env.apiUrl + `product/?${params}`)
+      .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  getRecentReviews(): Observable<any> {
+    return this.http
+      .get<Review[]>(env.apiUrl + `review/recent`)
+      .pipe(catchError((err) => this.handleError(err)));
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.http
+      .get<Category[]>(env.apiUrl + `category/`)
+      .pipe(catchError((err) => this.handleError(err)));
+  }
+  getCategoriesBulk(): Observable<Category[]> {
+    return this.http
+      .get<Category[]>(env.apiUrl + `category/bulk`)
       .pipe(catchError((err) => this.handleError(err)));
   }
 
@@ -71,16 +82,6 @@ export class ApiService {
   submitOrder(order: any) {
     return this.http
       .post<any>(env.apiUrl + `orders`, order)
-      .pipe(catchError((err) => this.handleError(err)));
-  }
-
-  getProductsFiltered(data: any): Observable<any> {
-    const params = new URLSearchParams();
-    for (const [key, val] of Object.entries(data)) {
-      params.set(key, val as string);
-    }
-    return this.http
-      .get<any>(env.apiUrl + `product/?${params}`)
       .pipe(catchError((err) => this.handleError(err)));
   }
 

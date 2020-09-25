@@ -65,9 +65,9 @@
                                 name="quantity"
                                 class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
                         </div>
-                        <c-button addClass="btn-secondary h-12"
+                        <app-button addClass="btn-secondary h-12"
                             (click)="addToCart()"
-                            [disabled]="!addToCartQuantity">Add to cart</c-button>
+                            [disabled]="!addToCartQuantity">Add to cart</app-button>
                     </div>
                     <div class="border-t border-gray-300 pt-6"
                         *ngIf="product.categories?.length"><span>Category: </span><span
@@ -126,6 +126,7 @@
                                     placeholder="This product is..."
                                     label="Your review"
                                     cols="46"
+                                    el-id="reviewContent"
                                     rows="8"
                                     addClass="h-auto"></app-textarea>
                             </div>
@@ -134,6 +135,7 @@
                                     [validate]="validatorConfig['name']"
                                     [control]="authorName"
                                     placeholder="John Doe"
+                                    el-id="name"
                                     label="Your name"></app-input>
                             </div>
                             <div class="mb-4">
@@ -142,19 +144,20 @@
                                     [control]="authorEmail"
                                     label="Your email"
                                     placeholder="johndoe@example.com"
+                                    el-id="email"
                                     type="email"></app-input>
                             </div>
                             <div class="mt-8">
-                                <c-button [disabled]="reviewForm.invalid || !rating.value"
+                                <app-button [disabled]="reviewForm.invalid || !rating.value"
                                     #submitReviewBtn
                                     addClass="btn-primary"
-                                    type="submit">Submit</c-button>
+                                    type="submit">Submit</app-button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div>
+            <div *ngIf="relatedProducts.length">
                 <h1 class="mt-12 text-2xl font-thin mb-6">Related products</h1>
                 <app-product-grid [products]="relatedProducts"
                     [rating]="false"

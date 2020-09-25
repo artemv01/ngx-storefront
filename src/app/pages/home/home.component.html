@@ -11,7 +11,8 @@
         id="recentReviews">
         <h1 class="page-header">Recent reviews</h1>
 
-        <app-review-slider [reviews]="reviews"></app-review-slider>
+        <app-review-slider *ngIf="reviews.length"
+            [reviews]="reviews"></app-review-slider>
     </section>
 
 </main>

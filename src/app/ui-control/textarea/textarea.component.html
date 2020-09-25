@@ -1,6 +1,16 @@
-    <label *ngIf="label" class="mb-2 text-txDark block opacity-75" [for]="elId" [class.required]="required">{{label}}</label>
-    <div><textarea  [required]="required" class="form-input" [formControl]="control" [id]="elId" [placeholder]="placeholder" [class]="addClass" [cols]="cols" [rows]="rows"></textarea></div>
-    <div class="form-err-container"
+<label *ngIf="label"
+    class="mb-2 text-txDark block opacity-75"
+    [attr.for]="elId ? elId : null"
+    [class.required]="required">{{label}}</label>
+<div><textarea [required]="required"
+        class="form-input"
+        [formControl]="control"
+        [attr.id]="elId ? elId : null"
+        [placeholder]="placeholder"
+        [class]="addClass"
+        [cols]="cols"
+        [rows]="rows"></textarea></div>
+<div class="form-err-container"
     *ngIf="isValidate && control.invalid && (control.dirty || control.touched)">
     <ng-container *ngFor="let err of validate | keyvalue">
         <div *ngIf="control.errors[err.key]">{{err.value}}</div>

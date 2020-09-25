@@ -166,7 +166,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   };
   itemsTotal = 0;
 
-  selectedAction = 'Sort by popularity';
   actions = [
     'Sort by popularity',
     'Sort by rating',
@@ -199,9 +198,7 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.loading.forceHide();
       }
     });
-    this.api
-      .getCategories()
-      .subscribe((result) => (this.allCategories = result));
+
     this.search.searchInput.valueChanges
       .pipe(
         debounceTime(500),
