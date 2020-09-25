@@ -6,7 +6,8 @@
     <div class="flex flex-col xl:flex-row mt-12 xl:mt-20 ">
         <div class="w-full xl:w-9/12">
             <div class="flex flex-col lg:flex-row">
-                <div class="mb-6 lg:hidden">
+                <div class="mb-6 lg:hidden"
+                    *ngIf="product.onSale">
                     <app-sale-label></app-sale-label>
                 </div>
                 <div class="rounded mb-6 lg:w-2/5 zoomImg bg-no-repeat"
@@ -26,7 +27,8 @@
                         style="font-size:36px; top:12px; right:12px; position:absolute">zoom_in</i>
                 </div>
                 <div class="product-desc lg:pl-12 lg:w-3/5">
-                    <div class="mb-4 hidden lg:block"
+                    <div *ngIf="product.onSale"
+                        class="mb-4 hidden lg:block"
                         style="margin-top:2px;">
                         <app-sale-label></app-sale-label>
                     </div>
@@ -77,7 +79,7 @@
                 </div>
 
             </div>
-            <div class="flex flex-col md:flex-row md:flex-no-wrap mt-12"
+            <div class="flex flex-col md:flex-row md:flex-no-wrap mt-12 mb-12"
                 #reviews>
                 <div class="w-full hidden xl:block xl:w-2/5">
                     <!-- <div class="product-dets  py-6 border-t border-b order-gray-400">Additional

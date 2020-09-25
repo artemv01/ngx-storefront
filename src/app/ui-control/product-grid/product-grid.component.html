@@ -23,7 +23,8 @@
                     *ngIf="product.rating">
                     <app-star-rating [rating]="product.rating"></app-star-rating>
                 </div>
-                <div class="text-center flex justify-center mb-4">
+                <div *ngIf="product.onSale"
+                    class="text-center flex justify-center mb-4">
                     <app-sale-label></app-sale-label>
                 </div>
                 <div class="w-full flex justify-center">
