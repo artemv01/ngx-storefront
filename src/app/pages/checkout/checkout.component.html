@@ -1,4 +1,5 @@
-<main class="container mt-16 mb-16 flex-grow">
+<main class="container mt-16 mb-16 flex-grow"
+    #topEl>
     <!-- <div class="h-16 flex mb-12">
         <div class="w-3 bg-bgAlertInfoDark h-full rounded-l"></div>
         <div class="h-full flex-grow bg-bgAlertInfo p-8 text-white rounded-r items-center flex">Have a coupon? <a
@@ -159,7 +160,6 @@
                     <app-button class="w-full"
                         #submitBtn
                         addClass="h-16 w-full btn-secondary font-bold text-2xl block"
-                        [disabled]="addressForm.invalid"
                         type="submit">Place
                         order</app-button>
                 </div>

@@ -1,10 +1,10 @@
 <div id="reviewCarousel">
     <div class="slide-nav">
-        <div class='nav-btn next-slide mr-2 cursor-pointer'
+        <div class='nav-btn next-slide mr-2 cursor-pointer select-none'
             #slideNavPrev>
             <i class="material-icons">keyboard_arrow_left</i>
         </div>
-        <div class='nav-btn next-slide cursor-pointer'
+        <div class='nav-btn next-slide cursor-pointer select-none'
             #slideNavNext>
             <i class="material-icons">keyboard_arrow_right</i>
         </div>
@@ -14,10 +14,14 @@
         [config]="slideConfig">
         <div class="slide"
             ngxSlickItem
-            *ngFor="let review of reviews">
+            *ngFor="let review of reviews$ | async">
             <div class="pl-8">
-                <app-star-rating [rating]="review.rating"></app-star-rating>
-                <div class="mb-8"><span class="font-bold">{{review.productName}}</span>
+                <div *ngIf="review.rating"
+                    class="mb-4">
+                    <app-star-rating [rating]="review.rating"></app-star-rating>
+                </div>
+                <div class="mb-8"><span [routerLink]="['/product', review.productId]"
+                        class="font-semibold text-txDark tracking-wide  hover:cursor-pointer hover:underline">{{review.productName}}</span>
                 </div>
                 <div class="mb-6">{{review.content}}</div>
             </div>

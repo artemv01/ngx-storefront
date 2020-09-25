@@ -19,6 +19,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class CheckoutComponent implements OnInit {
   @ViewChild('submitBtn', { read: ElementRef }) submitBtn: ElementRef;
+  @ViewChild('topEl', { read: ElementRef }) topEl: ElementRef;
 
   formSubmitted = false;
 
@@ -100,14 +101,17 @@ export class CheckoutComponent implements OnInit {
   placesConfigs: Record<string, ReconfigurableOptions> = {
     country: {
       type: 'country',
+      language: 'en',
     },
 
     address: {
       type: 'address',
+      language: 'en',
     },
 
     city: {
       type: 'city',
+      language: 'en',
     },
   };
 
@@ -118,6 +122,14 @@ export class CheckoutComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {}
+
+  scrollTo($el) {
+    $el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
 
   submitOrder() {
     (this.submitBtn.nativeElement as HTMLElement).classList.add('loading');
@@ -138,6 +150,7 @@ export class CheckoutComponent implements OnInit {
         (this.submitBtn.nativeElement as HTMLElement).classList.remove(
           'loading'
         );
+        this.scrollTo(this.topEl.nativeElement);
       });
   }
 }

@@ -14,7 +14,8 @@ import { Review } from '@app/type/review';
   styleUrls: ['./review-slider.component.scss'],
 })
 export class ReviewSliderComponent implements OnInit, AfterViewInit {
-  @Input('reviews') reviews: Review[] = [];
+  @Input('reviews$') reviews$: Review[] = [];
+
   @ViewChild('slideNavPrev') slideNavPrev: ElementRef;
   @ViewChild('slideNavNext') slideNavNext: ElementRef;
   slideConfig = {};
@@ -28,7 +29,8 @@ export class ReviewSliderComponent implements OnInit, AfterViewInit {
       slidesToScroll: 1,
       nextArrow: this.slideNavNext.nativeElement,
       prevArrow: this.slideNavPrev.nativeElement,
-      infinite: false,
+      infinite: true,
+      adaptiveHeight: true,
     };
   }
 }
