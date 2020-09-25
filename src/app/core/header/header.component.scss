@@ -69,77 +69,21 @@ header {
     margin-bottom: 1.5rem;
     transition: max-height 0.25s ease-in;
 }
-/* .bottom-bar {
-    margin-top: 2rem;
-    @include display-md(flex);
-    .category-list-desktop {
-        display: flex;
-        flex-flow: row wrap;
-        margin: 0;
-        // max-width: calc(100% - 250px);
-        li {
-            font-weight: 300;
-            color: var(--txSecondary);
-            padding: 1rem;
-            cursor: pointer;
-        }
-        li:first-child {
-            padding-left: 0;
-        }
-        li:hover {
-            color: var(--bgPrimary);
-        }
-    }
-    i:hover {
-        color: var(--txPrimary);
-        cursor: pointer;
-    }
 
-    .cart-info {
-        position: relative;
-        padding-top: 1rem;
-        padding-bottom: 25px;
-        .price {
-            margin-right: 0.5rem;
-        }
-        .cart-content {
-            display: none;
-            width: 100%;
-            background-color: #1d1e24;
-            position: absolute;
-            top: 100%;
-        }
-        .cart-items {
-            padding: 1rem;
-            .cart-item {
-                font-size: 0.875rem;
-                width: 100%;
-                margin-bottom: 1.5rem;
-                i {
-                    font-size: 14px;
-                    color: var(--txInfo);
-                }
-                .desc {
-                    min-width: calc(100% - 56px);
-                    padding-left: 0.5rem;
-                    padding-right: 0.5rem;
-                }
-                img {
-                    width: rem(40px);
-                    border-radius: 4px;
-                }
-            }
-        }
-        .cart-footer {
-            background: #222329;
-        }
-    }
-    .cart-info:hover {
-        .cart-content {
-            display: block;
-        }
-    }
-} */
+.cart-product-number {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    background: red;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: white;
+    bottom: 4px;
+    right: -12px;
+}
 
 #burgerIcon {
     width: 40px;

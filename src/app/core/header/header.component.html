@@ -31,9 +31,11 @@
                         placeholder="Search products">
                     <app-icon>search</app-icon>
                 </form>
-                <div class="flex items-center">
+                <div class="flex items-center relative">
                     <app-icon size='sm'
                         [routerLink]="['/cart']">shopping_cart</app-icon>
+                    <div *ngIf="cart.totalQuantity"
+                        class="cart-product-number">{{cart.totalQuantity}}</div>
                 </div>
             </div>
         </div>
