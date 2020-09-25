@@ -30,3 +30,13 @@
         background-color: transparent !important;
     }
 }
+ul.pagination li {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i.material-icons {
+        font-size: 20px;
+    }
+}

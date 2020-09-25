@@ -34,7 +34,6 @@
               "src/styles.scss",
               "src/styles/support.scss",
               "src/styles/base.scss",
-              "src/styles/components.scss",
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
@@ -110,8 +109,7 @@
               "src/styles.scss",
               "src/styles/support.scss",
               "src/styles/base.scss",
-              "src/styles/components.scss",
-              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick.min.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss"
             ],
             "scripts": [

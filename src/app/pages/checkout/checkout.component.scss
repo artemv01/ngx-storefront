@@ -1,0 +1,17 @@
+.checkout-form .countries {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background-color: white !important;
+    color: var(--txDark);
+    li {
+        border: 1px solid transparent;
+
+        box-sizing: border-box;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+    li:hover {
+        border: 1px solid var(--bgPrimary);
+    }
+}

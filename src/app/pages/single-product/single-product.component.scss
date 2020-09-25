@@ -31,3 +31,12 @@
         cursor: zoom-in;
     }
 }
+.product-dets.active {
+    border-bottom: 2px solid var(--bgPrimary);
+    border-top: 2px solid var(--bgPrimary);
+}
+.product-attributes {
+    .attr-val {
+        background-color: #fdfdfd;
+    }
+}

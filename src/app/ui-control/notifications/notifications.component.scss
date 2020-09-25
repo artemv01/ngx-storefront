@@ -29,9 +29,28 @@
     right: 1.5rem;
     top: 1.5rem;
     z-index: 500;
-    .notification {
-        // position: absolute;
-        // width: 100%;
-        // right: -40rem;
+}
+.close-btn {
+    top: 7px;
+    right: 14px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    .arr1 {
+        height: 15px;
+        width: 1px;
+        margin-left: 12px;
+        background-color: #fff;
+        transform: rotate(45deg);
+        z-index: 1;
+    }
+
+    .arr2 {
+        height: 15px;
+        width: 1px;
+        background-color: #fff;
+        transform: rotate(90deg);
+        z-index: 2;
     }
 }
