@@ -22,8 +22,10 @@
         transform: rotate(360deg);
     }
 }
+/* purgecss start ignore */
 :host.loading {
     .btn-loading {
         display: inline-block;
     }
 }
+/* purgecss end ignore */

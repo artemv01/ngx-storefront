@@ -20,7 +20,7 @@
         height: 2.5rem;
     }
 }
-
+/* purgecss start ignore */
 :host {
     height: 2.5rem;
 }
@@ -30,3 +30,4 @@
         color: #ccc;
     }
 }
+/* purgecss end ignore */

@@ -3,7 +3,9 @@ i.material-icons {
     -webkit-touch-callout: none;
     user-select: none;
 }
+/* purgecss start ignore */
 :host {
     display: flex;
     align-items: center;
 }
+/* purgecss end ignore */

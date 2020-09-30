@@ -22,6 +22,7 @@
         }
     }
 }
+/* purgecss start ignore */
 :host([disabled='true']) {
     .pagination-item {
         color: #ccc !important;
@@ -30,6 +31,7 @@
         background-color: transparent !important;
     }
 }
+/* purgecss end ignore */
 ul.pagination li {
     width: 2.25rem;
     height: 2.25rem;
