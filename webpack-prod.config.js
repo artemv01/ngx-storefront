@@ -1,4 +1,5 @@
 const purgecss = require('@fullhuman/postcss-purgecss');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   module: {
@@ -24,9 +25,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new Dotenv()
+
+  ],
 };
-  // purgecss({
-  //             content:  ['./**/*.html', './**/*.ts', './**/*.scss'], 
-  //             defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-  //           })
+ 
