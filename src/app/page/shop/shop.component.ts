@@ -166,6 +166,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   };
   itemsTotal = 0;
 
+  selSortType = 'Sort by popularity';
   actions = [
     'Sort by popularity',
     'Sort by rating',

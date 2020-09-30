@@ -68,7 +68,7 @@
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
-                            [ngModel]="actions[0]"
+                            [(ngModel)]="selSortType"
                             #selectAction
                             [options]="actions"
                             [addClass]="'z-50'"
@@ -91,7 +91,7 @@
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
-                            [ngModel]="actions[0]"
+                            [(ngModel)]="selSortType"
                             #selectAction
                             [options]="actions"
                             [addClass]="'z-50'"
