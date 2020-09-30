@@ -38,15 +38,7 @@ header {
     }
 }
 .search-input {
-    width: 100%;
-    background: transparent;
-    border-top: 4px solid var(--txPrimary);
-    border-radius: 0;
     padding: 0.5rem 2rem;
-    &::placeholder {
-        color: var(--txPrimary);
-        opacity: 0.5;
-    }
     i {
         opacity: 0.5;
     }
