@@ -10,7 +10,7 @@
                     *ngIf="product.onSale">
                     <app-sale-label></app-sale-label>
                 </div>
-                <div class="rounded mb-6 lg:w-2/5 zoomImg bg-no-repeat"
+                <div class="rounded mb-6 lg:mb-0 lg:w-2/5 zoomImg bg-no-repeat"
                     [class.is-image]="product.image"
                     (mousemove)="zoomImage($event)"
                     [style.background-image]="product.image ? 'url(' + product.image + ')' : ''">
