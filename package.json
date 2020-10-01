@@ -26,6 +26,7 @@
     "jquery": "^3.5.1",
     "material-design-icons": "^3.0.1",
     "module-alias": "^2.2.2",
+    "ng-recaptcha": "^6.0.2",
     "ngx-slick-carousel": "^0.5.1",
     "places.js": "^1.19.0",
     "rxjs": "~6.6.3",

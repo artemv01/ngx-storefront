@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Attribute } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -7,18 +7,21 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./textarea.component.scss'],
 })
 export class TextareaComponent implements OnInit {
-  @Input('cols') cols = 45;
-  @Input('rows') rows = 8;
-  @Input('label') label = '';
   @Input('addClass') addClass = '';
   @Input('control') control: FormControl;
   @Input('validate') validate: Record<any, string> = {};
-  @Input('placeholder') placeholder = '';
-  @Input('required') required: boolean;
-  @Input('el-id') elId = '';
 
   isValidate: boolean;
-  constructor() {}
+  constructor(
+    @Attribute('required') public required,
+    @Attribute('_id') public id,
+    @Attribute('label') public label = '',
+    @Attribute('placeholder') public placeholder = '',
+    @Attribute('type') public type = 'text',
+    @Attribute('rows') public rows = 8,
+    @Attribute('cols') public cols = 45,
+    @Attribute('name') public name
+  ) {}
 
   ngOnInit(): void {
     this.control = this.control ?? new FormControl('');

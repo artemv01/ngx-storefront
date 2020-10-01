@@ -5,10 +5,11 @@
 <div><textarea [required]="required"
         class="form-input"
         [formControl]="control"
-        [attr.id]="elId ? elId : null"
+        [attr.id]="id ? id : null"
         [placeholder]="placeholder"
         [class]="addClass"
         [cols]="cols"
+        [name]="name"
         [rows]="rows"></textarea></div>
 <div class="form-err-container"
     *ngIf="isValidate && control.invalid && (control.dirty || control.touched)">

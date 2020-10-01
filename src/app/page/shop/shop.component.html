@@ -64,7 +64,7 @@
                 <!-- [hidden]="!products?.length || searchLoading" -->
                 <div *ngIf="products?.length && !searchLoading">
                     <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                        <app-select-input [attr.disabled]="itemsLoading"
+                        <app-select [attr.disabled]="itemsLoading"
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
@@ -72,7 +72,7 @@
                             #selectAction
                             [options]="actions"
                             [addClass]="'z-50'"
-                            [addClassWrapper]="' mr-4'"></app-select-input>
+                            [addClassWrapper]="' mr-4'"></app-select>
                         <ng-container *ngIf="showPagination">
                             <div
                                 class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
@@ -87,7 +87,7 @@
                     </div>
                     <app-product-grid [products]="products"></app-product-grid>
                     <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                        <app-select-input [attr.disabled]="searchLoading"
+                        <app-select [attr.disabled]="searchLoading"
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
@@ -95,7 +95,7 @@
                             #selectAction
                             [options]="actions"
                             [addClass]="'z-50'"
-                            [addClassWrapper]="' mr-4'"></app-select-input>
+                            [addClassWrapper]="' mr-4'"></app-select>
                         <ng-container *ngIf="showPagination">
                             <div
                                 class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">

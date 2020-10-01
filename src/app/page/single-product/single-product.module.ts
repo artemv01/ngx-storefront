@@ -5,6 +5,7 @@ import { UiControlModule } from '@app/ui-control/ui-control.module';
 import { SingleProductRoutingModule } from './single-product-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [SingleProductComponent],
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    RecaptchaModule,
   ],
 })
 export class SingleProductModule {}

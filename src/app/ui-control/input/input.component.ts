@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
+  Attribute,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import places, { ReconfigurableOptions, StaticOptions } from 'places.js';
@@ -15,24 +16,27 @@ import places, { ReconfigurableOptions, StaticOptions } from 'places.js';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent implements OnInit, AfterViewInit {
-  @Input('type') type = 'text';
   @Input('addClass') addClass = '';
-  @Input('label') label = '';
-  @Input('placeholder') placeholder = '';
   @Input('control') control: FormControl;
-  @Input('required') required: boolean;
   @Input('validate') validate: Record<any, string> = {};
   @ViewChild('inputEl') inputEl: ElementRef;
   @Input('placesConfig') placesConfig: ReconfigurableOptions;
   @Input('noSpin') noSpin = undefined;
-  @Input('el-id') elId = '';
 
   isValidate: boolean;
   pattern: string = '';
+  isRequired = false;
   additClass = {
     'form-input': true,
   };
-  constructor() {}
+  constructor(
+    @Attribute('required') public required,
+    @Attribute('_id') public id,
+    @Attribute('label') public label = '',
+    @Attribute('placeholder') public placeholder = '',
+    @Attribute('type') public type = 'text',
+    @Attribute('name') public name
+  ) {}
 
   ngOnInit(): void {
     this.control = this.control ?? new FormControl('');

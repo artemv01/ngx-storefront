@@ -1,15 +1,16 @@
 <label *ngIf="label"
-    [for]="elId"
+    [for]="id"
     class="mb-2 text-txDark block opacity-75"
-    [class.required]="required">{{label}}</label>
+    [class.required]="required != null">{{label}}</label>
 <div><input #inputEl
         [type]="type"
         [required]="required"
         [formControl]="control"
         [placeholder]="placeholder"
         [class]="additClass"
+        [name]="name"
         [pattern]="pattern ? pattern : ''"
-        [attr.id]="elId ? elId : null"></div>
+        [attr.id]="id ? id : null"></div>
 <div class="form-err-container"
     *ngIf="isValidate && control.invalid && (control.dirty || control.touched)">
     <ng-container *ngFor="let err of validate | keyvalue">

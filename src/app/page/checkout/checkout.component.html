@@ -27,13 +27,15 @@
                             [control]="firstName"
                             label="First name"
                             placeholder="John"
-                            el-id="first_name"
+                            _id="first_name"
+                            name="first_name"
                             [validate]="validate.firstName"></app-input>
                     </div>
                     <div class="md:pl-12 flex-1">
                         <app-input required
                             [control]="lastName"
-                            el-id="last_name"
+                            _id="last_name"
+                            name="last_name"
                             label="Last name"
                             placeholder="Doe"
                             [validate]="validate.lastName"></app-input>
@@ -44,27 +46,31 @@
                         [control]="country"
                         [placesConfig]="placesConfigs.country"
                         label="Country"
-                        el-id="country"
+                        _id="country"
+                        name="country"
                         placeholder="Your country"
                         [validate]="validate.country"></app-input>
                 </div>
                 <div class="mb-6">
-                    <label for=""
-                        class="mb-2 text-txDark block">Street address</label>
                     <app-input required
                         [control]="addressLine1"
-                        el-id="address_line1"
+                        _id="address_line1"
+                        name="address_line1"
                         [placesConfig]="placesConfigs.address"
+                        label="Street address"
                         placeholder="House number and street name"
                         [validate]="validate.addressLine1"></app-input>
-                    <app-input addClass="mt-4"
-                        [control]="addressLine2"
+                </div>
+                <div class="mb-6">
+                    <app-input [control]="addressLine2"
+                        label="Additional address"
                         placeholder="Apartment, suite, unit etc. (optional)"></app-input>
                 </div>
                 <div class="mb-6">
                     <app-input [control]="city"
                         required
-                        el-id="address_line2"
+                        _id="address_line2"
+                        name="address_line2"
                         label="Town / City"
                         placeholder="Town / City"
                         [placesConfig]="placesConfigs.city"
@@ -74,14 +80,16 @@
                 <div class="mb-6">
                     <app-input [control]="state"
                         placeholder="State"
-                        el-id="state"
+                        _id="state"
+                        name="state"
                         label="State"></app-input>
 
                 </div>
                 <div class="mb-6">
                     <app-input [control]="zip"
                         required
-                        el-id="zip"
+                        _id="zip"
+                        name="zip"
                         type="number"
                         noSpin
                         label="Postcode / ZIP"
@@ -94,7 +102,8 @@
                             required
                             label="Phone"
                             type="number"
-                            el-id="phone"
+                            _id="phone"
+                            name="phone"
                             noSpin
                             placeholder="Phone"
                             [validate]="validate.phone"></app-input>
@@ -104,20 +113,28 @@
                             required
                             label="Email"
                             type="email"
-                            el-id="email"
+                            _id="email"
+                            name="email"
                             placeholder="Email"
                             [validate]="validate.email"></app-input>
 
                     </div>
                 </div>
-                <div class="mb-6">
+                <div class="mb-8">
                     <app-textarea label="Additional information"
                         cols="2"
                         rows="5"
                         [control]="notes"
                         placeholder="Notes about your order"
-                        el-id="notes"
+                        _id="notes"
+                        name="notes"
                         addClass="form-input h-auto"></app-textarea>
+                </div>
+                <div class="mb-6">
+                    <re-captcha required
+                        #reCaptcha
+                        (resolved)="captchaEvent($event)"
+                        siteKey="6Lc5YtIZAAAAACEuyyZLoR_SgvwT5jUseYGt3Vdy"></re-captcha>
                 </div>
             </div>
             <div class="xl:w-1/2 xl:pl-12">
@@ -160,6 +177,8 @@
                     <app-button class="w-full"
                         #submitBtn
                         addClass="h-16 w-full btn-secondary font-bold text-2xl block"
+                        [disabled]="addressForm.invalid || !captchaToken || postOrderLoading"
+                        [class.loading]="postOrderLoading"
                         type="submit">Place
                         order</app-button>
                 </div>

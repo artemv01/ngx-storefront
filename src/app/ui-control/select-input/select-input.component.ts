@@ -19,7 +19,7 @@ const RATE_ITEM_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'app-select-input',
+  selector: 'app-select',
   templateUrl: './select-input.component.html',
   styleUrls: ['./select-input.component.scss'],
   host: {

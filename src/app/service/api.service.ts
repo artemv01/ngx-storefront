@@ -81,7 +81,7 @@ export class ApiService {
 
   submitOrder(order: any) {
     return this.http
-      .post<any>(env.apiUrl + `orders`, order)
+      .post<any>(env.apiUrl + `order`, order)
       .pipe(catchError((err) => this.handleError(err)));
   }
 

@@ -5,6 +5,7 @@ import { CartService } from '@app/service/cart.service';
 import { ApiService } from '@app/service/api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TitleService } from '@app/service/title.service';
+import { RecaptchaComponent } from 'ng-recaptcha';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -21,8 +22,12 @@ import { TitleService } from '@app/service/title.service';
 export class CheckoutComponent implements OnInit {
   @ViewChild('submitBtn', { read: ElementRef }) submitBtn: ElementRef;
   @ViewChild('topEl', { read: ElementRef }) topEl: ElementRef;
+  @ViewChild('reCaptcha', { read: RecaptchaComponent }) reCaptcha;
 
   formSubmitted = false;
+  captchaToken = '';
+
+  postOrderLoading: boolean;
 
   addressForm = this.fb.group({
     first_name: ['', [Validators.required]],
@@ -135,8 +140,12 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  captchaEvent(result: string) {
+    this.captchaToken = result;
+  }
+
   submitOrder() {
-    (this.submitBtn.nativeElement as HTMLElement).classList.add('loading');
+    this.postOrderLoading = true;
     const { notes, ...address } = this.addressForm.value;
     const billingAddress = address;
     const shippingAddress = address;
@@ -147,13 +156,15 @@ export class CheckoutComponent implements OnInit {
         shippingAddress,
         notes,
         cart,
+        captcha: this.captchaToken,
       })
       .subscribe((result) => {
         this.cart.clean();
         this.formSubmitted = true;
-        (this.submitBtn.nativeElement as HTMLElement).classList.remove(
-          'loading'
-        );
+
+        this.postOrderLoading = true;
+
+        this.reCaptcha.reset();
         this.scrollTo(this.topEl.nativeElement);
       });
   }

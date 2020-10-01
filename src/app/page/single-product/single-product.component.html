@@ -122,35 +122,47 @@
                                     ngDefaultControl></app-rate-item>
                             </div>
                             <div class="mb-4">
-                                <app-textarea [required]="true"
+                                <app-textarea required
                                     [validate]="validatorConfig['content']"
                                     [control]="content"
                                     placeholder="This product is..."
                                     label="Your review"
                                     cols="46"
-                                    el-id="reviewContent"
+                                    _id="reviewContent"
+                                    name="reviewContent"
                                     rows="8"
                                     addClass="h-auto"></app-textarea>
                             </div>
                             <div class="mb-4">
-                                <app-input [required]="true"
+                                <app-input required
+                                    id="name"
                                     [validate]="validatorConfig['name']"
                                     [control]="authorName"
                                     placeholder="John Doe"
-                                    el-id="name"
+                                    _id="name"
+                                    name="name"
                                     label="Your name"></app-input>
                             </div>
-                            <div class="mb-4">
-                                <app-input [required]="true"
+                            <div class="mb-8">
+                                <app-input required
                                     [validate]="validatorConfig['email']"
                                     [control]="authorEmail"
                                     label="Your email"
                                     placeholder="johndoe@example.com"
-                                    el-id="email"
+                                    _id="email"
+                                    name="email"
                                     type="email"></app-input>
                             </div>
-                            <div class="mt-8">
-                                <app-button [disabled]="reviewForm.invalid || !rating.value"
+                            <div class="mb-8">
+                                <re-captcha required
+                                    #reCaptcha
+                                    (resolved)="captchaEvent($event)"
+                                    siteKey="6Lc5YtIZAAAAACEuyyZLoR_SgvwT5jUseYGt3Vdy"></re-captcha>
+                            </div>
+                            <div class="">
+                                <app-button
+                                    [disabled]="reviewForm.invalid || !rating.value || !captchaToken || postReviewLoading"
+                                    [class.loading]="postReviewLoading"
                                     #submitReviewBtn
                                     addClass="btn-primary"
                                     type="submit">Submit</app-button>

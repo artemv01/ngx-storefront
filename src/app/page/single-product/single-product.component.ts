@@ -9,9 +9,9 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, exhaustMap, mergeMap, delay } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
+
 import { ApiService } from '@app/service/api.service';
 import { Product } from '@app/type/product';
-
 import { CartService } from '@app/service/cart.service';
 import { environment } from '@root/environments/environment';
 import { Category } from '@app/type/category';
@@ -23,6 +23,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Breadcrumbs } from '@app/type/breadcrumbs';
 import { Notification } from '@app/type/notification';
 import { TitleService } from '@app/service/title.service';
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-single-product',
@@ -32,6 +33,7 @@ import { TitleService } from '@app/service/title.service';
 export class SingleProductComponent
   implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('submitReviewBtn', { read: ElementRef }) submitReviewBtn;
+  @ViewChild('reCaptcha', { read: RecaptchaComponent }) reCaptcha;
   breadcrumbs: Breadcrumbs[] = [];
   destroy: Subject<null> = new Subject();
   productId: string;
@@ -40,8 +42,11 @@ export class SingleProductComponent
   allCategories: Category[] = [];
   isReviewSubmitted: boolean = false;
 
+  postReviewLoading = false;
+
   addToCartQuantity = 1;
 
+  captchaToken = '';
   reviewForm = this.fb.group({
     authorName: ['', [Validators.required]],
     authorEmail: ['', [Validators.required, Validators.email]],
@@ -118,12 +123,11 @@ export class SingleProductComponent
   //   }
 
   submitReview() {
-    (this.submitReviewBtn.nativeElement as HTMLElement).classList.add(
-      'loading'
-    );
+    this.postReviewLoading = true;
     const reviewData = {
       ...this.reviewForm.value,
       productId: this.productId,
+      captcha: this.captchaToken,
     };
     this.api
       .submitReview(reviewData)
@@ -135,9 +139,8 @@ export class SingleProductComponent
         this.product.ratingCount = result.ratingCount;
         this.product.rating = result.rating;
         this.notify.push({ message: 'Your review has been submitted!' });
-        (this.submitReviewBtn.nativeElement as HTMLElement).classList.remove(
-          'loading'
-        );
+        this.reCaptcha.reset();
+        this.postReviewLoading = false;
       });
   }
 
@@ -191,6 +194,11 @@ export class SingleProductComponent
     const x = (offsetX / zoomer.offsetWidth) * 100;
     const y = (offsetY / zoomer.offsetHeight) * 100;
     zoomer.style.backgroundPosition = x + '% ' + y + '%';
+  }
+
+  captchaEvent(result: string) {
+    console.log(result);
+    this.captchaToken = result;
   }
 
   scrollTo($el) {

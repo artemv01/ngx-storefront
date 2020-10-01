@@ -10,7 +10,7 @@
                 <h1 class="page-header mb-12">Products in {{categoryName}}
                 </h1>
                 <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                    <app-select-input [attr.disabled]="itemsLoading"
+                    <app-select [attr.disabled]="itemsLoading"
                         ngDefaultControl
                         name='selectAction'
                         (change)="sort($event)"
@@ -18,7 +18,7 @@
                         #selectAction
                         [options]="actions"
                         [addClass]="'z-50'"
-                        [addClassWrapper]="' mr-4'"></app-select-input>
+                        [addClassWrapper]="' mr-4'"></app-select>
                     <ng-container *ngIf="showPagination">
                         <div class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                             Total
@@ -52,7 +52,7 @@
                 </div>
                 <div
                     class="flex items-start flex-col mb-8 md:flex-row md:flex-no-wrap md:items-center">
-                    <app-select-input [attr.disabled]="itemsLoading"
+                    <app-select [attr.disabled]="itemsLoading"
                         ngDefaultControl
                         name='selectAction'
                         (change)="sort($event)"
@@ -60,7 +60,7 @@
                         #selectAction
                         [options]="actions"
                         [addClass]="'z-50'"
-                        [addClassWrapper]="' mr-4'"></app-select-input>
+                        [addClassWrapper]="' mr-4'"></app-select>
                     <ng-container *ngIf="showPagination">
                         <div class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                             Total
