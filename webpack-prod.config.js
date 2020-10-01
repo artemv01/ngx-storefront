@@ -26,9 +26,9 @@ module.exports = {
       }
     ]
   },
-  plugins: [
+  /* plugins: [
     new Dotenv()
 
-  ],
+  ], */
 };
  
