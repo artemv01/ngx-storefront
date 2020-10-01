@@ -6,6 +6,7 @@ declare var process: NodeJS.Process;
 export const environment = {
   production: false,
   apiUrl: process.env.API_URL_TESTING,
+  recaptchaKey: process.env.RECAPTCHA_SITE_KEY,
 };
 /*
  * For easier debugging in development mode, you can import the following file

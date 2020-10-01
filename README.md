@@ -36,8 +36,8 @@ Integration/unit tests were omitted so far and might be implemented in the futur
 ### Launch the REST API
 
 ```
-git clone https://github.com/artemv01/ngx-storefront-backend.git
-cd ngx-storefront-backend
+git clone https://github.com/artemv01/ngx-storefront-api.git
+cd ngx-storefront-api
 cp .env.example .env
 # Open .env with your favorite  text editor (in this example vim)
 # Set the required params as per the documentation in .env file

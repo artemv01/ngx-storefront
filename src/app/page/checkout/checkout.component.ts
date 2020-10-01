@@ -6,6 +6,7 @@ import { ApiService } from '@app/service/api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TitleService } from '@app/service/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { environment } from '@root/environments/environment';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -20,6 +21,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
   ],
 })
 export class CheckoutComponent implements OnInit {
+  environment = environment;
   @ViewChild('submitBtn', { read: ElementRef }) submitBtn: ElementRef;
   @ViewChild('topEl', { read: ElementRef }) topEl: ElementRef;
   @ViewChild('reCaptcha', { read: RecaptchaComponent }) reCaptcha;

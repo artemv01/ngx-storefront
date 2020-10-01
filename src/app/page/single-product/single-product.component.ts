@@ -32,6 +32,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 })
 export class SingleProductComponent
   implements OnInit, OnDestroy, AfterViewInit {
+  environment = environment;
   @ViewChild('submitReviewBtn', { read: ElementRef }) submitReviewBtn;
   @ViewChild('reCaptcha', { read: RecaptchaComponent }) reCaptcha;
   breadcrumbs: Breadcrumbs[] = [];

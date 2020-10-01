@@ -157,7 +157,7 @@
                                 <re-captcha required
                                     #reCaptcha
                                     (resolved)="captchaEvent($event)"
-                                    siteKey="6Lc5YtIZAAAAACEuyyZLoR_SgvwT5jUseYGt3Vdy"></re-captcha>
+                                    [siteKey]="environment.recaptchaKey"></re-captcha>
                             </div>
                             <div class="">
                                 <app-button
