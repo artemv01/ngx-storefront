@@ -17,15 +17,21 @@ export class NotificationService {
       data.message = '';
     }
     const key = new Date().getTime();
-    this.notifications[key] = data;
-    console.log(this.notifications);
+    this.notifications[key] = { ...data, key: key };
     this.emitter$.next(Object.values(this.notifications));
     setInterval(() => {
       delete this.notifications[key];
       this.emitter$.next(Object.values(this.notifications));
     }, 2500);
   }
+
+  close(key: number) {
+    delete this.notifications[key];
+    this.emitter$.next(Object.values(this.notifications));
+  }
+
   dismissAll() {
-    this.dismiss.next(null);
+    this.notifications = {};
+    this.emitter$.next([]);
   }
 }

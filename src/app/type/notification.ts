@@ -3,4 +3,5 @@ export interface Notification {
   message?: string;
   show?: boolean;
   showMessage?: 'addToCartSuccess';
+  key?: number;
 }

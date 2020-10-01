@@ -53,4 +53,5 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy.next(null);
   }
+  close(key: string) {}
 }
