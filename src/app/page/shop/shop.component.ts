@@ -1,10 +1,8 @@
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil, tap, delay } from 'rxjs/operators';
 
 import {
   animate,
-  animateChild,
-  group,
   query,
   state,
   style,
@@ -18,14 +16,12 @@ import { LoadingService } from '@app/service/loading.service';
 import { SearchService } from '@app/service/search.service';
 import { Category } from '@app/type/category';
 import { PaginationParams } from '@app/type/pagination-params';
-import { Product } from '@app/type/product';
 import { ProductFilterQuery } from '@app/type/product-filter-query';
 import {
   NavigationStart,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
   Router,
-  RouterOutlet,
 } from '@angular/router';
 import { NotificationService } from '@app/service/notification.service';
 
@@ -35,46 +31,6 @@ import { NotificationService } from '@app/service/notification.service';
   styleUrls: ['./shop.component.scss'],
 
   animations: [
-    trigger('routerTransition', [
-      transition('* => *', [
-        query(
-          ':enter, :leave',
-          style({ position: 'fixed', width: '100%', height: '100%' })
-        ),
-        query(':enter', style({ transform: 'translateX(100%)' })),
-
-        group([
-          query(':leave', [
-            style({ transform: 'translateX(0%)' }),
-            animate(
-              '1.0s ease-in-out',
-              style({ transform: 'translateX(-100%)' })
-            ),
-          ]),
-          query(':enter', [
-            animate('1.0s ease-in-out', style({ transform: 'translateX(0%)' })),
-            animateChild(),
-          ]),
-        ]),
-      ]),
-    ]),
-    trigger('fadeAnimation', [
-      transition('* => *', [
-        query(':enter', [style({ opacity: 0 })], { optional: true }),
-
-        query(
-          ':leave',
-          [style({ opacity: 1 }), animate('0.5s', style({ opacity: 0 }))],
-          { optional: true }
-        ),
-
-        query(
-          ':enter',
-          [style({ opacity: 0 }), animate('0.5s', style({ opacity: 1 }))],
-          { optional: true }
-        ),
-      ]),
-    ]),
     trigger('routeAnimation', [
       transition('* => *', [
         style({ position: 'relative', height: '100vh', overflow: 'hidden' }),
@@ -133,13 +89,6 @@ import { NotificationService } from '@app/service/notification.service';
       transition(':enter', [style({ opacity: 0 }), animate(200)]),
 
       transition(':leave', animate(200, style({ opacity: 0 }))),
-    ]),
-    trigger('loadingScreen', [
-      state('in', style({ opacity: 1 })),
-
-      //   transition(':enter', [style({ opacity: 0 }), animate(600)]),
-
-      transition(':leave', animate(500, style({ opacity: 0 }))),
     ]),
   ],
 })

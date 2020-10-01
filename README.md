@@ -1,20 +1,23 @@
-# An ecommerce system built on Angular & NestJS & TailwindCSS (the Customer Interface part)
+# An ecommerce system built on Angular & NestJS & TailwindCSS (the Customer UI part)
 
-Ngx-storefront is an example of an ecommerce system comprising 3 parts: 
+Ngx-storefront is an example of a modern SPA for eCommerce. The project consists of 3 parts:
 
-*   the Customer Interface (Angular & TailwindCSS & SCSS) [artemv01/ngx-storefront](ngx-storefront)
-*   the REST API (NestJS & MongoDB & Mongoose) [artemv01/ngx-storefront-api](ngx-storefront-api)
-*   and the Admin Interface (Angular & TailwindCSS & SCSS) coming soon
+*   the Customer UI [artemv01/ngx-storefront](ngx-storefront)
+*   the REST API [artemv01/ngx-storefront-api](ngx-storefront-api)
+*   and the Admin UI (coming soon)
 
-This is a repository for the customer interface part. It can be used as an example of a modern ecommerce SPA built on Angular. It’s mobile & tablet ready and tested on all modern browsers.
+This is a repository for the customer UI. 
 
-[ngx-storefront]: https://github.com/artemv01/ngx-storefront
-[ngx-storefront-api]: https://github.com/artemv01/ngx-storefront-api
+## Techonlogy stack
+
+The techonoly stack used for the customer interface includes:
+* [Angular](angular)
+* [TailwindCSS](tailwindcss)
+* [SCSS](scss)
 
 ## Live demo
 
 The demo can be seen here -> [https://ngx-storefront.artemev.dev/](https://ngx-storefront.artemev.dev/)
-
 
 ## What’s currently missing
 
@@ -80,3 +83,8 @@ The application was inspired by [woocommerce/storefront](https://github.com/wooc
 Feel free to use my code on your project. It would be great if you put a reference to this repository.
 
 [MIT](https://opensource.org/licenses/MIT)
+[tailwind](https://tailwindcss.com/)
+[angular](https://angular.io/)
+[scss](https://sass-lang.com/)
+[ngx-storefront]: https://github.com/artemv01/ngx-storefront
+[ngx-storefront-api]: https://github.com/artemv01/ngx-storefront-api

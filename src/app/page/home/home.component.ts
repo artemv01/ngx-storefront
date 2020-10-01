@@ -1,18 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
-import { environment } from 'src/environments/environment';
 import { Product } from 'src/app/type/product';
 import { Review } from 'src/app/type/review';
 import { Category } from 'src/app/type/category';
-import { BehaviorSubject, forkJoin, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin } from 'rxjs';
 import { LoadingService } from '@app/service/loading.service';
-import { tap } from 'rxjs/operators';
 import { TitleService } from '@app/service/title.service';
 @Component({
   selector: 'app-home',

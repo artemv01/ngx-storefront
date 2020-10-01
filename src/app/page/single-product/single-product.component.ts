@@ -7,7 +7,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil, exhaustMap, mergeMap, delay } from 'rxjs/operators';
+import { takeUntil, mergeMap } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 
 import { ApiService } from '@app/service/api.service';
@@ -18,10 +18,7 @@ import { Category } from '@app/type/category';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoadingService } from '@app/service/loading.service';
 import { NotificationService } from '@app/service/notification.service';
-import { Review } from '@app/type/review';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { Breadcrumbs } from '@app/type/breadcrumbs';
-import { Notification } from '@app/type/notification';
 import { TitleService } from '@app/service/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 
@@ -80,7 +77,6 @@ export class SingleProductComponent
   };
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private api: ApiService,
     private fb: FormBuilder,
@@ -146,7 +142,7 @@ export class SingleProductComponent
   }
 
   addToCartFromGallery(product: Product) {
-    const { _id, image, name, ...other } = product;
+    const { _id, image, name } = product;
     let price = product.onSale ? product.salePrice : product.price;
     this.cart.add(({
       _id,
@@ -158,7 +154,7 @@ export class SingleProductComponent
   }
 
   addToCart() {
-    const { _id, image, name, ...other } = this.product;
+    const { _id, image, name } = this.product;
     let price = this.product.onSale
       ? this.product.salePrice
       : this.product.price;

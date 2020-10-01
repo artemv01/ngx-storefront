@@ -10,14 +10,12 @@ import {
 
 import { SearchService } from '@app/service/search.service';
 import { ApiService } from '@app/service/api.service';
-import { switchMap, tap, takeUntil, debounceTime, delay } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
-import { Product } from '@app/type/product';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { PaginationParams } from '@app/type/pagination-params';
 import { ProductFilterQuery } from '@app/type/product-filter-query';
 import { Category } from '@app/type/category';
 import { ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { TitleService } from '@app/service/title.service';
 
 @Component({
@@ -26,13 +24,13 @@ import { TitleService } from '@app/service/title.service';
   styleUrls: ['./single-category.component.scss'],
 
   animations: [
-    trigger('loadingScreen', [
+    /*  trigger('loadingScreen', [
       state('in', style({ opacity: 1 })),
 
       transition(':enter', [style({ opacity: 0 }), animate(200)]),
 
       transition(':leave', animate(200, style({ opacity: 0 }))),
-    ]),
+    ]), */
     trigger('loadingScreen', [
       state('in', style({ opacity: 1 })),
       transition(':enter', [style({ opacity: 0 }), animate(600)]),
