@@ -26,9 +26,11 @@ module.exports = {
       }
     ]
   },
-  /* plugins: [
-    new Dotenv()
+  plugins: [
+    new Dotenv({
+      systemvars: true
+    })
 
-  ], */
+  ],
 };
  

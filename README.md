@@ -1,27 +1,31 @@
-# An ecommerce system built on Angular & NestJS & TailwindCSS (the Customer UI part)
+# An eCommerce system built on Angular & NestJS & TailwindCSS (the Customer UI part)
 
-Ngx-storefront is an example of a modern SPA for eCommerce. The project consists of 3 parts:
+Ngx-storefront is an example of a modern eCommerce system built on TypeScript stack. The project consists of 3 parts:
 
-*   the Customer UI [artemv01/ngx-storefront](ngx-storefront)
-*   the REST API [artemv01/ngx-storefront-api](ngx-storefront-api)
+*   the Customer UI [artemv01/ngx-storefront][ngx-storefront]
+*   the REST API [artemv01/ngx-storefront-api][ngx-storefront-api]
 *   and the Admin UI (coming soon)
 
 This is a repository for the customer UI. 
 
-## Techonlogy stack
+## Technology stack
 
-The techonoly stack used for the customer interface includes:
-* [Angular](angular)
-* [TailwindCSS](tailwindcss)
-* [SCSS](scss)
+The techonoly stack used for the customer UI consists of:
+* [Angular][angular]
+* [TailwindCSS][tailwind]
+* [SCSS][scss]
+
+Deployed on [Netlify](https://www.netlify.com/).
 
 ## Live demo
 
 The demo can be seen here -> [https://ngx-storefront.artemev.dev/](https://ngx-storefront.artemev.dev/)
 
+![An ecommerce system built on Angular & NestJS & TailwindCSS][demo]
+
 ## What’s currently missing
 
-The project on its initial stage and there are still some important features that are yet to be implemented. Such as:
+The project is on its initial stage and there are still some important features that are yet to be implemented. Such as:
 
 *   Stripe integration
 *   Customer dashboard
@@ -42,7 +46,7 @@ Integration/unit tests were omitted so far and might be implemented in the futur
 git clone https://github.com/artemv01/ngx-storefront-api.git
 cd ngx-storefront-api
 cp .env.example .env
-# Open .env with your favorite  text editor (in this example vim)
+# Open the .env file with your favorite  text editor (in this example vim)
 # Set the required params as per the documentation in .env file
 vim .env
 npm install
@@ -50,14 +54,14 @@ npm run start:dev
 ```
 
 
-### Start angular dev server
+### Start the Customer UI
 ```
 git clone https://github.com/artemv01/ngx-storefront.git
 cd ngx-storefront
-# Open angular config file with your favorite  text editor (in this example vim)
-# Make sure _apiUrl is set to the REST API URL
-# For example: http://localhost:4200
-vim environments/environment.ts
+cp .env.example .env
+# Open the .env file with your favorite  text editor (in this example vim)
+# Set the required params as per the documentation in .env file
+vim .env
 npm install
 npm run start
 ```
@@ -75,7 +79,7 @@ If you are interested and have any ideas for features, please open an [issue](ht
 
 ## Credits
 
-The application was inspired by [woocommerce/storefront](https://github.com/woocommerce/storefront).
+The Customer UI was inspired by [woocommerce/storefront](https://github.com/woocommerce/storefront).
 
 
 ## License
@@ -83,8 +87,11 @@ The application was inspired by [woocommerce/storefront](https://github.com/wooc
 Feel free to use my code on your project. It would be great if you put a reference to this repository.
 
 [MIT](https://opensource.org/licenses/MIT)
-[tailwind](https://tailwindcss.com/)
-[angular](https://angular.io/)
-[scss](https://sass-lang.com/)
+
+
+[tailwind]: https://tailwindcss.com/
+[angular]: https://angular.io/
+[scss]: https://sass-lang.com/
+[demo]: src/assets/img/pc_demo.gif
 [ngx-storefront]: https://github.com/artemv01/ngx-storefront
 [ngx-storefront-api]: https://github.com/artemv01/ngx-storefront-api
