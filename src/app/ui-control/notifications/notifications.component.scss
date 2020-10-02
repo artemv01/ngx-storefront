@@ -1,16 +1,20 @@
 .notification {
+    /* purgecss ignore */
     & > div {
         border-left: 12px solid;
         border-radius: 4px;
         padding: 12px;
         text-overflow: break-word;
     }
+    /* purgecss ignore */
     & > div.bg-bgSuccess {
         border-color: var(--bgSuccessDark);
     }
+    /* purgecss ignore */
     & > div.bg-bgInfo {
         border-color: var(--bgInfoDark);
     }
+    /* purgecss ignore */
     & > div.bg-bgDanger {
         border-color: var(--bgDangerDark);
     }

@@ -17,8 +17,7 @@ module.exports = {
             purgecss({
               content:  ['./**/*.html', './**/*.ts', './**/*.scss'], 
               defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-              whitelist: ['host'],
-              whitelistPatterns: [/^:host/],
+              whitelistPatterns: [/&+/],
             })
          
           ]

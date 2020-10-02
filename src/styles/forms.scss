@@ -43,12 +43,14 @@ label.required::after {
 }
 .btn-primary {
     background: var(--bgPrimary);
+    /* purgecss ignore */
     &:not([disabled]):hover {
         background-color: var(--bgPrimaryDark);
     }
 }
 .btn-secondary {
     background-color: var(--bgSecondary);
+    /* purgecss ignore */
     &:not([disabled]):hover {
         background-color: var(--bgSecondaryDark);
     }
