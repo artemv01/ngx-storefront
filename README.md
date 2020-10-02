@@ -1,6 +1,6 @@
-# An eCommerce system built on Angular & NestJS & TailwindCSS (the Customer UI part)
+# An eCommerce application built on Angular & NestJS & TailwindCSS (the Customer UI part)
 
-Ngx-storefront is an example of a modern eCommerce system built on TypeScript stack. The project consists of 3 parts:
+Ngx-storefront is an example of a modern eCommerce application built on TypeScript stack. The project consists of 3 parts:
 
 *   the Customer UI [artemv01/ngx-storefront][ngx-storefront]
 *   the REST API [artemv01/ngx-storefront-api][ngx-storefront-api]
@@ -21,7 +21,7 @@ Deployed on [Netlify](https://www.netlify.com/).
 
 The demo can be seen here -> [https://ngx-storefront.artemev.dev/](https://ngx-storefront.artemev.dev/)
 
-![An ecommerce system built on Angular & NestJS & TailwindCSS][demo]
+![An ecommerce application built on Angular & NestJS & TailwindCSS][demo]
 
 ## What’s currently missing
 

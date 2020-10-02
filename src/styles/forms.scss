@@ -37,12 +37,14 @@ label.required::after {
     cursor: pointer;
     color: white;
     padding: 0 1.25rem;
+    transition: background 0.1s ease-in;
+    letter-spacing: 0.025em;
 }
 .btn:focus {
     outline: none;
 }
 .btn-primary {
-    background: var(--bgPrimary);
+    background-color: var(--bgPrimary);
     /* purgecss ignore */
     &:not([disabled]):hover {
         background-color: var(--bgPrimaryDark);
