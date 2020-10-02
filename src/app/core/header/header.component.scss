@@ -36,6 +36,12 @@ header {
         left: 0.5rem;
         top: 0.9rem;
     }
+    input::placeholder {
+        opacity: 0.75;
+    }
+    app-icon i {
+        opacity: 0.75;
+    }
 }
 .search-input {
     padding: 0.5rem 2rem;

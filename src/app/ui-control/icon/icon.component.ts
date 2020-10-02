@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class IconComponent implements OnInit {
   @Input('color') color = 'primary';
   @Input('size') size = 'xs';
+  @Input('opacity') opacity = 1;
   colors = {
     primary: 'var(--txPrimary)',
     white: 'white',
@@ -19,6 +20,5 @@ export class IconComponent implements OnInit {
     xl: '48px',
   };
   constructor() {}
-
   ngOnInit(): void {}
 }
