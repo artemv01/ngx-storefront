@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { environment } from '@root/environments/environment';
+import { map, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-footer',
@@ -6,7 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  constructor() {}
+  mapsLoaded: Observable<boolean>;
+  environment = environment;
+  constructor(httpClient: HttpClient) {
+    this.mapsLoaded = httpClient
+      .jsonp(
+        `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsKey}`,
+        'callback'
+      )
+      .pipe(
+        tap(() => {
+          (this.mapMarker.options as any).animation =
+            google.maps.Animation.BOUNCE;
+        }),
+        map(() => true),
+        catchError(() => of(false))
+      );
+  }
 
   mapOptions = {
     zoom: 15,
@@ -33,7 +53,7 @@ export class FooterComponent implements OnInit {
       text: 'Storefront',
     },
     title: 'Storefront',
-    options: { animation: google.maps.Animation.BOUNCE },
+    options: {},
   };
 
   ngOnInit(): void {}

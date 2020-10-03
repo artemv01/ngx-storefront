@@ -1,3 +1,5 @@
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=6Lc5YtIZAAAAACEuyyZLoR_SgvwT5jUseYGt3Vdy"></script>
 <footer class=" bg-bgFooter px-4 py-12 text-txDark sm:px-8">
     <div class="container mx-auto px-0">
         <h1 class="page-header break-words mb-12">Contacts</h1>
@@ -56,7 +58,7 @@
                     </a>
                 </div>
             </div>
-            <div>
+            <div *ngIf="mapsLoaded | async">
                 <google-map width="280px"
                     height="300px"
                     [zoom]="mapOptions.zoom"

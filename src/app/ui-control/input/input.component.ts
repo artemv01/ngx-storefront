@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import places, { ReconfigurableOptions, StaticOptions } from 'places.js';
+import { environment } from '@root/environments/environment';
 
 @Component({
   selector: 'app-input',
@@ -55,8 +56,8 @@ export class InputComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.placesConfig) {
       var placesAutocomplete = places({
-        appId: 'pl7YQAV8478T',
-        apiKey: '05cac0c539ea24366b2f55fc957c75c9',
+        appId: environment.algoliaPlacesAppId,
+        apiKey: environment.algoliaPlacesApiKey,
         container: this.inputEl.nativeElement as HTMLInputElement,
         templates: {
           value: function (suggestion) {

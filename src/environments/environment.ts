@@ -7,6 +7,9 @@ export const environment = {
   production: false,
   apiUrl: process.env.API_URL_TESTING,
   recaptchaKey: process.env.RECAPTCHA_SITE_KEY,
+  googleMapsKey: process.env.GOOGLE_MAPS_KEY,
+  algoliaPlacesAppId: process.env.ALGOLIA_PLACES_APP_ID,
+  algoliaPlacesApiKey: process.env.ALGOLIA_PLACES_KEY,
 };
 /*
  * For easier debugging in development mode, you can import the following file
