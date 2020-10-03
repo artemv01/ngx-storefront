@@ -6,7 +6,8 @@
         "ng": "ng",
         "start": "ng serve",
         "serve": "ng serve --disable-host-check",
-        "build": "ng build"
+        "build": "ng build --prod",
+        "build-purgecss": "PURGECSS=true ng build --prod"
     },
     "private": true,
     "dependencies": {
