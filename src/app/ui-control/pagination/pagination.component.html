@@ -4,7 +4,7 @@
         <div class="px-4 cursor-pointer pagination-item pagination-arrow"
             [class.inactive]="!showPrevBtn"
             (click)="showPrevBtn ? getPrevPage() : null">
-            <i class="material-icons">keyboard_arrow_left</i>
+            <app-icon>keyboard_arrow_left</app-icon>
         </div>
         <div class="px-4 cursor-pointer pagination-item"
             [class.range-symbol]="btn === rangeSymbol"
@@ -16,7 +16,7 @@
         <div class="px-4 cursor-pointer pagination-item pagination-arrow"
             [class.inactive]="!showNextBtn"
             (click)="showNextBtn ? getNextPage() : null">
-            <i class="material-icons">keyboard_arrow_right</i>
+            <app-icon>keyboard_arrow_right</app-icon>
         </div>
 
     </div>

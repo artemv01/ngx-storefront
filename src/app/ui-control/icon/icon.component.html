@@ -1,5 +1,5 @@
 <i class="material-icons"
-    [style.font-size]="sizes[size]"
+    [style.font-size]="sizes[size] ? sizes[size] : size"
     [style.color]="colors[color]"
     [style.opacity]="opacity">
     <ng-content></ng-content>

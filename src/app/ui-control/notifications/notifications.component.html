@@ -5,8 +5,9 @@
         <div class="flex-col  items-start md:items-center md:flex-row flex-grow mb-4 p-8 text-white rounded  flex "
             [class]="typeMap[notification.type]">
             <div class="mb-4 md:mb-0 flex items-center justify-start ">
-                <i class="material-icons"
-                    style="font-size:2rem;padding-right: 6px;">{{iconMap[notification.type]}}</i><span
+                <app-icon size="2rem"
+                    color="white"
+                    style="padding-right: 6px;">{{iconMap[notification.type]}}</app-icon><span
                     class="font-semibold pr-4">{{messageMap[notification.type]}}</span>
             </div> <span *ngIf="!notification.showMessage"
                 class="message"

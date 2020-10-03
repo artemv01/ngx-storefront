@@ -22,7 +22,7 @@ export class NotificationService {
     setInterval(() => {
       delete this.notifications[key];
       this.emitter$.next(Object.values(this.notifications));
-    }, 2500);
+    }, 112500);
   }
 
   close(key: number) {

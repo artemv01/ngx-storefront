@@ -8,8 +8,12 @@
         <div class="alert-modal rounded bg-white p-4 flex flex-col">
             <div class="flex-grow mb-4">
                 <h1 class="text-2xl border-b border-bgPrimary tracking-wide pb-2 mb-4 relative">
-                    {{alertService.header}}<i class="material-icons absolute right-0"
-                        (click)="alertService.hide()">close</i></h1>
+                    {{alertService.header}}
+                    <!-- <i class="material-icons absolute right-0"
+                        (click)="alertService.hide()">close</i> -->
+                    <app-icon class="absolute right-0"
+                        (click)="alertService.hide()"></app-icon>
+                </h1>
                 <div class="break-words">{{alertService.message}}</div>
             </div>
         </div>
@@ -26,10 +30,11 @@
                 <div *ngIf="!products.length && !searchLoading"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
                     <h1 class="page-header mb-0">No results for "{{filterParams.search}}" :(</h1>
-                    <i class="material-icons md:mt-2 cursor-pointer"
-                        style="font-size:42px"
+
+                    <app-icon class=" md:mt-2 cursor-pointer"
+                        size="xl"
                         title="Cancel search"
-                        (click)="cancelSearch()">close</i>
+                        (click)="cancelSearch()">close</app-icon>
                 </div>
                 <div *ngIf="products.length || searchLoading"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
@@ -39,10 +44,10 @@
                     <h1 class="page-header mb-0"
                         *ngIf="!filterParams.search">Search products
                     </h1>
-                    <i class="material-icons md:mt-2 cursor-pointer"
-                        style="font-size:42px"
+                    <app-icon class=" md:mt-2 cursor-pointer"
+                        size="xl"
                         title="Cancel search"
-                        (click)="cancelSearch()">close</i>
+                        (click)="cancelSearch()">close</app-icon>
                 </div>
                 <div *ngIf="searchLoading"
                     id="searchLoading">
