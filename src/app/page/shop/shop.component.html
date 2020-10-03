@@ -24,7 +24,8 @@
         class="container mt-6 flex-auto mb-16 pt-12 xl:pt-20">
 
 
-        <div class="flex flex-col xl:flex-row  ">
+        <div class="flex flex-col xl:flex-row  "
+            #top>
             <div class="w-full xl:w-9/12">
 
                 <div *ngIf="!products.length && !searchLoading"
@@ -95,7 +96,7 @@
                         <app-select [attr.disabled]="searchLoading"
                             ngDefaultControl
                             name='selectAction'
-                            (change)="sort($event)"
+                            (change)="sort($event); "
                             [(ngModel)]="selSortType"
                             #selectAction
                             [options]="actions"
@@ -110,7 +111,8 @@
                             <app-pagination [pagesTotal]="pagesTotal"
                                 [attr.disabled]="searchLoading"
                                 [currentPage]="currentPage"
-                                (change)="paginationChange($event)"></app-pagination>
+                                (change)="paginationChange($event); scrollToElement(top);">
+                            </app-pagination>
                         </ng-container>
                     </div>
                 </div>

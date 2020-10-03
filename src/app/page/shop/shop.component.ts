@@ -245,6 +245,15 @@ export class ShopComponent implements OnInit, OnDestroy {
     );
   }
 
+  scrollToElement($element): void {
+    console.log('go');
+    $element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
+
   ngOnDestroy() {
     this.destroy.next(null);
   }
