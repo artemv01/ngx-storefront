@@ -1,5 +1,6 @@
 <div id="shopApp"
     class="flex flex-col"
+    #top
     [class.app-loading]="(loading.display$ | async)">
     <div class="loading-screen-alert"
         *ngIf="(alertService.display | async)"
@@ -24,8 +25,7 @@
         class="container mt-6 flex-auto mb-16 pt-12 xl:pt-20">
 
 
-        <div class="flex flex-col xl:flex-row  "
-            #top>
+        <div class="flex flex-col xl:flex-row  ">
             <div class="w-full xl:w-9/12">
 
                 <div *ngIf="!products.length && !searchLoading"
