@@ -115,7 +115,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
       })
       .pipe(takeUntil(this.filtersChanged))
       .subscribe((searchResult) => {
-        this.products = searchResult.products;
+        this.products = searchResult.items;
         this.pagesTotal = searchResult.pages;
         this.currentPage = searchResult.page;
         this.itemsTotal = searchResult.total;
