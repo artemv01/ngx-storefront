@@ -1,0 +1,4 @@
+[context.maintenance]
+  command = "echo 'Maintenance build'"
+  base = ""
+  publish = "maintenance/"
