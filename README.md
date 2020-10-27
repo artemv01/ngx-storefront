@@ -10,7 +10,7 @@ This is a repository for the customer UI.
 
 ## Technology stack
 
-The techonoly stack used for the customer UI consists of:
+The technology stack used for the customer UI consists of:
 * [Angular][angular]
 * [TailwindCSS][tailwind]
 * [SCSS][scss]
