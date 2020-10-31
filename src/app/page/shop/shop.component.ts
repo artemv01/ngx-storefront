@@ -197,10 +197,10 @@ export class ShopComponent implements OnInit, OnDestroy {
         this.sortBy('rating');
         break;
       case 'Sort by price (from low to high)':
-        this.sortBy('price', 'asc');
+        this.sortBy('_price', 'asc');
         break;
       case 'Sort by price (from high to low)':
-        this.sortBy('price', 'desc');
+        this.sortBy('_price', 'desc');
         break;
     }
   }
