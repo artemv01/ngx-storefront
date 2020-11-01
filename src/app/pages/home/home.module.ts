@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UiControlModule } from '@app/ui-control/ui-control.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { HomePageResolver } from './home-page.resolver';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -13,5 +14,6 @@ import { HomeComponent } from './home.component';
     UiControlModule,
     // SlickCarouselModule,
   ],
+  providers: [HomePageResolver],
 })
 export class HomeModule {}

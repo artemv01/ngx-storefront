@@ -15,7 +15,7 @@
         [config]="slideConfig">
         <div class="slide"
             ngxSlickItem
-            *ngFor="let review of reviews$ | async">
+            *ngFor="let review of reviews">
             <div class="pl-8">
                 <div *ngIf="review.rating"
                     class="mb-4">

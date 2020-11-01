@@ -17,6 +17,15 @@ import { HeaderComponent } from './core/header/header.component';
 import { UiControlModule } from './ui-control/ui-control.module';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './core/footer/footer.component';
+import { StoreConfig, StoreModule } from '@ngrx/store';
+import { reducers, featureKey } from './store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { ShopEffects } from './store/effects';
+import { EffectsModule } from '@ngrx/effects';
+
+const storeConfig: any = {};
+storeConfig[featureKey] = reducers;
 
 @NgModule({
   declarations: [AppComponent, ShopComponent, HeaderComponent, FooterComponent],
@@ -31,6 +40,9 @@ import { FooterComponent } from './core/footer/footer.component';
     UiControlModule,
     RouterModule,
     GoogleMapsModule,
+    StoreModule.forRoot(storeConfig),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([ShopEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

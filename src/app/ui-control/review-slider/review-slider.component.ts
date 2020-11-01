@@ -14,7 +14,7 @@ import { Review } from '@app/models/review';
   styleUrls: ['./review-slider.component.scss'],
 })
 export class ReviewSliderComponent implements OnInit, AfterViewInit {
-  @Input('reviews$') reviews$: Review[] = [];
+  @Input('reviews') reviews: Review[] = [];
 
   @ViewChild('slideNavPrev') slideNavPrev: ElementRef;
   @ViewChild('slideNavNext') slideNavNext: ElementRef;
@@ -24,6 +24,9 @@ export class ReviewSliderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
+    console.log(this.reviews);
+    console.log(this.slideNavNext);
+    console.log(this.slideNavPrev);
     this.slideConfig = {
       slidesToShow: 1,
       slidesToScroll: 1,
