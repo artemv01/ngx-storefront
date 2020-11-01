@@ -7,7 +7,9 @@
         "start": "ng serve",
         "serve": "ng serve --disable-host-check",
         "build": "ng build --prod",
-        "build-purgecss": "PURGECSS=true ng build --prod"
+        "build-purgecss": "PURGECSS=true ng build --prod",
+        "build:stats": "PURGECSS=true ng build --prod --stats-json",
+        "analyze": "webpack-bundle-analyzer dist/ngx-storefront/stats.json"
     },
     "private": true,
     "dependencies": {
