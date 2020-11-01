@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { Review } from '@app/type/review';
 import { environment as env } from '@root/environments/environment';
+import { ReviewsForProductResp } from '@app/type/reviews-for-product-resp';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +18,13 @@ export class ReviewService {
     return this.http.get<Review[]>(env.apiUrl + `review/recent`);
   }
 
-  submit(data: Review): any {
-    return this.http.post<any>(env.apiUrl + `review/`, data);
+  submit(data: Review): Observable<void> {
+    return this.http.post<void>(env.apiUrl + `review/`, data);
   }
 
-  forProduct(productId: string): Observable<Review[]> {
-    return this.http.get<Review[]>(env.apiUrl + `product/${productId}/reviews`);
+  forProduct(productId: string): Observable<ReviewsForProductResp> {
+    return this.http.get<ReviewsForProductResp>(
+      env.apiUrl + `product/${productId}/reviews`
+    );
   }
 }
