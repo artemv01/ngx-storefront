@@ -9,14 +9,14 @@ import {
 } from '@angular/animations';
 
 import { SearchService } from '@app/service/search.service';
-import { ApiService } from '@app/service/api.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { PaginationParams } from '@app/type/pagination-params';
-import { ProductFilterQuery } from '@app/type/product-filter-query';
 import { Category } from '@app/type/category';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '@app/service/title.service';
+import { QueryParams } from '@app/type/query-params';
+import { ProductsService } from '@app/service/products.service';
 
 @Component({
   selector: 'app-single-category',
@@ -48,7 +48,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   itemsTotal = 0;
   products: any = [];
   showPagination: boolean;
-  filterParams: ProductFilterQuery = {
+  filterParams: QueryParams = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
@@ -72,9 +72,9 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   constructor(
     public loading: LoadingService,
     public search: SearchService,
-    public api: ApiService,
     private route: ActivatedRoute,
-    private titleServ: TitleService
+    private titleServ: TitleService,
+    private productQuery: ProductsService
   ) {}
 
   ngOnInit(): void {
@@ -108,8 +108,8 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   }
   filterProducts() {
     this.itemsLoading = true;
-    this.api
-      .getProductsFiltered({
+    this.productQuery
+      .getMany({
         ...this.filterParams,
         ...this.paginationParams,
       })

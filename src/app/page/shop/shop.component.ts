@@ -11,12 +11,10 @@ import {
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertService } from '@app/service/alert.service';
-import { ApiService } from '@app/service/api.service';
 import { LoadingService } from '@app/service/loading.service';
 import { SearchService } from '@app/service/search.service';
 import { Category } from '@app/type/category';
 import { PaginationParams } from '@app/type/pagination-params';
-import { ProductFilterQuery } from '@app/type/product-filter-query';
 import {
   NavigationStart,
   RouteConfigLoadEnd,
@@ -24,6 +22,8 @@ import {
   Router,
 } from '@angular/router';
 import { NotificationService } from '@app/service/notification.service';
+import { ProductsService } from '@app/service/products.service';
+import { QueryParams } from '@app/type/query-params';
 
 @Component({
   selector: 'app-shop',
@@ -104,7 +104,7 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   products: any = [];
   showPagination: boolean;
-  filterParams: ProductFilterQuery = {
+  filterParams: QueryParams = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
@@ -128,10 +128,10 @@ export class ShopComponent implements OnInit, OnDestroy {
   constructor(
     public loading: LoadingService,
     public search: SearchService,
-    public api: ApiService,
     public alertService: AlertService,
     private notify: NotificationService,
-    private router: Router
+    private router: Router,
+    private productQuery: ProductsService
   ) {}
 
   ngOnInit(): void {
@@ -159,8 +159,8 @@ export class ShopComponent implements OnInit, OnDestroy {
         switchMap((searchText) => {
           this.paginationParams.page = 1;
           this.filterParams.search = searchText;
-          return this.api
-            .getProductsFiltered({
+          return this.productQuery
+            .getMany({
               ...this.filterParams,
               ...this.paginationParams,
             })
@@ -206,8 +206,8 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
   filterProducts() {
     this.searchLoading = true;
-    this.api
-      .getProductsFiltered({
+    this.productQuery
+      .getMany({
         ...this.filterParams,
         ...this.paginationParams,
       })

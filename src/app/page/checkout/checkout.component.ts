@@ -2,11 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ReconfigurableOptions } from 'places.js';
 import { CartService } from '@app/service/cart.service';
-import { ApiService } from '@app/service/api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { TitleService } from '@app/service/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { environment } from '@root/environments/environment';
+import { OrderService } from '@app/service/order.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -126,7 +126,7 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public cart: CartService,
-    private api: ApiService,
+    private orderQuery: OrderService,
     private titleServ: TitleService
   ) {}
 
@@ -152,8 +152,8 @@ export class CheckoutComponent implements OnInit {
     const billingAddress = address;
     const shippingAddress = address;
     const cart = this.cart.getContentForRequest();
-    this.api
-      .submitOrder({
+    this.orderQuery
+      .create({
         billingAddress,
         shippingAddress,
         notes,

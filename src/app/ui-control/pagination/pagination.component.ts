@@ -8,7 +8,6 @@ import {
   ElementRef,
 } from '@angular/core';
 import { PaginationParams } from '@app/type/pagination-params';
-import { ProductFilterQuery } from '@app/type/product-filter-query';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({

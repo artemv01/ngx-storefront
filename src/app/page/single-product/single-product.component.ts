@@ -10,7 +10,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, mergeMap } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 
-import { ApiService } from '@app/service/api.service';
 import { Product } from '@app/type/product';
 import { CartService } from '@app/service/cart.service';
 import { environment } from '@root/environments/environment';
@@ -21,6 +20,8 @@ import { NotificationService } from '@app/service/notification.service';
 import { Breadcrumbs } from '@app/type/breadcrumbs';
 import { TitleService } from '@app/service/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { ProductsService } from '@app/service/products.service';
+import { ReviewService } from '@app/service/review.service';
 
 @Component({
   selector: 'app-single-product',
@@ -78,7 +79,8 @@ export class SingleProductComponent
 
   constructor(
     private route: ActivatedRoute,
-    private api: ApiService,
+    private reviewQuery: ReviewService,
+    private productService: ProductsService,
     private fb: FormBuilder,
     public loading: LoadingService,
     public cart: CartService,
@@ -94,8 +96,8 @@ export class SingleProductComponent
       }
       this.loading.show();
       forkJoin({
-        product: this.api.getProduct(this.productId),
-        relatedProducts: this.api.getRelatedProducts(this.productId),
+        product: this.productService.getOne(this.productId),
+        relatedProducts: this.productService.related(this.productId),
       }).subscribe(({ product, relatedProducts }) => {
         this.product = product;
         this.relatedProducts = relatedProducts;
@@ -126,9 +128,9 @@ export class SingleProductComponent
       productId: this.productId,
       captcha: this.captchaToken,
     };
-    this.api
-      .submitReview(reviewData)
-      .pipe(mergeMap(() => this.api.getReviewsForProduct(this.productId)))
+    this.reviewQuery
+      .submit(reviewData)
+      .pipe(mergeMap(() => this.reviewQuery.forProduct(this.productId)))
       .subscribe((result) => {
         // this.isReviewSubmitted = true;
         this.reviewForm.reset();
