@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Review } from '@app/type/review';
+import { Review } from '@app/models/review';
 
 @Component({
   selector: 'app-review-slider',

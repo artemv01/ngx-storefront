@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CartService } from '@app/service/cart.service';
-import { Product } from '@app/type/product';
+import { CartService } from '@app/services/cart.service';
+import { Product } from '@app/models/product';
 import { environment } from '@root/environments/environment';
 import { trigger, transition, style, animate } from '@angular/animations';
 

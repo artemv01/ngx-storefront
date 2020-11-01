@@ -8,8 +8,8 @@ import {
   animate,
   state,
 } from '@angular/animations';
-import { Notification } from '@app/type/notification';
-import { NotificationService } from '@app/service/notification.service';
+import { Notification } from '@app/models/notification';
+import { NotificationService } from '@app/services/notification.service';
 
 @Component({
   selector: 'app-notifications',

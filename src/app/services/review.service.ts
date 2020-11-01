@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Review } from '@app/type/review';
+import { Review } from '@app/models/review';
 import { environment as env } from '@root/environments/environment';
-import { ReviewsForProductResp } from '@app/type/reviews-for-product-resp';
+import { ReviewsForProductResp } from '@app/models/reviews-for-product-resp';
 
 @Injectable({
   providedIn: 'root',

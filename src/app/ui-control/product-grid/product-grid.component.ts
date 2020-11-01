@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Product } from '@app/type/product';
+import { Product } from '@app/models/product';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { CartService } from '@app/service/cart.service';
-import { NotificationService } from '@app/service/notification.service';
+import { CartService } from '@app/services/cart.service';
+import { NotificationService } from '@app/services/notification.service';
 @Component({
   selector: 'app-product-grid',
   templateUrl: './product-grid.component.html',

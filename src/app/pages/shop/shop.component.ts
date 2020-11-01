@@ -10,20 +10,20 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertService } from '@app/service/alert.service';
-import { LoadingService } from '@app/service/loading.service';
-import { SearchService } from '@app/service/search.service';
-import { Category } from '@app/type/category';
-import { PaginationParams } from '@app/type/pagination-params';
+import { AlertService } from '@app/services/alert.service';
+import { LoadingService } from '@app/services/loading.service';
+import { SearchService } from '@app/services/search.service';
+import { Category } from '@app/models/category';
+import { PaginationParams } from '@app/models/pagination-params';
 import {
   NavigationStart,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
   Router,
 } from '@angular/router';
-import { NotificationService } from '@app/service/notification.service';
-import { ProductsService } from '@app/service/products.service';
-import { QueryParams } from '@app/type/query-params';
+import { NotificationService } from '@app/services/notification.service';
+import { ProductsService } from '@app/services/products.service';
+import { QueryParams } from '@app/models/query-params';
 
 @Component({
   selector: 'app-shop',

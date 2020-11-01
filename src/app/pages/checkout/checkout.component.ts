@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ReconfigurableOptions } from 'places.js';
-import { CartService } from '@app/service/cart.service';
+import { CartService } from '@app/services/cart.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TitleService } from '@app/service/title.service';
+import { TitleService } from '@app/services/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { environment } from '@root/environments/environment';
-import { OrderService } from '@app/service/order.service';
+import { OrderService } from '@app/services/order.service';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',

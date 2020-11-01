@@ -10,11 +10,11 @@ import { FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { CartService } from '@app/service/cart.service';
-import { SearchService } from '@app/service/search.service';
-import { NotificationService } from '@app/service/notification.service';
+import { CartService } from '@app/services/cart.service';
+import { SearchService } from '@app/services/search.service';
+import { NotificationService } from '@app/services/notification.service';
 import { Router } from '@angular/router';
-import { CategoryService } from '@app/service/category.service';
+import { CategoryService } from '@app/services/category.service';
 
 interface Category {
   _id: string;

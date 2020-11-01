@@ -1,4 +1,4 @@
-import { Review } from '@app/type/review';
+import { Review } from '@app/models/review';
 export interface Product {
   _id: string;
   name: string;

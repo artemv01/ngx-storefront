@@ -10,18 +10,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, mergeMap } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 
-import { Product } from '@app/type/product';
-import { CartService } from '@app/service/cart.service';
+import { Product } from '@app/models/product';
+import { CartService } from '@app/services/cart.service';
 import { environment } from '@root/environments/environment';
-import { Category } from '@app/type/category';
+import { Category } from '@app/models/category';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoadingService } from '@app/service/loading.service';
-import { NotificationService } from '@app/service/notification.service';
-import { Breadcrumbs } from '@app/type/breadcrumbs';
-import { TitleService } from '@app/service/title.service';
+import { LoadingService } from '@app/services/loading.service';
+import { NotificationService } from '@app/services/notification.service';
+import { Breadcrumbs } from '@app/models/breadcrumbs';
+import { TitleService } from '@app/services/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import { ProductsService } from '@app/service/products.service';
-import { ReviewService } from '@app/service/review.service';
+import { ProductsService } from '@app/services/products.service';
+import { ReviewService } from '@app/services/review.service';
 
 @Component({
   selector: 'app-single-product',

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from 'src/app/type/product';
-import { Review } from 'src/app/type/review';
-import { Category } from 'src/app/type/category';
+import { Product } from 'src/app/models/product';
+import { Review } from 'src/app/models/review';
+import { Category } from 'src/app/models/category';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { LoadingService } from '@app/service/loading.service';
-import { TitleService } from '@app/service/title.service';
-import { ProductsService } from '@app/service/products.service';
-import { ReviewService } from '@app/service/review.service';
+import { LoadingService } from '@app/services/loading.service';
+import { TitleService } from '@app/services/title.service';
+import { ProductsService } from '@app/services/products.service';
+import { ReviewService } from '@app/services/review.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

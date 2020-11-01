@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Product } from '@app/type/product';
+import { Product } from '@app/models/product';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment as env } from '@root/environments/environment';
-import { QueryParams } from '@app/type/query-params';
-import { QueryResponse } from '@app/type/query-response';
+import { QueryParams } from '@app/models/query-params';
+import { QueryResponse } from '@app/models/query-response';
 
 @Injectable({
   providedIn: 'root',

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoadingService } from '@app/service/loading.service';
+import { LoadingService } from '@app/services/loading.service';
 import {
   transition,
   style,
@@ -8,15 +8,15 @@ import {
   state,
 } from '@angular/animations';
 
-import { SearchService } from '@app/service/search.service';
+import { SearchService } from '@app/services/search.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { PaginationParams } from '@app/type/pagination-params';
-import { Category } from '@app/type/category';
+import { PaginationParams } from '@app/models/pagination-params';
+import { Category } from '@app/models/category';
 import { ActivatedRoute } from '@angular/router';
-import { TitleService } from '@app/service/title.service';
-import { QueryParams } from '@app/type/query-params';
-import { ProductsService } from '@app/service/products.service';
+import { TitleService } from '@app/services/title.service';
+import { QueryParams } from '@app/models/query-params';
+import { ProductsService } from '@app/services/products.service';
 
 @Component({
   selector: 'app-single-category',

@@ -7,7 +7,7 @@ import {
   OnChanges,
   ElementRef,
 } from '@angular/core';
-import { PaginationParams } from '@app/type/pagination-params';
+import { PaginationParams } from '@app/models/pagination-params';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({

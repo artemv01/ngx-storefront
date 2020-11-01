@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CartService } from '@app/service/cart.service';
-import { Product } from '@app/type/product';
+import { CartService } from '@app/services/cart.service';
+import { Product } from '@app/models/product';
 import { environment } from '@root/environments/environment';
 import { Router } from '@angular/router';
-import { NotificationService } from '@app/service/notification.service';
+import { NotificationService } from '@app/services/notification.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { TitleService } from '@app/service/title.service';
+import { TitleService } from '@app/services/title.service';
 
 @Component({
   selector: 'app-view-cart',

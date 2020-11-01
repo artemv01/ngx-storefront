@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Notification } from '@app/type/notification';
+import { Notification } from '@app/models/notification';
 import { Subject, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',

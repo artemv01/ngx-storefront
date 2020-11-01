@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShopComponent } from './page/shop/shop.component';
+import { ShopComponent } from './pages/shop/shop.component';
 
 const routes: Routes = [
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
           animation: 'home',
         },
         loadChildren: () =>
-          import('./page/home/home.module').then((m) => m.HomeModule),
+          import('./pages/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'product/:id',
@@ -21,7 +21,7 @@ const routes: Routes = [
           animation: 'single-product',
         },
         loadChildren: () =>
-          import('./page/single-product/single-product.module').then(
+          import('./pages/single-product/single-product.module').then(
             (m) => m.SingleProductModule
           ),
       },
@@ -31,7 +31,7 @@ const routes: Routes = [
           animation: 'category',
         },
         loadChildren: () =>
-          import('./page/single-category/single-category.module').then(
+          import('./pages/single-category/single-category.module').then(
             (m) => m.SingleCategoryModule
           ),
       },
@@ -41,7 +41,7 @@ const routes: Routes = [
           animation: 'cart',
         },
         loadChildren: () =>
-          import('./page/view-cart/view-cart.module').then(
+          import('./pages/view-cart/view-cart.module').then(
             (m) => m.ViewCartModule
           ),
       },
@@ -51,7 +51,7 @@ const routes: Routes = [
           animation: 'checkout',
         },
         loadChildren: () =>
-          import('./page/checkout/checkout.module').then(
+          import('./pages/checkout/checkout.module').then(
             (m) => m.CheckoutModule
           ),
       },

@@ -1,20 +1,19 @@
+import { Observable } from 'rxjs';
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
-import { Category } from '@app/type/category';
-import { Order } from '@app/type/order';
-import { Product } from '@app/type/product';
+import { Category } from '@app/models/category';
 import { environment as env } from '@root/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OrderService {
+export class CategoryService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  create(order: Order) {
-    return this.http.post<string>(env.apiUrl + `order`, order);
+  getMany(): Observable<Category[]> {
+    return this.http.get<Category[]>(env.apiUrl + `category/bulk`);
   }
 }
