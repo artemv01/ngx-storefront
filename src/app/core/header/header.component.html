@@ -60,7 +60,7 @@
                 </a></div>
             <ul id="mobileMenu"
                 class="flex flex-col items-start">
-                <li *ngFor="let cat of categoryList"
+                <li *ngFor="let cat of (categoryList$ | async)"
                     [routerLink]="['/category', cat._id]"
                     class="font-thin  cursor-pointer leading-8 text-lg"
                     routerLinkActive="active-link"><span>{{cat.name}}</span></li>
@@ -68,7 +68,7 @@
         </nav>
         <ul class="flex-wrap list-none mt-4 text-txHeader hidden md:flex"
             id="desktopMenu">
-            <li *ngFor="let cat of categoryList"
+            <li *ngFor="let cat of (categoryList$ | async)"
                 class="font-thin  cursor-pointer mr-4 leading-8 text-lg"
                 [routerLink]="['/category', cat._id]"
                 routerLinkActive="active-link"><span>{{cat.name}}</span></li>

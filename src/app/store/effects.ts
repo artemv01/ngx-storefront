@@ -1,6 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from '@app/models/category';
+import { CategoryService } from '@app/services/category.service';
 import { ReviewService } from '@app/services/review.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { forkJoin, of } from 'rxjs';
@@ -16,7 +18,8 @@ export class ShopEffects {
     private actions$: Actions,
     private router: Router,
     private productQuery: ProductsService,
-    private reviewQuery: ReviewService
+    private reviewQuery: ReviewService,
+    private categoryQuery: CategoryService
   ) {}
 
   homePageLoad$ = createEffect(() =>
@@ -31,8 +34,20 @@ export class ShopEffects {
       ),
       map((resp: IHomePageState) => ShopActions.loadHomePageSuccess(resp)),
       catchError((error: HttpErrorResponse) => {
-        console.log(error);
         return of(ShopActions.loadHomePageFailure({ error }));
+      })
+    )
+  );
+
+  loadCategories$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ShopActions.loadCategories),
+      concatMap(() => this.categoryQuery.getMany()),
+      map((categories: Category[]) =>
+        ShopActions.loadCategoriesSuccess({ categories })
+      ),
+      catchError((error: HttpErrorResponse) => {
+        return of(ShopActions.loadCategoriesFailure({ error }));
       })
     )
   );

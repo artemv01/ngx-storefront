@@ -16,34 +16,12 @@ import { selectHomePageData } from '@app/store/selectors';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  categories: Category[] = [];
-  reviews$: BehaviorSubject<Review[]> = new BehaviorSubject([]);
-  saleProducts: Product[] = [];
-  //   slideConfig = { slidesToShow: 2, slidesToScroll: 2 };
   pageData$: Observable<IHomePageState>;
-  constructor(
-    private productQuery: ProductsService,
-    private reviewQuery: ReviewService,
-    private loading: LoadingService,
-    private titleServ: TitleService,
-    private store: Store<ShopState>
-  ) {}
+  constructor(private store: Store<ShopState>) {}
   topRated: Product[] = [];
 
   ngOnInit(): void {
     this.pageData$ = this.store.select(selectHomePageData);
-    /*  this.loading.show();
-    forkJoin({
-      onSale: this.productQuery.onSale(),
-      topRated: this.productQuery.topRated(),
-      reviews: this.reviewQuery.recent(),
-    }).subscribe(({ onSale, topRated, reviews }) => {
-      this.saleProducts = onSale;
-      this.topRated = topRated;
-      this.reviews$.next(reviews);
-      this.titleServ.set('Home');
-      this.loading.hide();
-    }); */
   }
 
   addToCart() {}

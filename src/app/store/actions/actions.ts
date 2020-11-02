@@ -3,6 +3,7 @@ import { Review } from '@app/models/review';
 import { createAction, props } from '@ngrx/store';
 import { Product } from '@app/models/product';
 import { IHomePageState } from '..';
+import { Category } from '@app/models/category';
 
 export const loadHomePage = createAction(
   '[Home Component] Load Home Page Data'
@@ -13,6 +14,19 @@ export const loadHomePageSuccess = createAction(
 );
 export const loadHomePageFailure = createAction(
   '[Home Component] Load Home Page Data Failure',
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const loadCategories = createAction(
+  '[Header Component] Load Categories'
+);
+export const loadCategoriesSuccess = createAction(
+  '[Header Component] Load Categories Success',
+  props<{ categories: Category[] }>()
+);
+
+export const loadCategoriesFailure = createAction(
+  '[Header Component] Load Categories Failure',
   props<{ error: HttpErrorResponse }>()
 );
 

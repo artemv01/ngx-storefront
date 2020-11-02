@@ -11,3 +11,7 @@ export const selectIsLoaded = createSelector(
   selectState,
   (state: ShopState) => state.loaded
 );
+export const selectCategories = createSelector(
+  selectState,
+  (state: ShopState) => state.categories
+);

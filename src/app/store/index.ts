@@ -12,6 +12,7 @@ import {
 import { environment } from '../../environments/environment';
 import { ShopActions } from '@app/store/actions';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Category } from '@app/models/category';
 
 export const featureKey = 'shop';
 
@@ -23,6 +24,7 @@ export interface IHomePageState {
 
 export interface ShopState {
   homePage: IHomePageState;
+  categories: Category[];
   loaded: boolean;
   error: HttpErrorResponse;
 }
@@ -33,6 +35,7 @@ export const initialState = {
     onSaleProducts: undefined,
     recentReviews: undefined,
   },
+  categories: undefined,
   loaded: undefined,
   error: undefined,
 };
@@ -47,6 +50,10 @@ export const reducers = createReducer(
       recentReviews: action.recentReviews,
     },
     loaded: true,
+  })),
+  on(ShopActions.loadCategoriesSuccess, (state, action) => ({
+    ...state,
+    categories: action.categories,
   }))
   /*  on(ShopActions.loadTopRatedProductsSuccess, (state, action) => ({
     ...state,

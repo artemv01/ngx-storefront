@@ -8,13 +8,17 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { CartService } from '@app/services/cart.service';
 import { SearchService } from '@app/services/search.service';
 import { NotificationService } from '@app/services/notification.service';
 import { Router } from '@angular/router';
 import { CategoryService } from '@app/services/category.service';
+import { ShopState } from '@app/store';
+import { Store } from '@ngrx/store';
+import { ShopActions } from '@app/store/actions';
+import { selectCategories } from '@app/store/selectors';
 
 interface Category {
   _id: string;
@@ -29,28 +33,21 @@ interface Category {
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  // showCart = false
   @ViewChild('header') header: ElementRef;
   @Input('routeChange$') routeChange$: Subject<null>;
 
   destroy = new Subject();
-  categoryList: Category[] = [];
+  categoryList$: Observable<Category[]>;
   constructor(
-    private fb: FormBuilder,
-    private categoryQuery: CategoryService,
     public cart: CartService,
     public searchService: SearchService,
     public notify: NotificationService,
-    private router: Router
+    private store: Store<ShopState>
   ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(takeUntil(this.destroy)).subscribe(() => {
-      this.header.nativeElement.classList.remove('menu-active');
-    });
-    this.categoryQuery.getMany().subscribe((cats: Category[]) => {
-      this.categoryList = cats;
-    });
+    this.store.dispatch(ShopActions.loadCategories());
+    this.categoryList$ = this.store.select(selectCategories);
   }
   ngOnDestroy() {
     this.destroy.next(null);

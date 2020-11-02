@@ -24,9 +24,6 @@ export class ReviewSliderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    console.log(this.reviews);
-    console.log(this.slideNavNext);
-    console.log(this.slideNavPrev);
     this.slideConfig = {
       slidesToShow: 1,
       slidesToScroll: 1,
