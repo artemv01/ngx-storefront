@@ -2,15 +2,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Review } from '@app/models/review';
 import { createAction, props } from '@ngrx/store';
 import { Product } from '@app/models/product';
-import { IHomePageState } from '..';
+import { IHomePageState, ISingleProductPageState } from '..';
 import { Category } from '@app/models/category';
+import { CreateReviewResp } from '@app/models/create-review-resp';
 
 export const loadHomePage = createAction(
   '[Home Component] Load Home Page Data'
 );
 export const loadHomePageSuccess = createAction(
   '[Home Component] Load Home Page Data Success',
-  props<IHomePageState>()
+  props<{ payload: IHomePageState }>()
 );
 export const loadHomePageFailure = createAction(
   '[Home Component] Load Home Page Data Failure',
@@ -24,9 +25,33 @@ export const loadCategoriesSuccess = createAction(
   '[Header Component] Load Categories Success',
   props<{ categories: Category[] }>()
 );
-
 export const loadCategoriesFailure = createAction(
   '[Header Component] Load Categories Failure',
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const loadSingleProductPage = createAction(
+  '[Single Product Component] Load Single Product Page',
+  props<{ itemId: Product['_id'] }>()
+);
+export const loadSingleProductPageSuccess = createAction(
+  '[Single Product Component] Load Single Product Page Success',
+  props<{ payload: ISingleProductPageState }>()
+);
+export const loadSingleProductPageFailure = createAction(
+  '[Single Product Component] Load Single Product Page Failure',
+  props<{ error: HttpErrorResponse }>()
+);
+export const createReview = createAction(
+  '[Single Product Component] Create Review',
+  props<{ payload: Review }>()
+);
+export const createReviewSuccess = createAction(
+  '[Single Product Component] Create Review Success',
+  props<{ payload: CreateReviewResp }>()
+);
+export const createReviewFailure = createAction(
+  '[Single Product Component] Create Review Failure',
   props<{ error: HttpErrorResponse }>()
 );
 

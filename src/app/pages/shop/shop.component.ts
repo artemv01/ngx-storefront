@@ -24,6 +24,7 @@ import {
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { QueryParams } from '@app/models/query-params';
+import { fadeAnimation } from '@app/core/animations';
 
 @Component({
   selector: 'app-shop',
@@ -73,23 +74,8 @@ import { QueryParams } from '@app/models/query-params';
         style({ display: 'none' }),
       ]),
     ]),
-    trigger('modalWindow', [
-      transition(':enter', [
-        style({ opacity: 0, display: 'flex' }),
-        animate('100ms', style({ opacity: 0.6 })),
-      ]),
-      transition(':leave', [
-        animate('100ms', style({ opacity: 0 })),
-        style({ display: 'none' }),
-      ]),
-    ]),
-    trigger('loadingScreen', [
-      state('in', style({ opacity: 1 })),
 
-      transition(':enter', [style({ opacity: 0 }), animate(200)]),
-
-      transition(':leave', animate(200, style({ opacity: 0 }))),
-    ]),
+    fadeAnimation,
   ],
 })
 export class ShopComponent implements OnInit, OnDestroy {

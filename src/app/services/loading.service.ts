@@ -15,6 +15,13 @@ export class LoadingService {
     }
     this.displayIncrement++;
   }
+  hide() {
+    this.displayIncrement =
+      this.displayIncrement > 1 ? this.displayIncrement - 1 : 0;
+    if (this.displayIncrement === 0 && !this.permanent) {
+      setTimeout(() => this.display$.next(false), 0);
+    }
+  }
   showPermanent(show = true) {
     this.permanent = show;
     if (this.permanent) {
@@ -23,13 +30,7 @@ export class LoadingService {
       setTimeout(() => this.display$.next(false), 0);
     }
   }
-  hide() {
-    this.displayIncrement =
-      this.displayIncrement > 1 ? this.displayIncrement - 1 : 0;
-    if (this.displayIncrement === 0 && !this.permanent) {
-      setTimeout(() => this.display$.next(false), 0);
-    }
-  }
+
   forceHide() {
     this.displayIncrement = 0;
     setTimeout(() => this.display$.next(false), 0);

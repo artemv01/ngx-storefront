@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '@app/models/product';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 import { environment as env } from '@root/environments/environment';
 import { QueryParams } from '@app/models/query-params';
@@ -16,7 +16,9 @@ export class ProductsService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getOne(id: string | Product): Observable<Product> {
-    return this.http.get<Product>(env.apiUrl + `product/${id}`);
+    return this.http
+      .get<Product>(env.apiUrl + `product/${id}`)
+      .pipe(delay(2000));
   }
 
   getMany(query: QueryParams): Observable<QueryResponse<Product>> {
@@ -25,18 +27,26 @@ export class ProductsService {
       params.set(key, val as string);
     }
 
-    return this.http.get<any>(env.apiUrl + `product/?${params.toString()}`);
+    return this.http
+      .get<any>(env.apiUrl + `product/?${params.toString()}`)
+      .pipe(delay(2000));
   }
 
   onSale(): Observable<Product[]> {
-    return this.http.get<Product[]>(env.apiUrl + `product/sale`);
+    return this.http
+      .get<Product[]>(env.apiUrl + `product/sale`)
+      .pipe(delay(2000));
   }
 
   topRated(): Observable<any> {
-    return this.http.get<Product[]>(env.apiUrl + `product/top-rated`);
+    return this.http
+      .get<Product[]>(env.apiUrl + `product/top-rated`)
+      .pipe(delay(2000));
   }
 
   related(id: string): Observable<any> {
-    return this.http.get<Product[]>(env.apiUrl + `product/${id}/related`);
+    return this.http
+      .get<Product[]>(env.apiUrl + `product/${id}/related`)
+      .pipe(delay(2000));
   }
 }

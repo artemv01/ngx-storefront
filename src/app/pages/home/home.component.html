@@ -7,7 +7,7 @@
         <h1 class="page-header">Sale!</h1>
         <app-product-grid [products]="(pageData$ | async).topRatedProducts"></app-product-grid>
     </section>
-    <section [hidden]="!(pageData$ | async).recentReviews.length"
+    <section [hidden]="!(pageData$ | async).recentReviews?.length"
         id="recentReviews">
         <h1 class="page-header">Recent reviews</h1>
 

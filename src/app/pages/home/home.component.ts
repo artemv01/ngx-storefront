@@ -10,6 +10,7 @@ import { ReviewService } from '@app/services/review.service';
 import { IHomePageState, ShopState } from '@app/store';
 import { Store } from '@ngrx/store';
 import { selectHomePageData } from '@app/store/selectors';
+import { loadHomePage } from '@app/store/actions/actions';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

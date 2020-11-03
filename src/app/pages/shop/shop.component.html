@@ -1,7 +1,6 @@
 <div id="shopApp"
     class="flex flex-col"
-    #top
-    [class.app-loading]="(loading.display$ | async)">
+    #top>
     <div class="loading-screen-alert"
         *ngIf="(alertService.display | async)"
         (click)="alertService.hide()"
@@ -21,7 +20,7 @@
     </div>
     <app-header [routeChange$]="routeChange$"></app-header>
     <main *ngIf="searchMode"
-        [@loadingScreen]
+        [@fade]
         class="container mt-6 flex-auto mb-16 pt-12 xl:pt-20">
 
 
@@ -143,22 +142,4 @@
             (activate)='onRouteActivate()'></router-outlet>
     </div>
     <app-footer></app-footer>
-    <div *ngIf="loading.display$ | async"
-        id="loadingScreen"
-        [@loadingScreen]>
-        <div class="lds-default">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
 </div>

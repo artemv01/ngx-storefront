@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntil, mergeMap } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, Observable } from 'rxjs';
 
 import { Product } from '@app/models/product';
 import { CartService } from '@app/services/cart.service';
@@ -22,6 +22,15 @@ import { TitleService } from '@app/services/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { ProductsService } from '@app/services/products.service';
 import { ReviewService } from '@app/services/review.service';
+import { Store } from '@ngrx/store';
+import { ShopState } from '@app/store';
+import {
+  selectReviewLoading,
+  selectSingleProductPageData,
+} from '@app/store/selectors';
+import { ShopActions } from '@app/store/actions';
+import { loadSingleProductPage } from '@app/store/actions/actions';
+import { Review } from '@app/models/review';
 
 @Component({
   selector: 'app-single-product',
@@ -41,11 +50,11 @@ export class SingleProductComponent
   allCategories: Category[] = [];
   isReviewSubmitted: boolean = false;
 
-  postReviewLoading = false;
+  postReviewLoading$: Observable<boolean>;
 
   addToCartQuantity = 1;
 
-  captchaToken = '';
+  captchaToken = 'abc   ';
   reviewForm = this.fb.group({
     authorName: ['', [Validators.required]],
     authorEmail: ['', [Validators.required, Validators.email]],
@@ -85,62 +94,36 @@ export class SingleProductComponent
     public loading: LoadingService,
     public cart: CartService,
     public notify: NotificationService,
+    private store: Store<ShopState>,
     private titleServ: TitleService
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.productId = params.get('id');
-      if (!this.productId) {
-        // TODO!
-      }
-      this.loading.show();
-      forkJoin({
-        product: this.productService.getOne(this.productId),
-        relatedProducts: this.productService.related(this.productId),
-      }).subscribe(({ product, relatedProducts }) => {
-        this.product = product;
-        this.relatedProducts = relatedProducts;
-        this.breadcrumbs = [];
-        if (product.categories?.length) {
-          this.breadcrumbs.push([
-            product.categories[0].name,
-            ['/products', product._id],
-          ]);
-        }
-        this.breadcrumbs.push([product.name, ['/products', product._id]]);
-        this.titleServ.set(product.name);
-        this.loading.hide();
-      });
+
+      this.store
+        .select(selectSingleProductPageData)
+        .pipe(takeUntil(this.destroy))
+        .subscribe((pageData) => {
+          this.product = pageData.product;
+          this.relatedProducts = pageData.relatedProducts;
+        });
     });
+    this.postReviewLoading$ = this.store.select(selectReviewLoading);
   }
 
   ngAfterViewInit() {}
 
-  //   onRate(rating: number) {
-  //     this.submittedRating = rating;
-  //   }
-
   submitReview() {
-    this.postReviewLoading = true;
-    const reviewData = {
+    const reviewData: Review = {
       ...this.reviewForm.value,
       productId: this.productId,
       captcha: this.captchaToken,
     };
-    this.reviewQuery
-      .submit(reviewData)
-      .pipe(mergeMap(() => this.reviewQuery.forProduct(this.productId)))
-      .subscribe((result) => {
-        // this.isReviewSubmitted = true;
-        this.reviewForm.reset();
-        this.product.reviews = result.reviews;
-        this.product.ratingCount = result.ratingCount;
-        this.product.rating = result.rating;
-        this.notify.push({ message: 'Your review has been submitted!' });
-        this.reCaptcha.reset();
-        this.postReviewLoading = false;
-      });
+    this.store.dispatch(ShopActions.createReview({ payload: reviewData }));
+    this.reviewForm.reset();
+    this.reCaptcha.reset();
   }
 
   addToCartFromGallery(product: Product) {
@@ -196,7 +179,6 @@ export class SingleProductComponent
   }
 
   captchaEvent(result: string) {
-    console.log(result);
     this.captchaToken = result;
   }
 
