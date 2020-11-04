@@ -1,4 +1,4 @@
-export interface QueryResponse<T> {
+export interface QueryItemsResp<T> {
   items: T[];
   pages: number;
   page: number;

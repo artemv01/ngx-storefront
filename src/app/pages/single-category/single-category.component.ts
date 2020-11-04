@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  AfterViewChecked,
+} from '@angular/core';
 import { LoadingService } from '@app/services/loading.service';
 import {
   transition,
@@ -10,13 +16,25 @@ import {
 
 import { SearchService } from '@app/services/search.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { PaginationParams } from '@app/models/pagination-params';
+import { Observable, Subject } from 'rxjs';
 import { Category } from '@app/models/category';
 import { ActivatedRoute } from '@angular/router';
 import { TitleService } from '@app/services/title.service';
-import { QueryParams } from '@app/models/query-params';
 import { ProductsService } from '@app/services/products.service';
+import { SingleCategoryPageState } from './store/single-category-page.reducer';
+import { Store } from '@ngrx/store';
+import {
+  selectCategoryName,
+  selectCurrentPage,
+  selectItemsTotal,
+  selectPagesTotal,
+  selectProducts,
+  selectShowPagination,
+} from './store/single-category-page.selectors';
+import * as SingleCategoryPageActions from './store/single-category-page.actions';
+
+import { Product } from '@app/models/product';
+import { QueryItemsReq } from '@app/models/query-items-req';
 
 @Component({
   selector: 'app-single-category',
@@ -24,13 +42,6 @@ import { ProductsService } from '@app/services/products.service';
   styleUrls: ['./single-category.component.scss'],
 
   animations: [
-    /*  trigger('loadingScreen', [
-      state('in', style({ opacity: 1 })),
-
-      transition(':enter', [style({ opacity: 0 }), animate(200)]),
-
-      transition(':leave', animate(200, style({ opacity: 0 }))),
-    ]), */
     trigger('loadingScreen', [
       state('in', style({ opacity: 1 })),
       transition(':enter', [style({ opacity: 0 }), animate(600)]),
@@ -38,7 +49,8 @@ import { ProductsService } from '@app/services/products.service';
     ]),
   ],
 })
-export class SingleCategoryComponent implements OnInit, OnDestroy {
+export class SingleCategoryComponent
+  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
   filtersChanged: Subject<any> = new Subject();
   destroy: Subject<any> = new Subject();
   itemsLoading = false;
@@ -48,15 +60,13 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   itemsTotal = 0;
   products: any = [];
   showPagination: boolean;
-  filterParams: QueryParams = {
+  filterParams = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
     categoryId: '',
-  };
-  paginationParams: PaginationParams = {
     page: 1,
-    limit: 9,
+    limit: 2,
   };
 
   selSortType = 'Sort by popularity';
@@ -69,25 +79,59 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
 
   allCategories: Category[] = [];
 
+  products$: Observable<Product[]>;
+  pagesTotal$: Observable<number>;
+  currentPage$: Observable<number>;
+  itemsTotal$: Observable<number>;
+  showPagination$: Observable<boolean>;
+  categoryName$: Observable<string>;
+
   constructor(
     public loading: LoadingService,
     public search: SearchService,
     private route: ActivatedRoute,
     private titleServ: TitleService,
-    private productQuery: ProductsService
-  ) {}
+    private productQuery: ProductsService,
+    private store: Store<SingleCategoryPageState>
+  ) {
+    this.products$ = store.select(selectProducts);
+    this.pagesTotal$ = store.select(selectPagesTotal);
+    this.currentPage$ = store.select(selectCurrentPage);
+    this.itemsTotal$ = store.select(selectItemsTotal);
+    this.showPagination$ = store.select(selectShowPagination);
+    this.categoryName$ = store.select(selectCategoryName);
+
+    console.log(
+      'Component constructor',
+      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
+    );
+  }
 
   ngOnInit(): void {
+    console.log(
+      'Component on init',
+      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
+    );
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.filterParams.categoryId = params.get('id');
-      this.loading.show();
       this.filterProducts();
     });
+  }
+  ngAfterViewInit() {
+    console.log(
+      'Component on after view init',
+      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
+    );
+  }
+  ngAfterViewChecked() {
+    console.log(
+      'Component on after view checked',
+      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
+    );
   }
   sortBy(key: string, order = 'desc') {
     this.filterParams.sortType = key;
     this.filterParams.sortOrder = order;
-    this.filtersChanged.next(null);
     this.filterProducts();
   }
   sort(key: string) {
@@ -107,7 +151,10 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
     }
   }
   filterProducts() {
-    this.itemsLoading = true;
+    this.store.dispatch(
+      SingleCategoryPageActions.loadPageData({ payload: this.filterParams })
+    );
+    /* this.itemsLoading = true;
     this.productQuery
       .getMany({
         ...this.filterParams,
@@ -125,13 +172,12 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
 
         this.loading.hide();
         this.itemsLoading = false;
-      });
+      }); */
   }
 
   paginationChange(newPage: number) {
-    this.paginationParams.page = newPage;
-    this.filtersChanged.next(null);
-
+    console.log(Object.getOwnPropertyDescriptor(this.filterParams, 'page'));
+    this.filterParams.page = newPage;
     this.filterProducts();
   }
 

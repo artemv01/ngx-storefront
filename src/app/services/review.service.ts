@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { Review } from '@app/models/review';
 import { environment as env } from '@root/environments/environment';
-import { ReviewsForProductResp } from '@app/models/reviews-for-product-resp';
 import { CreateReviewResp } from '@app/models/create-review-resp';
 import { delay } from 'rxjs/operators';
 
@@ -28,9 +27,9 @@ export class ReviewService {
       .pipe(delay(2000));
   }
 
-  forProduct(productId: string): Observable<ReviewsForProductResp> {
+  forProduct(productId: string): Observable<CreateReviewResp> {
     return this.http
-      .get<ReviewsForProductResp>(env.apiUrl + `product/${productId}/reviews`)
+      .get<CreateReviewResp>(env.apiUrl + `product/${productId}/reviews`)
       .pipe(delay(2000));
   }
 }

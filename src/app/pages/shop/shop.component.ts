@@ -14,7 +14,6 @@ import { AlertService } from '@app/services/alert.service';
 import { LoadingService } from '@app/services/loading.service';
 import { SearchService } from '@app/services/search.service';
 import { Category } from '@app/models/category';
-import { PaginationParams } from '@app/models/pagination-params';
 import {
   NavigationStart,
   RouteConfigLoadEnd,
@@ -23,7 +22,7 @@ import {
 } from '@angular/router';
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
-import { QueryParams } from '@app/models/query-params';
+import { QueryItemsReq } from '@app/models/query-items-req';
 import { fadeAnimation } from '@app/core/animations';
 
 @Component({
@@ -90,15 +89,14 @@ export class ShopComponent implements OnInit, OnDestroy {
 
   products: any = [];
   showPagination: boolean;
-  filterParams: QueryParams = {
+  filterParams: QueryItemsReq = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
-  };
-  paginationParams: PaginationParams = {
     page: 1,
     limit: 9,
   };
+
   itemsTotal = 0;
 
   selSortType = 'Sort by popularity';
@@ -143,12 +141,11 @@ export class ShopComponent implements OnInit, OnDestroy {
           this.searchLoading = true;
         }),
         switchMap((searchText) => {
-          this.paginationParams.page = 1;
+          this.filterParams.page = 1;
           this.filterParams.search = searchText;
           return this.productQuery
             .getMany({
               ...this.filterParams,
-              ...this.paginationParams,
             })
             .pipe(takeUntil(this.filtersChanged), delay(2000));
         })
@@ -195,7 +192,6 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.productQuery
       .getMany({
         ...this.filterParams,
-        ...this.paginationParams,
       })
       .pipe(takeUntil(this.filtersChanged))
       .subscribe((searchResult) => {
@@ -213,7 +209,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   paginationChange(data: number) {
-    this.paginationParams.page = data;
+    this.filterParams.page = data;
     this.filtersChanged.next(null);
 
     this.filterProducts();

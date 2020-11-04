@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 
 import { environment as env } from '@root/environments/environment';
-import { QueryParams } from '@app/models/query-params';
-import { QueryResponse } from '@app/models/query-response';
+import { QueryItemsReq } from '@app/models/query-items-req';
+import { QueryItemsResp } from '@app/models/query-items-resp';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ export class ProductsService {
       .pipe(delay(2000));
   }
 
-  getMany(query: QueryParams): Observable<QueryResponse<Product>> {
+  getMany(query: QueryItemsReq): Observable<QueryItemsResp<Product>> {
     const params = new URLSearchParams();
     for (const [key, val] of Object.entries(query)) {
       params.set(key, val as string);
@@ -38,13 +38,13 @@ export class ProductsService {
       .pipe(delay(2000));
   }
 
-  topRated(): Observable<any> {
+  topRated(): Observable<Product[]> {
     return this.http
       .get<Product[]>(env.apiUrl + `product/top-rated`)
       .pipe(delay(2000));
   }
 
-  related(id: string): Observable<any> {
+  related(id: string): Observable<Product[]> {
     return this.http
       .get<Product[]>(env.apiUrl + `product/${id}/related`)
       .pipe(delay(2000));

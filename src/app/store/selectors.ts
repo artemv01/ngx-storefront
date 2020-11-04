@@ -11,10 +11,6 @@ export const selectSingleProductPageData = createSelector(
   selectState,
   (state: ShopState) => state.singleProductPage
 );
-export const selectIsSingleProductPageLoaded = createSelector(
-  selectState,
-  (state: ShopState) => state.singleProductPage.loaded
-);
 
 export const selectReviewLoading = createSelector(
   selectState,

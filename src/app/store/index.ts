@@ -26,7 +26,6 @@ export interface ISingleProductPageState {
   product: Product;
   relatedProducts: Product[];
   createReviewLoading: boolean;
-  loaded: boolean;
 }
 
 export interface ShopState {
@@ -60,7 +59,7 @@ export const reducers = createReducer(
   }),
   on(ShopActions.loadSingleProductPageSuccess, (state: ShopState, action) => {
     const stateCopy = deepCopy<ShopState>(state);
-    stateCopy.singleProductPage = { ...action.payload, loaded: true };
+    stateCopy.singleProductPage = { ...action.payload };
     return stateCopy;
   }),
   on(ShopActions.createReview, (state: ShopState, action) => {

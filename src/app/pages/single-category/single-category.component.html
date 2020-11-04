@@ -3,11 +3,11 @@
     <div class="flex flex-col xl:flex-row  ">
         <div #top
             class="w-full xl:w-9/12">
-            <h1 *ngIf="!products.length"
-                class="page-header mb-12">No products in {{categoryName}}
+            <h1 *ngIf="!((products$ | async)?.length)"
+                class="page-header mb-12">No products in {{categoryName$ | async}}
             </h1>
-            <ng-container *ngIf="products.length">
-                <h1 class="page-header mb-12">Products in {{categoryName}}
+            <ng-container *ngIf="(products$ | async)?.length">
+                <h1 class="page-header mb-12">Products in {{categoryName$ | async}}
                 </h1>
                 <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
                     <app-select [attr.disabled]="itemsLoading"
@@ -19,14 +19,14 @@
                         [options]="actions"
                         [addClass]="'z-50'"
                         [addClassWrapper]="' mr-4'"></app-select>
-                    <ng-container *ngIf="showPagination">
+                    <ng-container *ngIf="showPagination$ | async">
                         <div class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                             Total
                             {{itemsTotal}}
                             entries</div>
-                        <app-pagination [pagesTotal]="pagesTotal"
+                        <app-pagination [pagesTotal]="pagesTotal$ | async"
                             [attr.disabled]="itemsLoading"
-                            [currentPage]="currentPage"
+                            [currentPage]="currentPage$ | async"
                             (change)="paginationChange($event)"></app-pagination>
                     </ng-container>
                 </div>
@@ -47,8 +47,8 @@
                         <div></div>
                     </div>
                 </div>
-                <div [hidden]="!products?.length || itemsLoading">
-                    <app-product-grid [products]="products"></app-product-grid>
+                <div [hidden]="!(products$ | async)?.length || itemsLoading">
+                    <app-product-grid [products]="(products$ | async)"></app-product-grid>
                 </div>
                 <div
                     class="flex items-start flex-col mb-8 md:flex-row md:flex-no-wrap md:items-center">
@@ -61,14 +61,14 @@
                         [options]="actions"
                         [addClass]="'z-50'"
                         [addClassWrapper]="' mr-4'"></app-select>
-                    <ng-container *ngIf="showPagination">
+                    <ng-container *ngIf="showPagination$ | async">
                         <div class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                             Total
-                            {{itemsTotal}}
+                            {{itemsTotal$ | async}}
                             entries</div>
-                        <app-pagination [pagesTotal]="pagesTotal"
+                        <app-pagination [pagesTotal]="pagesTotal$ | async"
                             [attr.disabled]="itemsLoading"
-                            [currentPage]="currentPage"
+                            [currentPage]="currentPage$ | async"
                             (change)="paginationChange($event); scrollToElement(top)">
                         </app-pagination>
                     </ng-container>

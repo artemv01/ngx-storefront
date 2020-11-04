@@ -8,7 +8,7 @@ import { ShopState } from '@app/store';
 import { loadSingleProductPage } from '@app/store/actions/actions';
 import {
   selectIsLoaded,
-  selectIsSingleProductPageLoaded,
+  selectSingleProductPageData,
 } from '@app/store/selectors';
 import { Store } from '@ngrx/store';
 import { forkJoin, Observable } from 'rxjs';
@@ -24,13 +24,20 @@ export class SingleProductPageResolver implements Resolve<boolean> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select(selectIsSingleProductPageLoaded).pipe(
-      tap((isLoaded) =>
-        !isLoaded
-          ? this.store.dispatch(
-              loadSingleProductPage({ itemId: route.paramMap.get('id') })
-            )
-          : null
+    return this.store.select(selectSingleProductPageData).pipe(
+      tap((pageData) => {
+        if (
+          !pageData.product ||
+          pageData.product._id !== route.paramMap.get('id')
+        ) {
+          this.store.dispatch(
+            loadSingleProductPage({ itemId: route.paramMap.get('id') })
+          );
+        }
+      }),
+      map(
+        (pageData) =>
+          pageData.product && pageData.product._id == route.paramMap.get('id')
       ),
       filter((loaded) => !!loaded),
       first()
