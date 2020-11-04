@@ -19,7 +19,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   @Input('currentPage') currentPage: number;
   @Input('pageRangeLimit') pageRangeLimit = 4;
   @Input('loading') loading = false;
-  @Output('change') onChange = new EventEmitter();
+  @Output('onChange') onChange = new EventEmitter();
 
   rangeSymbol = '...';
 

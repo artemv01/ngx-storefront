@@ -29,3 +29,7 @@ export const selectCategoryName = createSelector(
   selectState,
   (state) => state.categoryName
 );
+export const selectLoading = createSelector(
+  selectState,
+  (state) => state.loading
+);

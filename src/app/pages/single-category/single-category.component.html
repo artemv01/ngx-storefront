@@ -10,7 +10,7 @@
                 <h1 class="page-header mb-12">Products in {{categoryName$ | async}}
                 </h1>
                 <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                    <app-select [attr.disabled]="itemsLoading"
+                    <app-select [attr.disabled]="(itemsLoading$ | async)"
                         ngDefaultControl
                         name='selectAction'
                         (change)="sort($event)"
@@ -25,12 +25,12 @@
                             {{itemsTotal}}
                             entries</div>
                         <app-pagination [pagesTotal]="pagesTotal$ | async"
-                            [attr.disabled]="itemsLoading"
+                            [attr.disabled]="(itemsLoading$ | async)"
                             [currentPage]="currentPage$ | async"
-                            (change)="paginationChange($event)"></app-pagination>
+                            (onChange)="paginationChange($event)"></app-pagination>
                     </ng-container>
                 </div>
-                <div *ngIf="itemsLoading"
+                <div *ngIf="(itemsLoading$ | async)"
                     id="searchLoading">
                     <div class="lds-default">
                         <div></div>
@@ -47,12 +47,12 @@
                         <div></div>
                     </div>
                 </div>
-                <div [hidden]="!(products$ | async)?.length || itemsLoading">
+                <div [hidden]="!(products$ | async)?.length || (itemsLoading$ | async)">
                     <app-product-grid [products]="(products$ | async)"></app-product-grid>
                 </div>
                 <div
                     class="flex items-start flex-col mb-8 md:flex-row md:flex-no-wrap md:items-center">
-                    <app-select [attr.disabled]="itemsLoading"
+                    <app-select [attr.disabled]="(itemsLoading$ | async)"
                         ngDefaultControl
                         name='selectAction'
                         (change)="sort($event)"
@@ -67,7 +67,7 @@
                             {{itemsTotal$ | async}}
                             entries</div>
                         <app-pagination [pagesTotal]="pagesTotal$ | async"
-                            [attr.disabled]="itemsLoading"
+                            [attr.disabled]="(itemsLoading$ | async)"
                             [currentPage]="currentPage$ | async"
                             (change)="paginationChange($event); scrollToElement(top)">
                         </app-pagination>

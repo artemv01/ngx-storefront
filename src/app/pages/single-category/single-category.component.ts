@@ -27,6 +27,7 @@ import {
   selectCategoryName,
   selectCurrentPage,
   selectItemsTotal,
+  selectLoading,
   selectPagesTotal,
   selectProducts,
   selectShowPagination,
@@ -49,22 +50,12 @@ import { QueryItemsReq } from '@app/models/query-items-req';
     ]),
   ],
 })
-export class SingleCategoryComponent
-  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
-  filtersChanged: Subject<any> = new Subject();
+export class SingleCategoryComponent implements OnInit, OnDestroy {
   destroy: Subject<any> = new Subject();
-  itemsLoading = false;
-  categoryName = '';
-  pagesTotal = 0;
-  currentPage = 0;
-  itemsTotal = 0;
-  products: any = [];
-  showPagination: boolean;
-  filterParams = {
+  filterParams: QueryItemsReq = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
-    categoryId: '',
     page: 1,
     limit: 2,
   };
@@ -85,6 +76,7 @@ export class SingleCategoryComponent
   itemsTotal$: Observable<number>;
   showPagination$: Observable<boolean>;
   categoryName$: Observable<string>;
+  itemsLoading$: Observable<boolean>;
 
   constructor(
     public loading: LoadingService,
@@ -100,35 +92,16 @@ export class SingleCategoryComponent
     this.itemsTotal$ = store.select(selectItemsTotal);
     this.showPagination$ = store.select(selectShowPagination);
     this.categoryName$ = store.select(selectCategoryName);
-
-    console.log(
-      'Component constructor',
-      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
-    );
+    this.itemsLoading$ = store.select(selectLoading);
   }
 
   ngOnInit(): void {
-    console.log(
-      'Component on init',
-      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
-    );
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.filterParams.categoryId = params.get('id');
       this.filterProducts();
     });
   }
-  ngAfterViewInit() {
-    console.log(
-      'Component on after view init',
-      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
-    );
-  }
-  ngAfterViewChecked() {
-    console.log(
-      'Component on after view checked',
-      Object.getOwnPropertyDescriptor(this.filterParams, 'page')
-    );
-  }
+
   sortBy(key: string, order = 'desc') {
     this.filterParams.sortType = key;
     this.filterParams.sortOrder = order;
@@ -152,38 +125,17 @@ export class SingleCategoryComponent
   }
   filterProducts() {
     this.store.dispatch(
-      SingleCategoryPageActions.loadPageData({ payload: this.filterParams })
-    );
-    /* this.itemsLoading = true;
-    this.productQuery
-      .getMany({
-        ...this.filterParams,
-        ...this.paginationParams,
+      SingleCategoryPageActions.loadPageData({
+        payload: { ...this.filterParams },
       })
-      .pipe(takeUntil(this.filtersChanged))
-      .subscribe((searchResult) => {
-        this.products = searchResult.items;
-        this.pagesTotal = searchResult.pages;
-        this.currentPage = searchResult.page;
-        this.itemsTotal = searchResult.total;
-        this.showPagination = searchResult.pages > 1 ? true : false;
-        this.categoryName = searchResult.categoryName;
-        this.titleServ.set(this.categoryName);
-
-        this.loading.hide();
-        this.itemsLoading = false;
-      }); */
+    );
   }
 
   paginationChange(newPage: number) {
-    console.log(Object.getOwnPropertyDescriptor(this.filterParams, 'page'));
     this.filterParams.page = newPage;
     this.filterProducts();
   }
 
-  noticeChange(selected = '') {
-    console.log(selected);
-  }
   scrollToElement($element): void {
     $element.scrollIntoView({
       behavior: 'smooth',

@@ -12,6 +12,7 @@ export interface SingleCategoryPageState {
   currentPage: number;
   itemsTotal: number;
   showPagination?: boolean;
+  loading?: boolean;
 }
 
 export const initialState: SingleCategoryPageState = {
@@ -20,14 +21,19 @@ export const initialState: SingleCategoryPageState = {
   pagesTotal: undefined,
   currentPage: undefined,
   itemsTotal: undefined,
-  showPagination: undefined,
+  showPagination: false,
+  loading: false,
 };
 
 export const reducer = createReducer(
   initialState,
 
+  on(SingleCategoryPageActions.loadPageData, (state, action) => {
+    const copy = deepCopy(state);
+    return { ...copy, loading: true };
+  }),
   on(SingleCategoryPageActions.loadPageDataSuccess, (state, action) => {
     const copy = deepCopy(state);
-    return { ...copy, ...action.payload };
+    return { ...copy, ...action.payload, loading: false };
   })
 );
