@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { debounceTime, switchMap, takeUntil, tap, delay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, delay, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import {
   animate,
@@ -10,20 +10,33 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertService } from '@app/services/alert.service';
-import { LoadingService } from '@app/services/loading.service';
-import { SearchService } from '@app/services/search.service';
-import { Category } from '@app/models/category';
 import {
   NavigationStart,
   RouteConfigLoadEnd,
   RouteConfigLoadStart,
   Router,
 } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { fadeAnimation } from '@app/core/animations';
+import { Category } from '@app/models/category';
+import { Product } from '@app/models/product';
+import { QueryItemsReq } from '@app/models/query-items-req';
+import { AlertService } from '@app/services/alert.service';
+import { LoadingService } from '@app/services/loading.service';
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
-import { QueryItemsReq } from '@app/models/query-items-req';
-import { fadeAnimation } from '@app/core/animations';
+import { SearchService } from '@app/services/search.service';
+import { ShopState } from '@app/store';
+import * as ShopActions from '@app/store/actions';
+import {
+  selectCurrentPage,
+  selectItemsTotal,
+  selectPagesTotal,
+  selectProducts,
+  selectSearchLoading,
+  selectSearchMode,
+  selectShowPagination,
+} from '@app/store/selectors';
 
 @Component({
   selector: 'app-shop',
@@ -78,26 +91,16 @@ import { fadeAnimation } from '@app/core/animations';
   ],
 })
 export class ShopComponent implements OnInit, OnDestroy {
-  filtersChanged: Subject<any> = new Subject();
   destroy: Subject<any> = new Subject();
   routeChange$: Subject<null> = new Subject();
-  searchLoading = true;
-  searchMode = false;
-  searchText = '';
-  pagesTotal = 0;
-  currentPage = 0;
 
-  products: any = [];
-  showPagination: boolean;
   filterParams: QueryItemsReq = {
     sortOrder: 'desc',
     sortType: 'ratingCount',
     search: '',
     page: 1,
-    limit: 9,
+    limit: 3,
   };
-
-  itemsTotal = 0;
 
   selSortType = 'Sort by popularity';
   actions = [
@@ -107,7 +110,13 @@ export class ShopComponent implements OnInit, OnDestroy {
     'Sort by price (from high to low)',
   ];
 
-  allCategories: Category[] = [];
+  products$: Observable<Product[]>;
+  pagesTotal$: Observable<number>;
+  currentPage$: Observable<number>;
+  itemsTotal$: Observable<number>;
+  showPagination$: Observable<boolean>;
+  searchLoading$: Observable<boolean>;
+  searchMode$: Observable<boolean>;
 
   constructor(
     public loading: LoadingService,
@@ -115,14 +124,15 @@ export class ShopComponent implements OnInit, OnDestroy {
     public alertService: AlertService,
     private notify: NotificationService,
     private router: Router,
-    private productQuery: ProductsService
+    private productQuery: ProductsService,
+    private store: Store<ShopState>
   ) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.loading.forceHide();
-        this.searchMode = false;
+        this.store.dispatch(ShopActions.setSearchMode({ set: false }));
         this.notify.dismissAll();
         this.routeChange$.next(null);
       }
@@ -136,39 +146,27 @@ export class ShopComponent implements OnInit, OnDestroy {
     this.search.searchInput.valueChanges
       .pipe(
         debounceTime(500),
-        tap(() => {
-          this.searchMode = true;
-          this.searchLoading = true;
-        }),
-        switchMap((searchText) => {
+        tap((searchText) => {
           this.filterParams.page = 1;
           this.filterParams.search = searchText;
-          return this.productQuery
-            .getMany({
-              ...this.filterParams,
-            })
-            .pipe(takeUntil(this.filtersChanged), delay(2000));
+          this.store.dispatch(
+            ShopActions.loadSearch({ payload: { ...this.filterParams } })
+          );
         })
       )
-      .pipe(takeUntil(this.destroy))
+      .subscribe();
 
-      .subscribe((searchResult) => {
-        this.products = searchResult.items;
-        this.pagesTotal = searchResult.pages;
-        this.currentPage = searchResult.page;
-        this.itemsTotal = searchResult.total;
-        if (searchResult.pages > 1) {
-          this.showPagination = true;
-        } else {
-          this.showPagination = false;
-        }
-        this.searchLoading = false;
-      });
+    this.products$ = this.store.select(selectProducts);
+    this.pagesTotal$ = this.store.select(selectPagesTotal);
+    this.currentPage$ = this.store.select(selectCurrentPage);
+    this.itemsTotal$ = this.store.select(selectItemsTotal);
+    this.showPagination$ = this.store.select(selectShowPagination);
+    this.searchMode$ = this.store.select(selectSearchMode);
+    this.searchLoading$ = this.store.select(selectSearchLoading);
   }
   sortBy(key: string, order = 'desc') {
     this.filterParams.sortType = key;
     this.filterParams.sortOrder = order;
-    this.filtersChanged.next(null);
     this.filterProducts();
   }
   sort(key: string) {
@@ -188,35 +186,15 @@ export class ShopComponent implements OnInit, OnDestroy {
     }
   }
   filterProducts() {
-    this.searchLoading = true;
-    this.productQuery
-      .getMany({
-        ...this.filterParams,
-      })
-      .pipe(takeUntil(this.filtersChanged))
-      .subscribe((searchResult) => {
-        this.products = searchResult.items;
-        this.pagesTotal = searchResult.pages;
-        this.currentPage = searchResult.page;
-        this.itemsTotal = searchResult.total;
-        if (searchResult.pages > 1) {
-          this.showPagination = true;
-        } else {
-          this.showPagination = false;
-        }
-        this.searchLoading = false;
-      });
+    this.store.dispatch(
+      ShopActions.loadSearch({ payload: { ...this.filterParams } })
+    );
   }
 
   paginationChange(data: number) {
     this.filterParams.page = data;
-    this.filtersChanged.next(null);
 
     this.filterProducts();
-  }
-
-  cancelSearch() {
-    this.searchMode = false;
   }
 
   onRouteActivate() {}
@@ -225,6 +203,10 @@ export class ShopComponent implements OnInit, OnDestroy {
     return (
       outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation
     );
+  }
+
+  setSearchMode(set = true) {
+    this.store.dispatch(ShopActions.setSearchMode({ set }));
   }
 
   scrollToElement($element): void {

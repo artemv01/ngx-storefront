@@ -6,6 +6,7 @@ import { Category } from '@app/models/category';
 import { CreateReviewResp } from '@app/models/create-review-resp';
 import { QueryItemsResp } from '@app/models/query-items-resp';
 import { ShopState } from '.';
+import { QueryItemsReq } from '@app/models/query-items-req';
 
 export const loadCategories = createAction(
   '[Header Component] Load Categories'
@@ -19,7 +20,10 @@ export const loadCategoriesFailure = createAction(
   props<{ error: HttpErrorResponse }>()
 );
 
-export const loadSearch = createAction('[Shop Component] Load Search');
+export const loadSearch = createAction(
+  '[Shop Component] Load Search',
+  props<{ payload: QueryItemsReq }>()
+);
 export const loadSearchSuccess = createAction(
   '[Shop Component] Load Search Success',
   props<{ payload: Partial<ShopState> }>()
@@ -27,4 +31,8 @@ export const loadSearchSuccess = createAction(
 export const loadSearchFailure = createAction(
   '[Shop Component] Load Search Failure',
   props<{ error: HttpErrorResponse }>()
+);
+export const setSearchMode = createAction(
+  '[Shop Component] Set Search Mode',
+  props<{ set: boolean }>()
 );

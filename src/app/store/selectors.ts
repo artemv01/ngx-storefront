@@ -32,7 +32,7 @@ export const selectSearchLoading = createSelector(
   selectState,
   (state) => state.searchLoading
 );
-export const selectSearchModel = createSelector(
+export const selectSearchMode = createSelector(
   selectState,
   (state) => state.searchMode
 );

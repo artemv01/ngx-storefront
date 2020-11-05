@@ -46,6 +46,10 @@ export const reducers = createReducer(
   on(ShopActions.loadSearchSuccess, (state: ShopState, action) => {
     const stateCopy = deepCopy<ShopState>(state);
     return { ...stateCopy, ...action.payload, searchLoading: false };
+  }),
+  on(ShopActions.setSearchMode, (state: ShopState, action) => {
+    const stateCopy = deepCopy<ShopState>(state);
+    return { ...stateCopy, searchMode: action.set };
   })
 );
 

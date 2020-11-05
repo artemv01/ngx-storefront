@@ -19,7 +19,7 @@
         </div>
     </div>
     <app-header [routeChange$]="routeChange$"></app-header>
-    <main *ngIf="searchMode"
+    <main *ngIf="searchMode$ | async"
         [@fade]
         class="container mt-6 flex-auto mb-16 pt-12 xl:pt-20">
 
@@ -27,16 +27,16 @@
         <div class="flex flex-col xl:flex-row  ">
             <div class="w-full xl:w-9/12">
 
-                <div *ngIf="!products.length && !searchLoading"
+                <div *ngIf="!(products$ | async)?.length && !(searchLoading$ | async)"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
                     <h1 class="page-header mb-0">No results for "{{filterParams.search}}" :(</h1>
 
                     <app-icon class=" md:mt-2 cursor-pointer"
                         size="xl"
                         title="Cancel search"
-                        (click)="cancelSearch()">close</app-icon>
+                        (click)="setSearchMode(false)">close</app-icon>
                 </div>
-                <div *ngIf="products.length || searchLoading"
+                <div *ngIf="(products$ | async)?.length && !(searchLoading$ | async)"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
                     <h1 class="page-header mb-0"
                         *ngIf="filterParams.search">Search results for "{{filterParams.search}}"
@@ -47,9 +47,9 @@
                     <app-icon class=" md:mt-2 cursor-pointer"
                         size="xl"
                         title="Cancel search"
-                        (click)="cancelSearch()">close</app-icon>
+                        (click)="setSearchMode(false)">close</app-icon>
                 </div>
-                <div *ngIf="searchLoading"
+                <div *ngIf="searchLoading$ | async"
                     id="searchLoading">
                     <div class="lds-default">
                         <div></div>
@@ -67,9 +67,9 @@
                     </div>
                 </div>
                 <!-- [hidden]="!products?.length || searchLoading" -->
-                <div *ngIf="products?.length && !searchLoading">
+                <div *ngIf="(products$ | async)?.length && !(searchLoading$ | async)">
                     <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                        <app-select [attr.disabled]="itemsLoading"
+                        <app-select [attr.disabled]="itemsLoading$ | async"
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
@@ -78,21 +78,22 @@
                             [options]="actions"
                             [addClass]="'z-50'"
                             [addClassWrapper]="' mr-4'"></app-select>
-                        <ng-container *ngIf="showPagination">
+                        <ng-container *ngIf="showPagination$ | async">
                             <div
                                 class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                                 Total
-                                {{itemsTotal}}
+                                {{itemsTotal$ | async}}
                                 entries</div>
-                            <app-pagination [pagesTotal]="pagesTotal"
-                                [attr.disabled]="itemsLoading"
-                                [currentPage]="currentPage"
-                                (change)="paginationChange($event)"></app-pagination>
+                            <app-pagination [pagesTotal]="pagesTotal$ | async"
+                                [attr.disabled]="searchLoading$ | async"
+                                [currentPage]="currentPage$ | async"
+                                (onChange)="paginationChange($event);">
+                            </app-pagination>
                         </ng-container>
                     </div>
-                    <app-product-grid [products]="products"></app-product-grid>
+                    <app-product-grid [products]="products$ | async"></app-product-grid>
                     <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                        <app-select [attr.disabled]="searchLoading"
+                        <app-select [attr.disabled]="searchLoading$ | async"
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event); "
@@ -101,16 +102,16 @@
                             [options]="actions"
                             [addClass]="'z-50'"
                             [addClassWrapper]="' mr-4'"></app-select>
-                        <ng-container *ngIf="showPagination">
+                        <ng-container *ngIf="showPagination$ | async">
                             <div
                                 class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                                 Total
-                                {{itemsTotal}}
+                                {{itemsTotal$ | async}}
                                 entries</div>
-                            <app-pagination [pagesTotal]="pagesTotal"
-                                [attr.disabled]="searchLoading"
-                                [currentPage]="currentPage"
-                                (change)="paginationChange($event); scrollToElement(top);">
+                            <app-pagination [pagesTotal]="pagesTotal$ | async"
+                                [attr.disabled]="searchLoading$ | async"
+                                [currentPage]="currentPage$ | async"
+                                (onChange)="paginationChange($event); scrollToElement(top);">
                             </app-pagination>
                         </ng-container>
                     </div>
@@ -136,7 +137,7 @@
     </main>
     <div id="routerWrap"
         class="flex-auto "
-        [hidden]="searchMode"
+        [hidden]="searchMode$ | async"
         [@routeAnimation]="prepareRoute(outlet)">
         <router-outlet #outlet="outlet"
             (activate)='onRouteActivate()'></router-outlet>
