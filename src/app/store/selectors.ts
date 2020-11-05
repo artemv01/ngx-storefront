@@ -1,27 +1,38 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ShopState, featureKey } from '.';
+import { featureKey, ShopState } from '.';
 
 export const selectState = createFeatureSelector<ShopState>(featureKey);
 
-export const selectHomePageData = createSelector(
-  selectState,
-  (state: ShopState) => state.homePage
-);
-export const selectSingleProductPageData = createSelector(
-  selectState,
-  (state: ShopState) => state.singleProductPage
-);
-
-export const selectReviewLoading = createSelector(
-  selectState,
-  (state: ShopState) => state.singleProductPage.createReviewLoading
-);
-
-export const selectIsLoaded = createSelector(
-  selectState,
-  (state: ShopState) => state.loaded
-);
 export const selectCategories = createSelector(
   selectState,
   (state: ShopState) => state.categories
+);
+export const selectProducts = createSelector(
+  selectState,
+  (state) => state.products
+);
+export const selectPagesTotal = createSelector(
+  selectState,
+  (state) => state.pagesTotal
+);
+export const selectCurrentPage = createSelector(
+  selectState,
+  (state) => state.currentPage
+);
+export const selectItemsTotal = createSelector(
+  selectState,
+  (state) => state.itemsTotal
+);
+export const selectShowPagination = createSelector(
+  selectState,
+  (state) => state.showPagination
+);
+
+export const selectSearchLoading = createSelector(
+  selectState,
+  (state) => state.searchLoading
+);
+export const selectSearchModel = createSelector(
+  selectState,
+  (state) => state.searchMode
 );

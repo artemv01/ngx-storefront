@@ -4,40 +4,35 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { ShopState } from '@app/store';
-import { loadSingleProductPage } from '@app/store/actions/actions';
-import {
-  selectIsLoaded,
-  selectSingleProductPageData,
-} from '@app/store/selectors';
+import { Product } from '@app/models/product';
+
 import { Store } from '@ngrx/store';
 import { forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { loadSingleProductPage } from './store/single-product.actions';
+import { SingleProductState } from './store/single-product.reducer';
+import { selectProduct } from './store/single-product.selectors';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SingleProductPageResolver implements Resolve<boolean> {
-  constructor(private store: Store<ShopState>) {}
+  constructor(private store: Store<SingleProductState>) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select(selectSingleProductPageData).pipe(
-      tap((pageData) => {
-        if (
-          !pageData.product ||
-          pageData.product._id !== route.paramMap.get('id')
-        ) {
+    return this.store.select(selectProduct).pipe(
+      tap((product: Product) => {
+        if (!product || product._id !== route.paramMap.get('id')) {
           this.store.dispatch(
             loadSingleProductPage({ itemId: route.paramMap.get('id') })
           );
         }
       }),
       map(
-        (pageData) =>
-          pageData.product && pageData.product._id == route.paramMap.get('id')
+        (product: Product) => product && product._id == route.paramMap.get('id')
       ),
       filter((loaded) => !!loaded),
       first()

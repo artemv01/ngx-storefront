@@ -6,6 +6,10 @@ import { SingleProductRoutingModule } from './single-product-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromSingleProduct from '@app/pages/single-product/store/single-product.reducer';
+import { SingleProductEffects } from '@app/pages/single-product/store/single-product.effects';
 
 @NgModule({
   declarations: [SingleProductComponent],
@@ -17,6 +21,11 @@ import { RecaptchaModule } from 'ng-recaptcha';
     ReactiveFormsModule,
     RouterModule,
     RecaptchaModule,
+    StoreModule.forFeature(
+      fromSingleProduct.singleProductFeatureKey,
+      fromSingleProduct.reducer
+    ),
+    EffectsModule.forFeature([SingleProductEffects]),
   ],
 })
 export class SingleProductModule {}

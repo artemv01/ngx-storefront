@@ -1,4 +1,3 @@
-import { selectSingleProductPageData } from '@app/store/selectors';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromSingleCategoryPage from './single-category-page.reducer';
 

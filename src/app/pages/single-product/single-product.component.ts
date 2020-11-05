@@ -23,14 +23,14 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { ProductsService } from '@app/services/products.service';
 import { ReviewService } from '@app/services/review.service';
 import { Store } from '@ngrx/store';
-import { ShopState } from '@app/store';
+
+import { Review } from '@app/models/review';
 import {
   selectReviewLoading,
-  selectSingleProductPageData,
-} from '@app/store/selectors';
-import { ShopActions } from '@app/store/actions';
-import { loadSingleProductPage } from '@app/store/actions/actions';
-import { Review } from '@app/models/review';
+  selectSingleProductPage,
+} from './store/single-product.selectors';
+import { SingleProductState } from './store/single-product.reducer';
+import { createReview } from './store/single-product.actions';
 
 @Component({
   selector: 'app-single-product',
@@ -94,7 +94,7 @@ export class SingleProductComponent
     public loading: LoadingService,
     public cart: CartService,
     public notify: NotificationService,
-    private store: Store<ShopState>,
+    private store: Store<SingleProductState>,
     private titleServ: TitleService
   ) {}
 
@@ -103,9 +103,9 @@ export class SingleProductComponent
       this.productId = params.get('id');
 
       this.store
-        .select(selectSingleProductPageData)
+        .select(selectSingleProductPage)
         .pipe(takeUntil(this.destroy))
-        .subscribe((pageData) => {
+        .subscribe((pageData: SingleProductState) => {
           this.product = pageData.product;
           this.relatedProducts = pageData.relatedProducts;
         });
@@ -121,7 +121,7 @@ export class SingleProductComponent
       productId: this.productId,
       captcha: this.captchaToken,
     };
-    this.store.dispatch(ShopActions.createReview({ payload: reviewData }));
+    this.store.dispatch(createReview({ payload: reviewData }));
     this.reviewForm.reset();
     this.reCaptcha.reset();
   }

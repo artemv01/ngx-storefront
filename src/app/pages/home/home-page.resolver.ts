@@ -7,13 +7,12 @@ import {
 import { LoadingService } from '@app/services/loading.service';
 import { ProductsService } from '@app/services/products.service';
 import { ReviewService } from '@app/services/review.service';
-import { ShopState } from '@app/store';
-import { ShopActions } from '@app/store/actions';
-import { loadHomePage } from '@app/store/actions/actions';
-import { selectIsLoaded } from '@app/store/selectors';
 import { Store } from '@ngrx/store';
 import { forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { loadHomePage } from './store/home-page.actions';
+import { HomePageState } from './store/home-page.reducer';
+import { selectHomePageLoaded } from './store/home-page.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +21,7 @@ export class HomePageResolver implements Resolve<boolean> {
   constructor(
     private productQuery: ProductsService,
     private reviewQuery: ReviewService,
-    private store: Store<ShopState>,
+    private store: Store<HomePageState>,
     private loading: LoadingService
   ) {}
 
@@ -30,11 +29,10 @@ export class HomePageResolver implements Resolve<boolean> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.store.select(selectIsLoaded).pipe(
+    return this.store.select(selectHomePageLoaded).pipe(
       tap((isLoaded) =>
         !isLoaded ? this.store.dispatch(loadHomePage()) : null
       ),
-      tap(() => console.log('Route finished resolving...')),
       filter((loaded) => !!loaded),
       first()
     );

@@ -8,7 +8,6 @@ import { ProductsService } from '@app/services/products.service';
 import { QueryItemsResp } from '@app/models/query-items-resp';
 import { Product } from '@app/models/product';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ShopActions } from '@app/store/actions';
 import { of } from 'rxjs';
 import { QueryItemsReq } from '@app/models/query-items-req';
 import { SingleCategoryPageState } from './single-category-page.reducer';
@@ -36,7 +35,7 @@ export class SingleCategoryPageEffects {
         });
       }),
       catchError((error: HttpErrorResponse) => {
-        return of(ShopActions.loadCategoriesFailure({ error }));
+        return of(SingleCategoryPageActions.loadPageDataFailure({ error }));
       })
     );
   });

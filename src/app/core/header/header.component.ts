@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 import { CategoryService } from '@app/services/category.service';
 import { ShopState } from '@app/store';
 import { Store } from '@ngrx/store';
-import { ShopActions } from '@app/store/actions';
 import { selectCategories } from '@app/store/selectors';
+import { loadCategories } from '@app/store/actions';
 
 interface Category {
   _id: string;
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(ShopActions.loadCategories());
+    this.store.dispatch(loadCategories());
     this.categoryList$ = this.store.select(selectCategories);
   }
   ngOnDestroy() {

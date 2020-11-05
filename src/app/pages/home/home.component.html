@@ -1,17 +1,17 @@
 <main class="container mt-16 mb-16">
     <section class="product-categories">
         <h1 class="page-header">Top Rated Products</h1>
-        <app-product-grid [products]="(pageData$ | async).topRatedProducts"></app-product-grid>
+        <app-product-grid [products]="topRated$ | async"></app-product-grid>
     </section>
     <section>
         <h1 class="page-header">Sale!</h1>
-        <app-product-grid [products]="(pageData$ | async).topRatedProducts"></app-product-grid>
+        <app-product-grid [products]="onSale$ | async"></app-product-grid>
     </section>
-    <section [hidden]="!(pageData$ | async).recentReviews?.length"
+    <section [hidden]="!(reviews$ | async)?.length"
         id="recentReviews">
         <h1 class="page-header">Recent reviews</h1>
 
-        <app-review-slider [reviews]="(pageData$ | async).recentReviews"></app-review-slider>
+        <app-review-slider [reviews]="(reviews$ | async)"></app-review-slider>
     </section>
 
 </main>
