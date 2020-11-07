@@ -1,10 +1,10 @@
-<ng-container *ngIf="cart.totalQuantity">
+<ng-container *ngIf="totalQuantity$ | async as totalQuantity">
     <div class="flex text-sm py-4 "
         [class]="isDark ? '' : 'border-b border-gray-300'"
         [@fadeIn]
-        *ngFor="let product of cart.cartContent | keyvalue">
+        *ngFor="let product of cartItems$ | async | keyvalue">
         <div>
-            <app-icon (click)="cart.delete(product.value._id)"
+            <app-icon (click)="deleteItem(product.value._id)"
                 size="xs">cancel</app-icon>
         </div>
 
@@ -24,7 +24,7 @@
     <div class="text-center text-sm py-4"
         [class]="isDark ? '' : 'border-b border-gray-300'">
         <span class="font-bold">Subtotal: </span><span>
-            <app-price [price]="cart.totalPrice"></app-price>
+            <app-price [price]="totalPrice$ | async"></app-price>
         </span>
     </div>
     <div>
@@ -40,6 +40,6 @@
         </button>
     </div>
 </ng-container>
-<ng-container *ngIf="!cart.totalQuantity">
+<ng-container *ngIf="!(totalQuantity$ | async)">
     <div class="mt-4 text-sm">No products in the cart.</div>
 </ng-container>

@@ -177,8 +177,8 @@
                     <app-button class="w-full"
                         #submitBtn
                         addClass="h-16 w-full btn-secondary font-bold text-2xl block"
-                        [disabled]="addressForm.invalid || !captchaToken || postOrderLoading"
-                        [class.loading]="postOrderLoading"
+                        [disabled]="addressForm.invalid || !captchaToken || (createOrderLoading$ | async)"
+                        [class.loading]="(createOrderLoading$ | async)"
                         type="submit">Place
                         order</app-button>
                 </div>

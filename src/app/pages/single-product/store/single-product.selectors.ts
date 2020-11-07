@@ -16,3 +16,12 @@ export const selectReviewLoading = createSelector(
   selectSingleProductState,
   (state: fromSingleProduct.SingleProductState) => state.createReviewLoading
 );
+
+export const selectSingleProduct = createSelector(
+  selectSingleProductState,
+  (state: fromSingleProduct.SingleProductState) => state.product
+);
+export const selectRelatedProducts = createSelector(
+  selectSingleProductState,
+  (state: fromSingleProduct.SingleProductState) => state.relatedProducts
+);

@@ -1,0 +1,46 @@
+<div class="overflow-auto cart-table-wrap mb-4">
+    <table style="min-width:768px;"
+        class="table-auto border-collapse w-full bg-bgGrayLight table-striped">
+        <thead class="bg-bgInput">
+            <tr class="h-16 text-left">
+                <th class="p-4"></th>
+                <th class="p-4"></th>
+                <th class="p-4 font-semibold">Product</th>
+                <th class="p-4 font-semibold">Price</th>
+                <th class="p-4 font-semibold">Quantity</th>
+                <th class="p-4 font-semibold">Total</th>
+            </tr>
+        </thead>
+        <tbody class="text-txDark">
+            <tr class="text-left"
+                *ngFor="let  product of cartItems$ | async | keyvalue"
+                [@fadeIn]>
+                <td class="p-4">
+                    <app-icon (click)="delete(product.key)">cancel</app-icon>
+                </td>
+                <td class="p-4"><img [src]="product.value.image"
+                        class="object-cover object-center h-12 w-12"
+                        alt=""></td>
+                <td class="p-4"><a [routerLink]="['/product', product.value._id]"
+                        class="hover:underline text-bgPrimary hover:text-bgPrimaryDark ">{{product.value.name}}</a>
+                </td>
+                <td class="p-4"><span>
+                        <app-price [price]="product.value.price"></app-price>
+                    </span></td>
+
+
+                <td class="p-4"><input type="number"
+                        min="1"
+                        [ngModel]="product.value.quantity"
+                        (change)="updateCart(product.value._id, $event.target.value)"
+                        name="quantity"
+                        class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
+                </td>
+                <td class="p-4"><span>
+                        <app-price [price]="product.value.price * product.value.quantity">
+                        </app-price>
+                    </span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

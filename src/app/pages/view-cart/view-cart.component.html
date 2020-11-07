@@ -1,54 +1,13 @@
 <main class="container mb-16 mt-16 flex-grow">
     <h1 class="page-header mb-12">Cart</h1>
     <div [@fadeIn]
-        *ngIf="isCartEmpty"
+        *ngIf="(isCartEmpty$ | async)"
         class="text-xl">Your cart is empty.</div>
-    <div *ngIf="!isCartEmpty"
-        class="overflow-auto cart-table-wrap mb-4">
-        <table style="min-width:768px;"
-            class="table-auto border-collapse w-full bg-bgGrayLight table-striped">
-            <thead class="bg-bgInput">
-                <tr class="h-16 text-left">
-                    <th class="p-4"></th>
-                    <th class="p-4"></th>
-                    <th class="p-4 font-semibold">Product</th>
-                    <th class="p-4 font-semibold">Price</th>
-                    <th class="p-4 font-semibold">Quantity</th>
-                    <th class="p-4 font-semibold">Total</th>
-                </tr>
-            </thead>
-            <tbody class="text-txDark">
-                <tr class="text-left"
-                    *ngFor="let  product of cart.cartContent | keyvalue"
-                    [@fadeIn]>
-                    <td class="p-4">
-                        <app-icon (click)="cart.delete(product.key)">cancel</app-icon>
-                    </td>
-                    <td class="p-4"><img [src]="product.value.image"
-                            class="object-cover object-center h-12 w-12"
-                            alt=""></td>
-                    <td class="p-4"><a [routerLink]="['/product', product.value._id]"
-                            class="hover:underline text-bgPrimary hover:text-bgPrimaryDark ">{{product.value.name}}</a>
-                    </td>
-                    <td class="p-4"><span>
-                            <app-price [price]="product.value.price"></app-price>
-                        </span></td>
 
-
-                    <td class="p-4"><input type="number"
-                            min="1"
-                            [(ngModel)]="product.value.quantity"
-                            name="quantity"
-                            class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
-                    </td>
-                    <td class="p-4"><span>
-                            <app-price [price]="product.value.price * product.value.quantity">
-                            </app-price>
-                        </span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <app-cart-table *ngIf="!(isCartEmpty$ | async)"
+        [cartItems$]="cartItems$"
+        (deleteItem)="deleteItem($event)"
+        (updateItem)="updateItem($event)"></app-cart-table>
     <!-- <div class="flex flex-col md:flex-row mb-12">
         <div class="flex flex-col md:flex-row w-full mb-6 md:w-1/2 md:mb-0">
             <div class="hidden">
@@ -64,7 +23,7 @@
             <app-button addClass="btn-primary" (click)="cart.update()">Update cart</app-button>
         </div>
     </div> -->
-    <div *ngIf="!isCartEmpty"
+    <div *ngIf="!(isCartEmpty$ | async)"
         [@fadeIn]
         class="flex md:justify-end">
         <div class="w-full md:w-1/2">
@@ -79,13 +38,13 @@
                     <tr>
                         <td class="p-4 font-semibold bg-gray-100">Subtotal</td>
                         <td class="p-4">
-                            <app-price [price]="cart.totalPrice"></app-price>
+                            <app-price [price]="totalPrice$ | async"></app-price>
                         </td>
                     </tr>
                     <tr>
                         <td class="p-4 font-semibold bg-gray-100">Total</td>
                         <td class="p-4">
-                            <app-price [price]="cart.totalPrice"></app-price>
+                            <app-price [price]="totalPrice$ | async"></app-price>
                         </td>
                     </tr>
                 </tbody>

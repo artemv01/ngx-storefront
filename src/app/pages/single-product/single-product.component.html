@@ -1,4 +1,5 @@
-<main class="container mt-6 mb-16">
+<main class="container mt-6 mb-16"
+    *ngIf="product$ | async as product">
     <div class="hidden md:block">
         <app-breadcrumbs [navs]="breadcrumbs"
             class=""></app-breadcrumbs>
@@ -170,9 +171,9 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="relatedProducts.length">
+            <div *ngIf="(relatedProducts$ | async)?.length">
                 <h1 class="mt-12 text-2xl font-thin mb-6">Related products</h1>
-                <app-product-grid [products]="relatedProducts"
+                <app-product-grid [products]="(relatedProducts$ | async)"
                     [rating]="false"
                     [columnsNumber]="2"
                     (actionBtn)="addToCartFromGallery($event)"></app-product-grid>

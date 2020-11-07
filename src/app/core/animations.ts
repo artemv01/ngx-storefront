@@ -13,3 +13,10 @@ export const fadeAnimation = trigger('fade', [
 
   transition(':leave', animate(200, style({ opacity: 0 }))),
 ]);
+
+export const fadeInAnimation = trigger('fadeIn', [
+  transition(':enter', [
+    style({ opacity: '0' }),
+    animate('.5s ease-out', style({ opacity: '1' })),
+  ]),
+]);

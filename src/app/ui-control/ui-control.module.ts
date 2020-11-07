@@ -22,6 +22,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { IconComponent } from './icon/icon.component';
 import { ReviewSliderComponent } from './review-slider/review-slider.component';
 import { LazyLoadDirective } from '@app/ui-control/lazy-load.directive';
+import { CartTableComponent } from './cart-table/cart-table.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { LazyLoadDirective } from '@app/ui-control/lazy-load.directive';
     IconComponent,
     ReviewSliderComponent,
     LazyLoadDirective,
+    CartTableComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { LazyLoadDirective } from '@app/ui-control/lazy-load.directive';
     IconComponent,
     ReviewSliderComponent,
     LazyLoadDirective,
+    CartTableComponent,
   ],
 })
 export class UiControlModule {}

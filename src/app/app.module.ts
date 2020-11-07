@@ -23,6 +23,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ShopEffects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
+import * as fromCart from '@app/cart-store/cart.reducer';
+import { CartEffects } from '@app/cart-store/cart.effects';
 
 const storeConfig: any = {};
 storeConfig[featureKey] = reducers;
@@ -43,6 +45,8 @@ storeConfig[featureKey] = reducers;
     StoreModule.forRoot(storeConfig),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([ShopEffects]),
+    StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
+    EffectsModule.forFeature([CartEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,8 +1,13 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import * as CartSelectors from '@app/cart-store/cart.actions';
+import { CartState } from '@app/cart-store/cart.reducer';
 import { Product } from '@app/models/product';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { ProductInCart } from '@app/models/product-in-cart';
 import { CartService } from '@app/services/cart.service';
 import { NotificationService } from '@app/services/notification.service';
+import { Store } from '@ngrx/store';
+
 @Component({
   selector: 'app-product-grid',
   templateUrl: './product-grid.component.html',
@@ -29,7 +34,10 @@ export class ProductGridComponent implements OnInit {
   @Input('rating') rating = true;
   @Input('columnsNumber') columnsNumber = 3;
   @Output() actionBtn = new EventEmitter<any>();
-  constructor(public cart: CartService, private notify: NotificationService) {}
+  constructor(
+    public cartStore: Store<CartState>,
+    private notify: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.columns = 'lg:w-1/' + this.columnsNumber;
@@ -38,13 +46,13 @@ export class ProductGridComponent implements OnInit {
   addToCart(product: Product) {
     const { _id, image, name, ...other } = product;
     let price = product.onSale ? product.salePrice : product.price;
-    this.cart.add(({
+    const payload: ProductInCart = {
       _id,
       image,
       name,
       price,
       quantity: 1,
-    } as unknown) as Product);
-    this.notify.push({ showMessage: 'addToCartSuccess' });
+    };
+    this.cartStore.dispatch(CartSelectors.addItem({ payload }));
   }
 }

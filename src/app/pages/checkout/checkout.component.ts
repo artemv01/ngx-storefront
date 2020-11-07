@@ -1,12 +1,37 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ReconfigurableOptions } from 'places.js';
-import { CartService } from '@app/services/cart.service';
-import { trigger, transition, style, animate } from '@angular/animations';
-import { TitleService } from '@app/services/title.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import { environment } from '@root/environments/environment';
+import { ReconfigurableOptions } from 'places.js';
+import { concatMap, filter, first, map, finalize } from 'rxjs/operators';
+
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  cleanCart,
+  createOrder,
+  resetOrderCreated,
+} from '@app/cart-store/cart.actions';
+import {
+  selectCartItems,
+  selectIsOrderCreated,
+  selectOrderLoading,
+} from '@app/cart-store/cart.selectors';
+import { Product } from '@app/models/product';
+import { CartService } from '@app/services/cart.service';
 import { OrderService } from '@app/services/order.service';
+import { TitleService } from '@app/services/title.service';
+import { Store } from '@ngrx/store';
+import { environment } from '@root/environments/environment';
+import { Observable } from 'rxjs';
+import { CartState } from '@app/cart-store/cart.reducer';
+
+function getCartContentForRequest(cartItems: Record<Product['_id'], Product>) {
+  const cart = {};
+  for (const [productId, product] of Object.entries(cartItems)) {
+    cart[productId] = product.quantity;
+  }
+  return cart;
+}
+
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
@@ -29,7 +54,7 @@ export class CheckoutComponent implements OnInit {
   formSubmitted = false;
   captchaToken = '';
 
-  postOrderLoading: boolean;
+  createOrderLoading$: Observable<boolean>;
 
   addressForm = this.fb.group({
     first_name: ['', [Validators.required]],
@@ -125,10 +150,24 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public cart: CartService,
+    public cartStore: Store<CartState>,
     private orderQuery: OrderService,
     private titleServ: TitleService
-  ) {}
+  ) {
+    this.createOrderLoading$ = cartStore.select(selectOrderLoading);
+    this.cartStore
+      .select(selectIsOrderCreated)
+      .pipe(
+        filter((created) => created),
+        first(),
+        finalize(() => cartStore.dispatch(resetOrderCreated()))
+      )
+      .subscribe(() => {
+        this.formSubmitted = true;
+        this.reCaptcha.reset();
+        this.scrollTo(this.topEl.nativeElement);
+      });
+  }
 
   ngOnInit(): void {
     this.titleServ.set('Checkout');
@@ -147,27 +186,24 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder() {
-    this.postOrderLoading = true;
     const { notes, ...address } = this.addressForm.value;
     const billingAddress = address;
     const shippingAddress = address;
-    const cart = this.cart.getContentForRequest();
-    this.orderQuery
-      .create({
-        billingAddress,
-        shippingAddress,
-        notes,
-        cart,
-        captcha: this.captchaToken,
-      })
-      .subscribe((result) => {
-        this.cart.clean();
-        this.formSubmitted = true;
-
-        this.postOrderLoading = true;
-
-        this.reCaptcha.reset();
-        this.scrollTo(this.topEl.nativeElement);
-      });
+    this.cartStore
+      .select(selectCartItems)
+      .pipe(
+        filter((items) => !!items),
+        map((items) => getCartContentForRequest(items)),
+        map((items) => ({
+          billingAddress,
+          shippingAddress,
+          notes,
+          cart: items,
+          captcha: this.captchaToken,
+        })),
+        map((payload) => this.cartStore.dispatch(createOrder({ payload }))),
+        first()
+      )
+      .subscribe(() => {});
   }
 }

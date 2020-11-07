@@ -7,7 +7,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil, mergeMap } from 'rxjs/operators';
+import { takeUntil, mergeMap, map, filter, first, tap } from 'rxjs/operators';
 import { Subject, forkJoin, Observable } from 'rxjs';
 
 import { Product } from '@app/models/product';
@@ -26,11 +26,15 @@ import { Store } from '@ngrx/store';
 
 import { Review } from '@app/models/review';
 import {
+  selectRelatedProducts,
   selectReviewLoading,
+  selectSingleProduct,
   selectSingleProductPage,
 } from './store/single-product.selectors';
 import { SingleProductState } from './store/single-product.reducer';
 import { createReview } from './store/single-product.actions';
+import { CartState } from '@app/cart-store/cart.reducer';
+import * as CartSelectors from '@app/cart-store/cart.actions';
 
 @Component({
   selector: 'app-single-product',
@@ -61,6 +65,9 @@ export class SingleProductComponent
     content: ['', [Validators.required]],
     rating: [0, [Validators.required]],
   });
+
+  product$: Observable<Product>;
+  related$: Observable<Product[]>;
   get authorName() {
     return this.reviewForm.get('authorName');
   }
@@ -92,23 +99,18 @@ export class SingleProductComponent
     private productService: ProductsService,
     private fb: FormBuilder,
     public loading: LoadingService,
-    public cart: CartService,
     public notify: NotificationService,
     private store: Store<SingleProductState>,
+    private cartStore: Store<CartState>,
     private titleServ: TitleService
-  ) {}
+  ) {
+    this.product$ = store.select(selectSingleProduct);
+    this.related$ = store.select(selectRelatedProducts);
+  }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.productId = params.get('id');
-
-      this.store
-        .select(selectSingleProductPage)
-        .pipe(takeUntil(this.destroy))
-        .subscribe((pageData: SingleProductState) => {
-          this.product = pageData.product;
-          this.relatedProducts = pageData.relatedProducts;
-        });
     });
     this.postReviewLoading$ = this.store.select(selectReviewLoading);
   }
@@ -127,33 +129,51 @@ export class SingleProductComponent
   }
 
   addToCartFromGallery(product: Product) {
-    const { _id, image, name } = product;
-    let price = product.onSale ? product.salePrice : product.price;
-    this.cart.add(({
-      _id,
-      image,
-      name,
-      price,
-      quantity: 1,
-    } as unknown) as Product);
+    this.product$.pipe(
+      filter((product) => !!product),
+      first(),
+      map((product) => {
+        const { _id, image, name } = product;
+        let price = product.onSale ? product.salePrice : product.price;
+
+        return {
+          _id,
+          image,
+          name,
+          price,
+          quantity: 1,
+        };
+      }),
+      map((product) =>
+        this.store.dispatch(CartSelectors.addItem({ payload: product }))
+      )
+    );
   }
 
   addToCart() {
-    const { _id, image, name } = this.product;
-    let price = this.product.onSale
-      ? this.product.salePrice
-      : this.product.price;
-    this.cart.add(({
-      _id,
-      image,
-      name,
-      price,
-      quantity: this.addToCartQuantity,
-    } as unknown) as Product);
+    this.store
+      .select(selectSingleProduct)
+      .pipe(
+        filter((product) => !!product),
 
-    this.notify.push({
-      showMessage: 'addToCartSuccess',
-    });
+        first(),
+        map((product) => {
+          const { _id, image, name } = product;
+          let price = product.onSale ? product.salePrice : product.price;
+
+          return {
+            _id,
+            image,
+            name,
+            price,
+            quantity: this.addToCartQuantity,
+          };
+        }),
+        map((product) =>
+          this.store.dispatch(CartSelectors.addItem({ payload: product }))
+        )
+      )
+      .subscribe();
   }
 
   zoomImage(e) {

@@ -10,7 +10,6 @@ import { FormBuilder } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
-import { CartService } from '@app/services/cart.service';
 import { SearchService } from '@app/services/search.service';
 import { NotificationService } from '@app/services/notification.service';
 import { Router } from '@angular/router';
@@ -19,6 +18,8 @@ import { ShopState } from '@app/store';
 import { Store } from '@ngrx/store';
 import { selectCategories } from '@app/store/selectors';
 import { loadCategories } from '@app/store/actions';
+import { CartState } from '@app/cart-store/cart.reducer';
+import { selectTotalQuantity } from '@app/cart-store/cart.selectors';
 
 interface Category {
   _id: string;
@@ -38,12 +39,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   destroy = new Subject();
   categoryList$: Observable<Category[]>;
+  totalQuantity$: Observable<number>;
+
   constructor(
-    public cart: CartService,
     public searchService: SearchService,
     public notify: NotificationService,
-    private store: Store<ShopState>
-  ) {}
+    private store: Store<ShopState>,
+    private cart: Store<CartState>
+  ) {
+    this.totalQuantity$ = cart.select(selectTotalQuantity);
+  }
 
   ngOnInit(): void {
     this.store.dispatch(loadCategories());
