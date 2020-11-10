@@ -1,7 +1,7 @@
 <div class="flex flex-no-wrap cursor-pointer"
     (mouseleave)="isTouchScreen() ? null : rate();">
     <div *ngFor="let star of ratingState; let i=  index;"
-        class="relative text-yellow-500"><i [style]="'font-size:'+ starWidth + 'px;'"
+        class="star-elem relative text-yellow-500"><i [style]="'font-size:'+ starWidth + 'px;'"
             class="material-icons ">{{star}}</i>
         <div style="left:0;"
             (mouseenter)="isTouchScreen() ? null : hoverRate(i, 'star_half');"

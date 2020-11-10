@@ -109,9 +109,7 @@
             "styles": [
               "src/styles.scss",
               "src/styles/support.scss",
-              "src/styles/base.scss",
-              "node_modules/slick-carousel/slick/slick.min.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss"
+              "src/styles/base.scss"
             ],
             "scripts": [
                 "node_modules/jquery/dist/jquery.min.js",

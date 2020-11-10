@@ -12,6 +12,7 @@ import { CartState } from './cart.reducer';
 import { selectCart, selectCartState } from './cart.selectors';
 import { saveCartState } from './save-cart-state';
 import { deepCopy } from '@app/store/helpers';
+import { ProductInCart } from '@app/models/product-in-cart';
 
 @Injectable()
 export class CartEffects {
@@ -28,7 +29,7 @@ export class CartEffects {
       withLatestFrom(this.store.select(selectCart)),
       map(([action, cartState]: [any, CartState]) => {
         const cart = deepCopy(cartState);
-        const product: Product = action.payload;
+        const product: ProductInCart = action.payload;
         if (cart.cartContent[product._id]) {
           const currentQuantity = cart.cartContent[product._id].quantity;
 
@@ -129,29 +130,28 @@ export class CartEffects {
     )
   );
 
-  cleanCart$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(CartActions.cleanCart),
-        map(() => {
-          const update: Partial<CartState> = {
-            cartContent: {},
-            totalPrice: 0,
-            totalQuantity: 0,
-          };
-          saveCartState(update);
-        })
-      ),
-    {
-      dispatch: false,
-    }
+  cleanCart$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.cleanCart),
+      map(() => ({
+        cartContent: {},
+        totalPrice: 0,
+        totalQuantity: 0,
+      })),
+      tap((update: Partial<CartState>) => {
+        saveCartState(update);
+      }),
+      map((update: Partial<CartState>) =>
+        CartActions.cleanCartReady({ payload: update })
+      )
+    )
   );
 
   createOrder$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(CartActions.createOrder),
-        concatMap((payload: any) => this.orderQuery.create(payload.order)),
+        map((payload: any) => this.orderQuery.create(payload.order)),
         tap(() => this.store.dispatch(CartActions.cleanCart())),
         tap(() => this.store.dispatch(CartActions.orderCreated()))
       ),

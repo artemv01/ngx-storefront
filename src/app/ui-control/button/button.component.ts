@@ -11,6 +11,6 @@ export class ButtonComponent implements OnInit {
   @Input('type') type = 'button';
   @Input('addClass') addClass = '';
   @Input('disabled') disabled = false;
-  @Output() onClick = new EventEmitter<any>();
+  @Output('click') onClick = new EventEmitter<any>();
   ngOnInit(): void {}
 }

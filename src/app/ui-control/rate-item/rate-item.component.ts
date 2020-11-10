@@ -40,9 +40,7 @@ export class RateItemComponent implements OnInit, ControlValueAccessor {
     return 'ontouchstart' in document.documentElement;
   }
 
-  ngOnInit(): void {
-    this.buildStars();
-  }
+  ngOnInit(): void {}
 
   hoverRate(starIndex: number, lastStar: string) {
     this.ratingState = this.ratingState.map((_, index) => {
@@ -92,6 +90,7 @@ export class RateItemComponent implements OnInit, ControlValueAccessor {
         return;
       }
     }
+
     let newRating = this.rating - 1;
     let truncated = Math.trunc(newRating);
     let lastIndex = 0;
@@ -110,5 +109,7 @@ export class RateItemComponent implements OnInit, ControlValueAccessor {
         this.ratingState[lastIndex] = 'star_half';
       }
     }
+
+    console.log(this.ratingState);
   }
 }

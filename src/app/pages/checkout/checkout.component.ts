@@ -14,6 +14,7 @@ import {
   selectCartItems,
   selectIsOrderCreated,
   selectOrderLoading,
+  selectTotalPrice,
 } from '@app/cart-store/cart.selectors';
 import { Product } from '@app/models/product';
 import { CartService } from '@app/services/cart.service';
@@ -23,8 +24,11 @@ import { Store } from '@ngrx/store';
 import { environment } from '@root/environments/environment';
 import { Observable } from 'rxjs';
 import { CartState } from '@app/cart-store/cart.reducer';
+import { ProductInCart } from '@app/models/product-in-cart';
 
-function getCartContentForRequest(cartItems: Record<Product['_id'], Product>) {
+function getCartContentForRequest(
+  cartItems: Record<Product['_id'], ProductInCart>
+) {
   const cart = {};
   for (const [productId, product] of Object.entries(cartItems)) {
     cart[productId] = product.quantity;
@@ -55,6 +59,8 @@ export class CheckoutComponent implements OnInit {
   captchaToken = '';
 
   createOrderLoading$: Observable<boolean>;
+  cartContent$: Observable<Record<string, ProductInCart>>;
+  totalPrice$: Observable<number>;
 
   addressForm = this.fb.group({
     first_name: ['', [Validators.required]],
@@ -155,6 +161,8 @@ export class CheckoutComponent implements OnInit {
     private titleServ: TitleService
   ) {
     this.createOrderLoading$ = cartStore.select(selectOrderLoading);
+    this.cartContent$ = cartStore.select(selectCartItems);
+    this.totalPrice$ = cartStore.select(selectTotalPrice);
     this.cartStore
       .select(selectIsOrderCreated)
       .pipe(

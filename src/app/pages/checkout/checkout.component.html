@@ -148,7 +148,7 @@
                         </div>
                     </div>
                     <div class=" flex bg-gray-100"
-                        *ngFor="let product of cart.cartContent | keyvalue">
+                        *ngFor="let product of cartContent$ | async | keyvalue">
                         <div class="p-6 w-2/5  break-words"><span>{{product.value.name}}</span><span
                                 class="font-bold opacity-50"> x {{product.value.quantity}}</span>
                         </div>
@@ -161,7 +161,7 @@
                         <div class="p-6 bg-bgInput w-2/5 break-words"><span
                                 class="text-txDark font-bold">Subtotal</span></div>
                         <div class="p-6 w-3/5  break-words">
-                            <app-price [price]="cart.totalPrice"></app-price>
+                            <app-price [price]="totalPrice$ | async"></app-price>
                         </div>
                     </div>
                     <div class=" flex">
@@ -169,7 +169,7 @@
                                 class="text-txDark font-bold">Total</span>
                         </div>
                         <div class="p-6 w-3/5  break-words">
-                            <app-price [price]="cart.totalPrice"></app-price>
+                            <app-price [price]="totalPrice$ | async"></app-price>
                         </div>
                     </div>
                 </div>

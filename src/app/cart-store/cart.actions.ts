@@ -39,6 +39,10 @@ export const updateOneReady = createAction(
 );
 
 export const cleanCart = createAction('[Cart] Clean Cart');
+export const cleanCartReady = createAction(
+  '[Cart] Clean Cart Ready',
+  props<{ payload: Partial<CartState> }>()
+);
 
 export const createOrder = createAction(
   '[Checkout] Create Order',

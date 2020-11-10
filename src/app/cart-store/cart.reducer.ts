@@ -1,4 +1,5 @@
 import { Product } from '@app/models/product';
+import { ProductInCart } from '@app/models/product-in-cart';
 import { deepCopy } from '@app/store/helpers';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as CartActions from './cart.actions';
@@ -7,7 +8,7 @@ import { saveCartState } from './save-cart-state';
 export const cartFeatureKey = 'cart';
 
 export interface CartState {
-  cartContent: Record<Product['_id'], Product>;
+  cartContent: Record<Product['_id'], ProductInCart>;
   totalPrice: number;
   totalQuantity: number;
   orderCreated: boolean;
@@ -77,6 +78,14 @@ export const reducer = createReducer(
   ),
 
   on(
+    CartActions.cleanCartReady,
+    (state: CartState, action): CartState => {
+      const sc: CartState = deepCopy(state);
+      return { ...sc, ...action.payload };
+    }
+  ),
+
+  /* on(
     CartActions.cleanCart,
     (state: CartState): CartState => {
       const sc = deepCopy(state);
@@ -88,7 +97,7 @@ export const reducer = createReducer(
         totalQuantity: 0,
       };
     }
-  ),
+  ), */
   on(CartActions.createOrder, (state) => {
     const sc = deepCopy(state);
     return { ...sc, createOrderLoading: true };

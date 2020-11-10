@@ -35,6 +35,7 @@ import { SingleProductState } from './store/single-product.reducer';
 import { createReview } from './store/single-product.actions';
 import { CartState } from '@app/cart-store/cart.reducer';
 import * as CartSelectors from '@app/cart-store/cart.actions';
+import { ProductInCart } from '@app/models/product-in-cart';
 
 @Component({
   selector: 'app-single-product',
@@ -144,7 +145,7 @@ export class SingleProductComponent
           quantity: 1,
         };
       }),
-      map((product) =>
+      map((product: ProductInCart) =>
         this.store.dispatch(CartSelectors.addItem({ payload: product }))
       )
     );
@@ -169,7 +170,7 @@ export class SingleProductComponent
             quantity: this.addToCartQuantity,
           };
         }),
-        map((product) =>
+        map((product: ProductInCart) =>
           this.store.dispatch(CartSelectors.addItem({ payload: product }))
         )
       )

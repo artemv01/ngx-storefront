@@ -1,6 +1,6 @@
 <div class="overflow-auto cart-table-wrap mb-4">
     <table style="min-width:768px;"
-        class="table-auto border-collapse w-full bg-bgGrayLight table-striped">
+        class="cart-items-table table-auto border-collapse w-full bg-bgGrayLight table-striped">
         <thead class="bg-bgInput">
             <tr class="h-16 text-left">
                 <th class="p-4"></th>
@@ -13,7 +13,7 @@
         </thead>
         <tbody class="text-txDark">
             <tr class="text-left"
-                *ngFor="let  product of cartItems$ | async | keyvalue"
+                *ngFor="let  product of cartItems$ | async | keyvalue: cartItemsOrderSort"
                 [@fadeIn]>
                 <td class="p-4">
                     <app-icon (click)="delete(product.key)">cancel</app-icon>

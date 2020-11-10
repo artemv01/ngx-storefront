@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,7 +21,7 @@ import { UpdateItem } from '../../models/update-item';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartTableComponent implements OnInit {
-  @Input('cartItems$') cartItems$: CartState['cartContent'];
+  @Input('cartItems$') cartItems$: Observable<CartState['cartContent']>;
   @Output('deleteItem') deleteItem: EventEmitter<
     Product['_id']
   > = new EventEmitter<Product['_id']>();
@@ -42,4 +43,12 @@ export class CartTableComponent implements OnInit {
       quantity: Number(quantity),
     });
   }
+
+  // for keyvalue pipe, preserve the original order of items
+  cartItemsOrderSort = (
+    a: KeyValue<number, string>,
+    b: KeyValue<number, string>
+  ): number => {
+    return 0;
+  };
 }
