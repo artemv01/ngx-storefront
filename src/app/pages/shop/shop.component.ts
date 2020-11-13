@@ -18,11 +18,9 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { fadeAnimation } from '@app/core/animations';
-import { Category } from '@app/models/category';
 import { Product } from '@app/models/product';
 import { QueryItemsReq } from '@app/models/query-items-req';
 import { AlertService } from '@app/services/alert.service';
-import { LoadingService } from '@app/services/loading.service';
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { SearchService } from '@app/services/search.service';
@@ -99,7 +97,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     sortType: 'ratingCount',
     search: '',
     page: 1,
-    limit: 3,
+    limit: 9,
   };
 
   selSortType = 'Sort by popularity';

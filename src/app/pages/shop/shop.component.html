@@ -1,7 +1,7 @@
 <div id="shopApp"
     class="flex flex-col"
     #top>
-    <div class="loading-screen-alert"
+    <!-- <div class="loading-screen-alert"
         *ngIf="(alertService.display | async)"
         (click)="alertService.hide()"
         [@modalBg]>
@@ -9,25 +9,21 @@
             <div class="flex-grow mb-4">
                 <h1 class="text-2xl border-b border-bgPrimary tracking-wide pb-2 mb-4 relative">
                     {{alertService.header}}
-                    <!-- <i class="material-icons absolute right-0"
-                        (click)="alertService.hide()">close</i> -->
                     <app-icon class="absolute right-0"
                         (click)="alertService.hide()"></app-icon>
                 </h1>
                 <div class="break-words">{{alertService.message}}</div>
             </div>
         </div>
-    </div>
+    </div> -->
     <app-header [routeChange$]="routeChange$"></app-header>
     <main *ngIf="searchMode$ | async"
         [@fade]
         class="container mt-6 flex-auto mb-16 pt-12 xl:pt-20">
-
-
         <div class="flex flex-col xl:flex-row  ">
             <div class="w-full xl:w-9/12">
 
-                <div *ngIf="!(products$ | async)?.length && !(searchLoading$ | async)"
+                <div *ngIf="!(itemsTotal$ | async) && !(searchLoading$ | async)"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
                     <h1 class="page-header mb-0">No results for "{{filterParams.search}}" :(</h1>
 
@@ -36,7 +32,7 @@
                         title="Cancel search"
                         (click)="setSearchMode(false)">close</app-icon>
                 </div>
-                <div *ngIf="(products$ | async)?.length && !(searchLoading$ | async)"
+                <div *ngIf="(itemsTotal$ | async) || (searchLoading$ | async)"
                     class=" mb-8 flex flex-col-reverse md:flex-row md:justify-between md:items-center">
                     <h1 class="page-header mb-0"
                         *ngIf="filterParams.search">Search results for "{{filterParams.search}}"
@@ -49,33 +45,20 @@
                         title="Cancel search"
                         (click)="setSearchMode(false)">close</app-icon>
                 </div>
-                <div *ngIf="searchLoading$ | async"
-                    id="searchLoading">
-                    <div class="lds-default">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
+
                 <!-- [hidden]="!products?.length || searchLoading" -->
-                <div *ngIf="(products$ | async)?.length && !(searchLoading$ | async)">
-                    <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
-                        <app-select [attr.disabled]="itemsLoading$ | async"
+                <!-- *ngIf="(itemsTotal$ | async) && !(searchLoading$ | async)" -->
+                <div>
+                    <div class="flex items-start flex-col mb-8 md:flex-row md:items-center"
+                        *ngIf="(itemsTotal$ | async) || (searchLoading$ | async)">
+                        <app-select [attr.disabled]="searchLoading$ | async"
                             ngDefaultControl
                             name='selectAction'
                             (change)="sort($event)"
                             [(ngModel)]="selSortType"
                             #selectAction
                             [options]="actions"
+                            [attr.disabled]="(searchLoading$ | async)"
                             [addClass]="'z-50'"
                             [addClassWrapper]="' mr-4'"></app-select>
                         <ng-container *ngIf="showPagination$ | async">
@@ -91,10 +74,32 @@
                             </app-pagination>
                         </ng-container>
                     </div>
-                    <app-product-grid [products]="products$ | async"></app-product-grid>
-                    <div class="flex items-start flex-col mb-8 md:flex-row md:items-center">
+                    <div *ngIf="searchLoading$ | async"
+                        id="searchLoading">
+                        <div class="lds-default">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="product-list"
+                        *ngIf="!(searchLoading$ | async)">
+                        <app-product-grid [products]="products$ | async"></app-product-grid>
+                    </div>
+                    <div class="flex items-start flex-col mb-8 md:flex-row md:items-center"
+                        *ngIf="(itemsTotal$ | async) || (searchLoading$ | async)">
                         <app-select [attr.disabled]="searchLoading$ | async"
                             ngDefaultControl
+                            [attr.disabled]="(searchLoading$ | async)"
                             name='selectAction'
                             (change)="sort($event); "
                             [(ngModel)]="selSortType"
