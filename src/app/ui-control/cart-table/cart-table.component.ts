@@ -10,6 +10,7 @@ import {
 import { CartState } from '@app/cart-store/cart.reducer';
 import { fadeInAnimation } from '@app/core/animations';
 import { Product } from '@app/models/product';
+import { ProductQuantity } from '@app/models/product-quantity';
 import { Observable } from 'rxjs';
 import { UpdateItem } from '../../models/update-item';
 
@@ -22,12 +23,12 @@ import { UpdateItem } from '../../models/update-item';
 })
 export class CartTableComponent implements OnInit {
   @Input('cartItems$') cartItems$: Observable<CartState['cartContent']>;
-  @Output('deleteItem') deleteItem: EventEmitter<
-    Product['_id']
-  > = new EventEmitter<Product['_id']>();
-  @Output('updateItem') updateItem: EventEmitter<UpdateItem> = new EventEmitter<
-    UpdateItem
-  >();
+
+  @Output('deleteItem') deleteItem = new EventEmitter<Product['_id']>();
+
+  @Output('updateCart') updateCart = new EventEmitter<ProductQuantity>();
+
+  updateMap: ProductQuantity = {};
   constructor() {}
 
   ngOnInit(): void {
@@ -37,12 +38,19 @@ export class CartTableComponent implements OnInit {
   delete(id: Product['_id']) {
     this.deleteItem.emit(id);
   }
-  updateCart(id: Product['_id'], quantity: number) {
-    this.updateItem.emit({
-      itemId: id,
-      quantity: Number(quantity),
-    });
+  addToUpdateCartMap(id: Product['_id'], quantity: number) {
+    this.updateMap[id] = quantity;
   }
+  flushUpdateCartMap() {
+    this.updateCart.emit(this.updateMap);
+    this.updateMap = {};
+  }
+
+  /* productIdentify(index, item) {
+    console.log(index);
+    console.log(item);
+    return item.value;
+  } */
 
   // for keyvalue pipe, preserve the original order of items
   cartItemsOrderSort = (

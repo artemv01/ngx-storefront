@@ -14,7 +14,10 @@ export const addItemReady = createAction(
   '[Cart] Add Item To Cart Ready',
   props<{ payload: CartState }>()
 );
-export const updateTotals = createAction('[Cart] Update Cart Totals');
+export const updateTotals = createAction(
+  '[Cart] Update Cart Totals',
+  props<{ payload: Record<Product['_id'], number> }>()
+);
 export const updateTotalsReady = createAction(
   '[Cart] Update Cart Totals Ready',
   props<{ payload: CartState }>()
@@ -35,7 +38,7 @@ export const updateOne = createAction(
 );
 export const updateOneReady = createAction(
   '[Cart] Update One Cart Item Ready',
-  props<{ payload: CartState }>()
+  props<{ payload: Partial<CartState> }>()
 );
 
 export const cleanCart = createAction('[Cart] Clean Cart');

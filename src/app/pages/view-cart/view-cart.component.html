@@ -7,7 +7,7 @@
     <app-cart-table *ngIf="!(isCartEmpty$ | async)"
         [cartItems$]="cartItems$"
         (deleteItem)="deleteItem($event)"
-        (updateItem)="updateItem($event)"></app-cart-table>
+        (updateCart)="updateTotals($event)"></app-cart-table>
     <!-- <div class="flex flex-col md:flex-row mb-12">
         <div class="flex flex-col md:flex-row w-full mb-6 md:w-1/2 md:mb-0">
             <div class="hidden">
@@ -29,9 +29,7 @@
         <div class="w-full md:w-1/2">
             <div class="flex justify-between w-full">
                 <h1 class="text-2xl font-thin mb-4">Cart totals</h1>
-                <!-- <span
-                    class="p-2 bg-bgSecondary text-white text-sm rounded self-start cursor-pointer select-none hover:bg-bgSecondaryDark"
-                    (click)="updateTotals()">Update totals</span> -->
+
             </div>
             <table class="table-auto w-full mb-4">
                 <tbody>

@@ -57,7 +57,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
     sortType: 'ratingCount',
     search: '',
     page: 1,
-    limit: 2,
+    limit: 9,
   };
 
   selSortType = 'Sort by popularity';

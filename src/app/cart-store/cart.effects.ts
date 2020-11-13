@@ -9,10 +9,12 @@ import { State, Store } from '@ngrx/store';
 
 import * as CartActions from './cart.actions';
 import { CartState } from './cart.reducer';
-import { selectCart, selectCartState } from './cart.selectors';
+import { selectCart, selectCartItems, selectCartState } from './cart.selectors';
 import { saveCartState } from './save-cart-state';
 import { deepCopy } from '@app/store/helpers';
 import { ProductInCart } from '@app/models/product-in-cart';
+import { ProductQuantity } from '@app/models/product-quantity';
+import { CartContent } from '@app/models/cart-content';
 
 @Injectable()
 export class CartEffects {
@@ -61,21 +63,33 @@ export class CartEffects {
   updateTotals$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.updateTotals),
-      withLatestFrom(this.store.select(selectCart)),
-      map(([payload, cartState]: [any, CartState]) => {
-        let newTotal = 0;
-        let newQuantity = 0;
-        const cart = deepCopy(cartState);
+      withLatestFrom(this.store.select(selectCartItems)),
+      map(
+        ([action, cartContent]: [
+          { payload: ProductQuantity },
+          CartContent
+        ]) => {
+          const cart = deepCopy(cartContent);
+          for (const [productId, quantity] of Object.entries(action.payload)) {
+            cart[productId].quantity = quantity;
+          }
 
-        for (const [productId, product] of Object.entries(cart.cartContent)) {
-          newTotal += product.price * product.quantity;
-          newQuantity += product.quantity;
+          let newTotal = 0;
+          let newQuantity = 0;
+
+          for (const [productId, product] of Object.entries(cart)) {
+            newTotal += product.price * product.quantity;
+            newQuantity += product.quantity;
+          }
+          const cartUpdates: Partial<CartState> = {
+            cartContent: cart,
+            totalPrice: newTotal,
+            totalQuantity: newQuantity,
+          };
+          saveCartState(cartUpdates);
+          return CartActions.updateTotalsReady({ payload: cartUpdates });
         }
-        cart.totalPrice = newTotal;
-        cart.totalQuantity = newQuantity;
-        saveCartState(cart);
-        return CartActions.updateTotalsReady({ payload: cart });
-      })
+      )
     )
   );
 

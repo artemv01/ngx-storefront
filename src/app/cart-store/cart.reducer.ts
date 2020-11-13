@@ -1,3 +1,4 @@
+import { CartContent } from '@app/models/cart-content';
 import { Product } from '@app/models/product';
 import { ProductInCart } from '@app/models/product-in-cart';
 import { deepCopy } from '@app/store/helpers';
@@ -8,7 +9,7 @@ import { saveCartState } from './save-cart-state';
 export const cartFeatureKey = 'cart';
 
 export interface CartState {
-  cartContent: Record<Product['_id'], ProductInCart>;
+  cartContent: CartContent;
   totalPrice: number;
   totalQuantity: number;
   orderCreated: boolean;
@@ -55,10 +56,7 @@ export const reducer = createReducer(
 
   on(
     CartActions.updateTotalsReady,
-    (state: CartState, action): CartState => {
-      const sc: CartState = deepCopy(state);
-      return { ...sc, ...action.payload };
-    }
+    (state: CartState, action): CartState => ({ ...state, ...action.payload })
   ),
 
   on(

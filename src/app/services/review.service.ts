@@ -16,20 +16,16 @@ export class ReviewService {
   constructor(private http: HttpClient, private router: Router) {}
 
   recent(): Observable<Review[]> {
-    return this.http
-      .get<Review[]>(env.apiUrl + `review/recent`)
-      .pipe(delay(2000));
+    return this.http.get<Review[]>(env.apiUrl + `review/recent`);
   }
 
   submit(data: Review): Observable<CreateReviewResp> {
-    return this.http
-      .post<CreateReviewResp>(env.apiUrl + `review/`, data)
-      .pipe(delay(2000));
+    return this.http.post<CreateReviewResp>(env.apiUrl + `review/`, data);
   }
 
   forProduct(productId: string): Observable<CreateReviewResp> {
-    return this.http
-      .get<CreateReviewResp>(env.apiUrl + `product/${productId}/reviews`)
-      .pipe(delay(2000));
+    return this.http.get<CreateReviewResp>(
+      env.apiUrl + `product/${productId}/reviews`
+    );
   }
 }

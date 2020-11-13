@@ -16,9 +16,7 @@ export class ProductsService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getOne(id: string | Product): Observable<Product> {
-    return this.http
-      .get<Product>(env.apiUrl + `product/${id}`)
-      .pipe(delay(2000));
+    return this.http.get<Product>(env.apiUrl + `product/${id}`);
   }
 
   getMany(query: QueryItemsReq): Observable<QueryItemsResp<Product>> {
@@ -27,26 +25,18 @@ export class ProductsService {
       params.set(key, val as string);
     }
 
-    return this.http
-      .get<any>(env.apiUrl + `product/?${params.toString()}`)
-      .pipe(delay(2000));
+    return this.http.get<any>(env.apiUrl + `product/?${params.toString()}`);
   }
 
   onSale(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(env.apiUrl + `product/sale`)
-      .pipe(delay(2000));
+    return this.http.get<Product[]>(env.apiUrl + `product/sale`);
   }
 
   topRated(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(env.apiUrl + `product/top-rated`)
-      .pipe(delay(2000));
+    return this.http.get<Product[]>(env.apiUrl + `product/top-rated`);
   }
 
   related(id: string): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(env.apiUrl + `product/${id}/related`)
-      .pipe(delay(2000));
+    return this.http.get<Product[]>(env.apiUrl + `product/${id}/related`);
   }
 }

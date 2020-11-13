@@ -32,7 +32,7 @@
                 <td class="p-4"><input type="number"
                         min="1"
                         [ngModel]="product.value.quantity"
-                        (change)="updateCart(product.value._id, $event.target.value)"
+                        (change)="addToUpdateCartMap(product.value._id, $event.target.value)"
                         name="quantity"
                         class="form-input bg-bgInput border-t border-brInput w-20 h-12 mr-3 focus:border-bgPrimary">
                 </td>
@@ -43,4 +43,10 @@
             </tr>
         </tbody>
     </table>
+
+</div>
+<div class="flex justify-end my-4">
+    <span
+        class="update-totals-btn inline-block p-2 bg-bgSecondary text-white tracking-wide rounded self-start cursor-pointer select-none hover:bg-bgSecondaryDark"
+        (click)="flushUpdateCartMap()">Update totals</span>
 </div>

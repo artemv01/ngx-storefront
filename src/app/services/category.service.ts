@@ -15,8 +15,6 @@ export class CategoryService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getMany(): Observable<Category[]> {
-    return this.http
-      .get<Category[]>(env.apiUrl + `category/bulk`)
-      .pipe(delay(1000));
+    return this.http.get<Category[]>(env.apiUrl + `category/bulk`);
   }
 }
