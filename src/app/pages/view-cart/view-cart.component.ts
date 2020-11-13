@@ -51,10 +51,10 @@ export class ViewCartComponent implements OnInit, OnDestroy {
     this.cartStore.dispatch(updateTotals());
     this.router.navigate(['checkout']);
   }
-  updateTotals() {
+  /* updateTotals() {
     this.cartStore.dispatch(updateTotals());
     this.notify.push({ message: 'Cart totals has been updated.' });
-  }
+  } */
   updateItem(payload: UpdateItem) {
     this.cartStore.dispatch(updateOne({ payload }));
   }

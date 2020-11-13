@@ -10,13 +10,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoadingService } from '@app/services/loading.service';
 import { ProductsService } from '@app/services/products.service';
 import { HomePageState } from './home-page.reducer';
+import { ShopState } from '@app/store';
+import { Store } from '@ngrx/store';
+import { loadingOff, loadingOn } from '@app/store/actions';
 
 @Injectable()
 export class HomePageStateEffects {
   homePageLoad$ = createEffect(() =>
     this.actions$.pipe(
       ofType(HomePageStateActions.loadHomePage),
-      tap(() => this.loading.show()),
+      tap(() => setTimeout(() => this.store.dispatch(loadingOn()))),
       concatMap(() =>
         forkJoin({
           topRatedProducts: this.productQuery.onSale(),
@@ -27,7 +30,7 @@ export class HomePageStateEffects {
       map((payload: HomePageState) =>
         HomePageStateActions.loadHomePageSuccess({ payload })
       ),
-      tap(() => this.loading.hide()),
+      tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
       catchError((error: HttpErrorResponse) => {
         return of(HomePageStateActions.loadHomePageFailure({ error }));
       })
@@ -38,6 +41,6 @@ export class HomePageStateEffects {
     private actions$: Actions,
     private reviewQuery: ReviewService,
     private productQuery: ProductsService,
-    private loading: LoadingService
+    private store: Store<ShopState>
   ) {}
 }

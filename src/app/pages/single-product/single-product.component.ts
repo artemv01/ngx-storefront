@@ -99,7 +99,6 @@ export class SingleProductComponent
     private reviewQuery: ReviewService,
     private productService: ProductsService,
     private fb: FormBuilder,
-    public loading: LoadingService,
     public notify: NotificationService,
     private store: Store<SingleProductState>,
     private cartStore: Store<CartState>,

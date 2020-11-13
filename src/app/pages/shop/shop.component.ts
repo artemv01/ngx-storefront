@@ -119,7 +119,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   searchMode$: Observable<boolean>;
 
   constructor(
-    public loading: LoadingService,
     public search: SearchService,
     public alertService: AlertService,
     private notify: NotificationService,
@@ -131,15 +130,15 @@ export class ShopComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.loading.forceHide();
+        this.store.dispatch(ShopActions.loadingOffForce());
         this.store.dispatch(ShopActions.setSearchMode({ set: false }));
         this.notify.dismissAll();
         this.routeChange$.next(null);
       }
       if (event instanceof RouteConfigLoadStart) {
-        this.loading.show();
+        this.store.dispatch(ShopActions.loadingOn());
       } else if (event instanceof RouteConfigLoadEnd) {
-        this.loading.forceHide();
+        this.store.dispatch(ShopActions.loadingOffForce());
       }
     });
 

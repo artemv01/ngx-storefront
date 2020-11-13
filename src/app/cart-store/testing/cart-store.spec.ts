@@ -76,7 +76,8 @@ describe('CartStore effects', () => {
   let store: any;
   let actions$: Observable<any>;
   let cartEffects: CartEffects;
-  let orderService: OrderService;
+  let orderService: any;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [],
@@ -92,6 +93,7 @@ describe('CartStore effects', () => {
     store = TestBed.inject(Store);
     orderService = TestBed.inject(OrderService);
   });
+
   it('adds new cart items - addItem$', () => {
     const action = addItem({ payload: CartMocks.testAddItem.item });
     actions$ = hot('a', { a: action });
@@ -183,14 +185,15 @@ describe('CartStore effects', () => {
     );
   });
 
-  /*  it('creates order - createOrder$', () => {
+  it('creates order - createOrder$', async () => {
     const action = createOrder({ payload: CartMocks.testCreateOrder.item });
     actions$ = hot('a', { a: action });
     cartEffects = TestBed.inject(CartEffects);
-    cartEffects.createOrder$.subscribe();
-    expect(orderService.create).toHaveBeenCalled();
-    expect(orderService.create).toHaveBeenCalledWith(
-      CartMocks.testCreateOrder.item
-    );
-  }); */
+    await cartEffects.createOrder$.subscribe(() => {
+      expect(orderService.create).toHaveBeenCalled();
+      expect(orderService.create).toHaveBeenCalledWith(
+        CartMocks.testCreateOrder.item
+      );
+    });
+  });
 });

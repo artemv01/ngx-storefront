@@ -11,12 +11,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { QueryItemsReq } from '@app/models/query-items-req';
 import { SingleCategoryPageState } from './single-category-page.reducer';
+import { ShopState } from '@app/store';
+import { Store } from '@ngrx/store';
+import { loadingOff, loadingOn } from '@app/store/actions';
 
 @Injectable()
 export class SingleCategoryPageEffects {
   loadPageData$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SingleCategoryPageActions.loadPageData),
+      tap(({ pageLoading }) =>
+        pageLoading ? setTimeout(() => this.store.dispatch(loadingOn())) : null
+      ),
       switchMap((query: any) =>
         this.productQuery.getMany(query.payload as QueryItemsReq)
       ),
@@ -34,6 +40,8 @@ export class SingleCategoryPageEffects {
           payload: updateStore,
         });
       }),
+      tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
+
       catchError((error: HttpErrorResponse) => {
         return of(SingleCategoryPageActions.loadPageDataFailure({ error }));
       })
@@ -42,6 +50,7 @@ export class SingleCategoryPageEffects {
 
   constructor(
     private actions$: Actions,
-    private productQuery: ProductsService
+    private productQuery: ProductsService,
+    private store: Store<ShopState>
   ) {}
 }

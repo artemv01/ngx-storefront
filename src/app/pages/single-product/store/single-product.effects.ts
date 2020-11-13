@@ -13,6 +13,9 @@ import { ReviewService } from '@app/services/review.service';
 import { TitleService } from '@app/services/title.service';
 import { SingleProductState } from '@app/pages/single-product/store/single-product.reducer';
 import * as SingleProductActions from '@app/pages/single-product/store/single-product.actions';
+import { ShopState } from '@app/store';
+import { loadingOff, loadingOn } from '@app/store/actions';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class SingleProductEffects {
@@ -20,15 +23,15 @@ export class SingleProductEffects {
     private actions$: Actions,
     private productQuery: ProductsService,
     private reviewQuery: ReviewService,
-    private loading: LoadingService,
     public notify: NotificationService,
-    private titleServ: TitleService
+    private titleServ: TitleService,
+    private store: Store<ShopState>
   ) {}
 
   loadSingleProductPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SingleProductActions.loadSingleProductPage),
-      tap(() => this.loading.show()),
+      tap(() => setTimeout(() => this.store.dispatch(loadingOn()))),
       concatMap(({ itemId }) =>
         forkJoin({
           product: this.productQuery.getOne(itemId),
@@ -39,7 +42,8 @@ export class SingleProductEffects {
       map((payload: SingleProductState) =>
         SingleProductActions.loadSingleProductPageSuccess({ payload })
       ),
-      tap(() => this.loading.hide()),
+      tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
+
       catchError((error: HttpErrorResponse) => {
         return of(SingleProductActions.loadSingleProductPageFailure({ error }));
       })

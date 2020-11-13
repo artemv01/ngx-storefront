@@ -79,7 +79,6 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   itemsLoading$: Observable<boolean>;
 
   constructor(
-    public loading: LoadingService,
     public search: SearchService,
     private route: ActivatedRoute,
     private titleServ: TitleService,
@@ -98,7 +97,7 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy)).subscribe((params) => {
       this.filterParams.categoryId = params.get('id');
-      this.filterProducts();
+      this.filterProducts(true);
     });
   }
 
@@ -123,10 +122,11 @@ export class SingleCategoryComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  filterProducts() {
+  filterProducts(firstPageLoading = false) {
     this.store.dispatch(
       SingleCategoryPageActions.loadPageData({
         payload: { ...this.filterParams },
+        pageLoading: firstPageLoading,
       })
     );
   }

@@ -7,7 +7,7 @@ import { SingleCategoryPageState } from './single-category-page.reducer';
 
 export const loadPageData = createAction(
   '[Single Category Page] Load Single Category Page Data',
-  props<{ payload: QueryItemsReq }>()
+  props<{ payload: QueryItemsReq; pageLoading?: boolean }>()
 );
 
 export const loadPageDataSuccess = createAction(

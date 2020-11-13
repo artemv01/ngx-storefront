@@ -12,6 +12,7 @@ import { NotificationService } from '@app/services/notification.service';
 import { ReviewService } from '@app/services/review.service';
 import { TitleService } from '@app/services/title.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { forkJoin, of } from 'rxjs';
 import {
   mergeMap,
@@ -34,20 +35,20 @@ export class ShopEffects {
     private productQuery: ProductsService,
     private reviewQuery: ReviewService,
     private categoryQuery: CategoryService,
-    private loading: LoadingService,
     public notify: NotificationService,
-    private titleServ: TitleService
+    private titleServ: TitleService,
+    private store: Store<ShopState>
   ) {}
 
   loadCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ShopActions.loadCategories),
-      tap(() => this.loading.show()),
+      tap(() => this.store.dispatch(ShopActions.loadingOn())),
       concatMap(() => this.categoryQuery.getMany()),
       map((payload: Category[]) =>
         ShopActions.loadCategoriesSuccess({ payload })
       ),
-      tap(() => this.loading.hide()),
+      tap(() => this.store.dispatch(ShopActions.loadingOff())),
       catchError((error: HttpErrorResponse) => {
         return of(ShopActions.loadCategoriesFailure({ error }));
       })

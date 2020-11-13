@@ -1,4 +1,4 @@
-import { concatMap, map, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, delay, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { Product } from '@app/models/product';
@@ -27,6 +27,11 @@ export class CartEffects {
     this.actions$.pipe(
       ofType(CartActions.addItem),
       withLatestFrom(this.store.select(selectCart)),
+      tap(() =>
+        this.notify.push({
+          showMessage: 'addToCartSuccess',
+        })
+      ),
       map(([action, cartState]: [any, CartState]) => {
         const cart = deepCopy(cartState);
         const product: ProductInCart = action.payload;
@@ -41,21 +46,15 @@ export class CartEffects {
             cart.cartContent[product._id].quantity *
             cart.cartContent[product._id].price;
           cart.totalQuantity += product.quantity;
-
-          saveCartState(cart);
-          return CartActions.addItemReady({ payload: cart });
+        } else {
+          cart.cartContent[product._id] = product;
+          cart.totalPrice += product.quantity * product.price;
+          cart.totalQuantity += product.quantity;
         }
-        cart.cartContent[product._id] = product;
-        cart.totalPrice += product.quantity * product.price;
-        cart.totalQuantity += product.quantity;
+
         saveCartState(cart);
         return CartActions.addItemReady({ payload: cart });
-      }),
-      tap(() =>
-        this.notify.push({
-          showMessage: 'addToCartSuccess',
-        })
-      )
+      })
     )
   );
 
@@ -151,7 +150,10 @@ export class CartEffects {
     () =>
       this.actions$.pipe(
         ofType(CartActions.createOrder),
-        map((payload: any) => this.orderQuery.create(payload.order)),
+        tap((action: any) => console.log(action.payload)),
+
+        map((action) => this.orderQuery.create(action.payload)),
+
         tap(() => this.store.dispatch(CartActions.cleanCart())),
         tap(() => this.store.dispatch(CartActions.orderCreated()))
       ),

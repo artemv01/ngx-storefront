@@ -4,9 +4,6 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { LoadingService } from '@app/services/loading.service';
-import { ProductsService } from '@app/services/products.service';
-import { ReviewService } from '@app/services/review.service';
 import { Store } from '@ngrx/store';
 import { forkJoin, Observable } from 'rxjs';
 import { filter, first, map, switchMap, tap } from 'rxjs/operators';
@@ -18,12 +15,7 @@ import { selectHomePageLoaded } from './store/home-page.selectors';
   providedIn: 'root',
 })
 export class HomePageResolver implements Resolve<boolean> {
-  constructor(
-    private productQuery: ProductsService,
-    private reviewQuery: ReviewService,
-    private store: Store<HomePageState>,
-    private loading: LoadingService
-  ) {}
+  constructor(private store: Store<HomePageState>) {}
 
   resolve(
     route: ActivatedRouteSnapshot,

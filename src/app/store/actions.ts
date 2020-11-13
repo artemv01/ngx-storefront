@@ -36,3 +36,7 @@ export const setSearchMode = createAction(
   '[Shop Component] Set Search Mode',
   props<{ set: boolean }>()
 );
+
+export const loadingOn = createAction('[Global] Loading On');
+export const loadingOff = createAction('[Global] Loading Off');
+export const loadingOffForce = createAction('[Global] Loading Off Force');

@@ -22,14 +22,6 @@ export class LoadingService {
       setTimeout(() => this.display$.next(false), 0);
     }
   }
-  showPermanent(show = true) {
-    this.permanent = show;
-    if (this.permanent) {
-      setTimeout(() => this.display$.next(true), 0);
-    } else {
-      setTimeout(() => this.display$.next(false), 0);
-    }
-  }
 
   forceHide() {
     this.displayIncrement = 0;
