@@ -23,35 +23,34 @@ import {
   filter,
   switchMap,
 } from 'rxjs/operators';
-import { ShopState } from '.';
+import { GlobalState } from '.';
 import { ProductsService } from '../services/products.service';
 import * as ShopActions from './actions';
 
 @Injectable()
-export class ShopEffects {
+export class GlobalEffects {
   constructor(
     private actions$: Actions,
-    private router: Router,
     private productQuery: ProductsService,
-    private reviewQuery: ReviewService,
     private categoryQuery: CategoryService,
     public notify: NotificationService,
-    private titleServ: TitleService,
-    private store: Store<ShopState>
+    private store: Store<GlobalState>
   ) {}
 
   loadCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ShopActions.loadCategories),
+      tap(() => console.log(this.store)),
       tap(() => this.store.dispatch(ShopActions.loadingOn())),
       concatMap(() => this.categoryQuery.getMany()),
       map((payload: Category[]) =>
         ShopActions.loadCategoriesSuccess({ payload })
       ),
       tap(() => this.store.dispatch(ShopActions.loadingOff())),
-      catchError((error: HttpErrorResponse) => {
-        return of(ShopActions.loadCategoriesFailure({ error }));
-      })
+
+      catchError((error: HttpErrorResponse) =>
+        of(ShopActions.setError({ error }))
+      )
     )
   );
 
@@ -72,9 +71,9 @@ export class ShopEffects {
         };
         return ShopActions.loadSearchSuccess({ payload: updateStore });
       }),
-      catchError((error: HttpErrorResponse) => {
-        return of(ShopActions.loadSearchFailure({ error }));
-      })
+      catchError((error: HttpErrorResponse) =>
+        of(ShopActions.setError({ error }))
+      )
     );
   });
 }

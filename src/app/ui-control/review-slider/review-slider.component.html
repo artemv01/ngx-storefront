@@ -1,6 +1,6 @@
 <div id="reviewCarousel">
     <div class="slide-nav">
-        <div class='nav-btn next-slide mr-2 cursor-pointer select-none'
+        <div class='nav-btn prev-slide mr-2 cursor-pointer select-none'
             #slideNavPrev>
             <i class="material-icons">keyboard_arrow_left</i>
         </div>
@@ -10,11 +10,9 @@
 
         </div>
     </div>
-    <ngx-slick-carousel class="carousel"
-        #slickModal="slick-carousel"
+    <swiper class="carousel"
         [config]="slideConfig">
         <div class="slide"
-            ngxSlickItem
             *ngFor="let review of reviews">
             <div class="pl-8">
                 <div *ngIf="review.rating"
@@ -35,5 +33,5 @@
                 </div>
             </div>
         </div>
-    </ngx-slick-carousel>
+    </swiper>
 </div>

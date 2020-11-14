@@ -24,13 +24,19 @@ export class ReviewSliderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    this.slideConfig = {
+    /*  this.slideConfig = {
       slidesToShow: 1,
       slidesToScroll: 1,
       nextArrow: this.slideNavNext.nativeElement,
       prevArrow: this.slideNavPrev.nativeElement,
       infinite: true,
       adaptiveHeight: true,
+    }; */
+    this.slideConfig = {
+      navigation: {
+        nextEl: '.next-slide',
+        prevEl: '.prev-slide',
+      },
     };
   }
 }

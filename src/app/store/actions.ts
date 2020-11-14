@@ -5,7 +5,7 @@ import { Product } from '@app/models/product';
 import { Category } from '@app/models/category';
 import { CreateReviewResp } from '@app/models/create-review-resp';
 import { QueryItemsResp } from '@app/models/query-items-resp';
-import { ShopState } from '.';
+import { GlobalState } from '.';
 import { QueryItemsReq } from '@app/models/query-items-req';
 
 export const loadCategories = createAction(
@@ -26,7 +26,7 @@ export const loadSearch = createAction(
 );
 export const loadSearchSuccess = createAction(
   '[Shop Component] Load Search Success',
-  props<{ payload: Partial<ShopState> }>()
+  props<{ payload: Partial<GlobalState> }>()
 );
 export const loadSearchFailure = createAction(
   '[Shop Component] Load Search Failure',
@@ -40,3 +40,8 @@ export const setSearchMode = createAction(
 export const loadingOn = createAction('[Global] Loading On');
 export const loadingOff = createAction('[Global] Loading Off');
 export const loadingOffForce = createAction('[Global] Loading Off Force');
+
+export const setError = createAction(
+  '[Global] Set Error',
+  props<{ error: HttpErrorResponse }>()
+);

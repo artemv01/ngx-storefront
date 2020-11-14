@@ -1,4 +1,11 @@
-import { concatMap, delay, map, tap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  delay,
+  map,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
 import { Product } from '@app/models/product';
@@ -15,6 +22,9 @@ import { deepCopy } from '@app/store/helpers';
 import { ProductInCart } from '@app/models/product-in-cart';
 import { ProductQuantity } from '@app/models/product-quantity';
 import { CartContent } from '@app/models/cart-content';
+import { HttpErrorResponse } from '@angular/common/http';
+import { setError } from '@app/store/actions';
+import { of } from 'rxjs';
 
 @Injectable()
 export class CartEffects {
@@ -113,7 +123,7 @@ export class CartEffects {
     )
   );
 
-  updateOne$ = createEffect(() =>
+  /*  updateOne$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CartActions.updateOne),
       withLatestFrom(this.store.select(selectCart)),
@@ -141,7 +151,7 @@ export class CartEffects {
         }
       )
     )
-  );
+  ); */
 
   cleanCart$ = createEffect(() =>
     this.actions$.pipe(
@@ -167,6 +177,7 @@ export class CartEffects {
         tap((action: any) => console.log(action.payload)),
 
         map((action) => this.orderQuery.create(action.payload)),
+        catchError((error: HttpErrorResponse) => of(setError({ error }))),
 
         tap(() => this.store.dispatch(CartActions.cleanCart())),
         tap(() => this.store.dispatch(CartActions.orderCreated()))

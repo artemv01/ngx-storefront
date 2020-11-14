@@ -1,4 +1,6 @@
-export const cartInitialForTest = {
+import { CartState } from '../cart.reducer';
+
+export const cartInitialForTest: CartState = {
   cartContent: {
     '5f6852394251e5e6aa22964f': {
       _id: '5f6852394251e5e6aa22964f',

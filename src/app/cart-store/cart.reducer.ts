@@ -58,14 +58,14 @@ export const reducer = createReducer(
     CartActions.updateTotalsReady,
     (state: CartState, action): CartState => ({ ...state, ...action.payload })
   ),
-
+  /* 
   on(
     CartActions.updateOneReady,
     (state: CartState, action): CartState => {
       const sc: CartState = deepCopy(state);
       return { ...sc, ...action.payload };
     }
-  ),
+  ), */
 
   on(
     CartActions.deleteOneReady,

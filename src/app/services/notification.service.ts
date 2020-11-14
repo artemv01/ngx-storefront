@@ -19,10 +19,12 @@ export class NotificationService {
     const key = new Date().getTime();
     this.notifications[key] = { ...data, key: key };
     this.emitter$.next(Object.values(this.notifications));
-    setInterval(() => {
-      delete this.notifications[key];
-      this.emitter$.next(Object.values(this.notifications));
-    }, 2500);
+    if (data.type !== 'danger') {
+      setTimeout(() => {
+        delete this.notifications[key];
+        this.emitter$.next(Object.values(this.notifications));
+      }, 2500);
+    }
   }
 
   close(key: number) {

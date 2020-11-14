@@ -21,7 +21,7 @@ import { StoreConfig, StoreModule } from '@ngrx/store';
 import { reducers, featureKey } from './store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { ShopEffects } from './store/effects';
+import { GlobalEffects } from './store/effects';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromCart from '@app/cart-store/cart.reducer';
 import { CartEffects } from '@app/cart-store/cart.effects';
@@ -44,7 +44,7 @@ storeConfig[featureKey] = reducers;
     GoogleMapsModule,
     StoreModule.forRoot(storeConfig),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([ShopEffects]),
+    EffectsModule.forRoot([GlobalEffects]),
     StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.reducer),
     EffectsModule.forFeature([CartEffects]),
   ],

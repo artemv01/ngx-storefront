@@ -24,7 +24,7 @@ import { AlertService } from '@app/services/alert.service';
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { SearchService } from '@app/services/search.service';
-import { ShopState } from '@app/store';
+import { GlobalState } from '@app/store';
 import * as ShopActions from '@app/store/actions';
 import {
   selectCurrentPage,
@@ -122,7 +122,7 @@ export class ShopComponent implements OnInit, OnDestroy {
     private notify: NotificationService,
     private router: Router,
     private productQuery: ProductsService,
-    private store: Store<ShopState>
+    private store: Store<GlobalState>
   ) {}
 
   ngOnInit(): void {

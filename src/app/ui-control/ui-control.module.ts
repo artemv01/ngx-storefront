@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { ButtonComponent } from './button/button.component';
@@ -20,7 +19,6 @@ import { SelectInputComponent } from '@app/ui-control/select-input/select-input.
 import { PaginationComponent } from './pagination/pagination.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IconComponent } from './icon/icon.component';
-import { ReviewSliderComponent } from './review-slider/review-slider.component';
 import { LazyLoadDirective } from '@app/ui-control/lazy-load.directive';
 import { CartTableComponent } from './cart-table/cart-table.component';
 
@@ -42,17 +40,10 @@ import { CartTableComponent } from './cart-table/cart-table.component';
     PaginationComponent,
     NotificationsComponent,
     IconComponent,
-    ReviewSliderComponent,
     LazyLoadDirective,
     CartTableComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    SlickCarouselModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
     StarRatingComponent,
     ButtonComponent,
@@ -70,7 +61,6 @@ import { CartTableComponent } from './cart-table/cart-table.component';
     PaginationComponent,
     NotificationsComponent,
     IconComponent,
-    ReviewSliderComponent,
     LazyLoadDirective,
     CartTableComponent,
   ],

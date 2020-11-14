@@ -26,13 +26,13 @@
     }
 }
 #notifications {
+    z-index: 9999;
     width: calc(100% - 2rem);
     max-width: 30rem;
     opacity: 0.9;
     position: fixed;
     right: 1.5rem;
     top: 1.5rem;
-    z-index: 500;
 }
 .close-btn {
     top: 7px;

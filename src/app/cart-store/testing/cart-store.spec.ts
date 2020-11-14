@@ -11,12 +11,10 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  addItem,
   cartFeatureKey,
   initialState,
-  loadCart,
   reducer,
-} from '@app/cart-store';
+} from '@app/cart-store/cart.reducer';
 import * as CartMocks from '@app/cart-store/testing/cart-mocks';
 import { TestUtilModule } from '@app/test-util/test-util.module';
 import { provideMockActions } from '@ngrx/effects/testing';
@@ -24,14 +22,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { cold, hot } from 'jasmine-marbles';
 
 import {
+  addItem,
   addItemReady,
   cleanCart,
   cleanCartReady,
   createOrder,
   deleteOne,
   deleteOneReady,
-  updateOne,
-  updateOneReady,
+  loadCart,
 } from '../cart.actions';
 import { CartState } from '../cart.reducer';
 import { getTestingCart, setTestingCart } from './cart-helpers';
@@ -139,7 +137,7 @@ describe('CartStore effects', () => {
     );
   });
 
-  it('updates one item - updateOne$', () => {
+  /* it('updates one item - updateOne$', () => {
     const action = updateOne({ payload: CartMocks.testUpdateOne.item });
     actions$ = hot('a', { a: action });
 
@@ -160,7 +158,7 @@ describe('CartStore effects', () => {
     expect(JSON.parse(localStorage.getItem('totalPrice'))).toEqual(
       CartMocks.testUpdateOne.result.totalPrice
     );
-  });
+  }); */
 
   it('cleans cart - cleanCart$', () => {
     const action = cleanCart();

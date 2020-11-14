@@ -14,7 +14,7 @@ import { SearchService } from '@app/services/search.service';
 import { NotificationService } from '@app/services/notification.service';
 import { Router } from '@angular/router';
 import { CategoryService } from '@app/services/category.service';
-import { ShopState } from '@app/store';
+import { GlobalState } from '@app/store';
 import { Store } from '@ngrx/store';
 import { selectCategories } from '@app/store/selectors';
 import { loadCategories } from '@app/store/actions';
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     public searchService: SearchService,
     public notify: NotificationService,
-    private store: Store<ShopState>,
+    private store: Store<GlobalState>,
     private cart: Store<CartState>
   ) {
     this.totalQuantity$ = cart.select(selectTotalQuantity);

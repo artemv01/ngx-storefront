@@ -39,18 +39,12 @@ export class CartTableComponent implements OnInit {
     this.deleteItem.emit(id);
   }
   addToUpdateCartMap(id: Product['_id'], quantity: number) {
-    this.updateMap[id] = quantity;
+    this.updateMap[id] = Number(quantity);
   }
   flushUpdateCartMap() {
     this.updateCart.emit(this.updateMap);
     this.updateMap = {};
   }
-
-  /* productIdentify(index, item) {
-    console.log(index);
-    console.log(item);
-    return item.value;
-  } */
 
   // for keyvalue pipe, preserve the original order of items
   cartItemsOrderSort = (

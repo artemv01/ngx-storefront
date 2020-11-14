@@ -65,8 +65,8 @@ describe('ButtonComponent', () => {
   });
   it('should handle the click event', () => {
     hostF.detectChanges();
-    hostC.disabled = true;
-    const button = hostF.debugElement.query(By.css('button'));
+    const button = hostF.debugElement.query(By.css('app-button'));
+    expect(button).toBeTruthy();
     click(button);
     expect(hostC.clickCount).toBe(1);
   });

@@ -13,8 +13,8 @@ import { ReviewService } from '@app/services/review.service';
 import { TitleService } from '@app/services/title.service';
 import { SingleProductState } from '@app/pages/single-product/store/single-product.reducer';
 import * as SingleProductActions from '@app/pages/single-product/store/single-product.actions';
-import { ShopState } from '@app/store';
-import { loadingOff, loadingOn } from '@app/store/actions';
+import { GlobalState } from '@app/store';
+import { loadingOff, loadingOn, setError } from '@app/store/actions';
 import { Store } from '@ngrx/store';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class SingleProductEffects {
     private reviewQuery: ReviewService,
     public notify: NotificationService,
     private titleServ: TitleService,
-    private store: Store<ShopState>
+    private store: Store<GlobalState>
   ) {}
 
   loadSingleProductPage$ = createEffect(() =>
@@ -44,9 +44,7 @@ export class SingleProductEffects {
       ),
       tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
 
-      catchError((error: HttpErrorResponse) => {
-        return of(SingleProductActions.loadSingleProductPageFailure({ error }));
-      })
+      catchError((error: HttpErrorResponse) => of(setError({ error })))
     )
   );
 
@@ -60,9 +58,7 @@ export class SingleProductEffects {
       tap((resp) =>
         this.notify.push({ message: 'Your review has been submitted!' })
       ),
-      catchError((error: HttpErrorResponse) =>
-        of(SingleProductActions.createReviewFailure({ error }))
-      )
+      catchError((error: HttpErrorResponse) => of(setError({ error })))
     )
   );
 }

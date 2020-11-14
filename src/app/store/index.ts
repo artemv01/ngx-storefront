@@ -15,8 +15,9 @@ import { Category } from '@app/models/category';
 import { deepCopy } from './helpers';
 import * as ShopActions from './actions';
 import { stat } from 'fs';
-export const featureKey = 'shop';
-export interface ShopState {
+
+export const featureKey = 'global';
+export interface GlobalState {
   categories: Category[];
   error: HttpErrorResponse;
 
@@ -39,48 +40,42 @@ export const initialState = {
 
 export const reducers = createReducer(
   initialState,
-  on(ShopActions.loadCategoriesSuccess, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
+  on(ShopActions.loadCategoriesSuccess, (state: GlobalState, action) => {
+    const stateCopy = deepCopy<GlobalState>(state);
     stateCopy.categories = action.payload;
     return stateCopy;
   }),
-  on(ShopActions.loadSearch, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
+  on(ShopActions.loadSearch, (state: GlobalState, action) => {
+    const stateCopy = deepCopy<GlobalState>(state);
     return { ...stateCopy, searchLoading: true, searchMode: true };
   }),
-  on(ShopActions.loadSearchSuccess, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
+  on(ShopActions.loadSearchSuccess, (state: GlobalState, action) => {
+    const stateCopy = deepCopy<GlobalState>(state);
     return { ...stateCopy, ...action.payload, searchLoading: false };
   }),
-  on(ShopActions.setSearchMode, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
+  on(ShopActions.setSearchMode, (state: GlobalState, action) => {
+    const stateCopy = deepCopy<GlobalState>(state);
     return { ...stateCopy, searchMode: action.set };
   }),
-  on(ShopActions.loadingOn, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
-    ++stateCopy.loadingCounter;
-    stateCopy.loading = true;
-    return stateCopy;
-  }),
-  on(ShopActions.loadingOff, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
-    if (stateCopy.loadingCounter > 0) {
-      --stateCopy.loadingCounter;
-    }
-    if (stateCopy.loadingCounter === 0) {
-      stateCopy.loading = false;
-    }
-    return stateCopy;
-  }),
-  on(ShopActions.loadingOffForce, (state: ShopState, action) => {
-    const stateCopy = deepCopy<ShopState>(state);
-    stateCopy.loadingCounter = 0;
-    stateCopy.loading = false;
-    return stateCopy;
-  })
-);
 
-/* export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? []
-  : [];
- */
+  on(ShopActions.loadingOn, (state: GlobalState, action) => {
+    const loadingCounter = state.loadingCounter + 1;
+    return { ...state, loadingCounter, loading: true };
+  }),
+  on(ShopActions.loadingOff, (state: GlobalState, action) => {
+    let loadingCounter =
+      state.loadingCounter > 0 ? state.loadingCounter - 1 : 0;
+    let loading = loadingCounter > 0;
+    return { ...state, loadingCounter, loading };
+  }),
+  on(ShopActions.loadingOffForce, (state: GlobalState, action) => ({
+    ...state,
+    loadingCounter: 0,
+    loading: false,
+  })),
+
+  on(ShopActions.setError, (state: GlobalState, action) => ({
+    ...state,
+    error: action.error,
+  }))
+);

@@ -1,11 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { featureKey, ShopState } from '.';
+import { featureKey, GlobalState } from '.';
 
-export const selectState = createFeatureSelector<ShopState>(featureKey);
+export const selectState = createFeatureSelector<GlobalState>(featureKey);
 
 export const selectCategories = createSelector(
   selectState,
-  (state: ShopState) => state.categories
+  (state: GlobalState) => state.categories
 );
 export const selectProducts = createSelector(
   selectState,
@@ -41,3 +41,5 @@ export const selectLoading = createSelector(
   selectState,
   (state) => state.loading
 );
+
+export const selectError = createSelector(selectState, (state) => state.error);

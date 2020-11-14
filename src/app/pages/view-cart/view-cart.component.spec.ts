@@ -1,74 +1,116 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { deleteOne, updateTotals } from '@app/cart-store/cart.actions';
 import {
   cartFeatureKey,
-  initialState,
-  loadCart,
+  CartState,
   reducer,
-} from '@app/cart-store';
+} from '@app/cart-store/cart.reducer';
+import {
+  selectCartItems,
+  selectIsCartEmpty,
+  selectTotalPrice,
+} from '@app/cart-store/cart.selectors';
+import { cartInitialForTest } from '@app/cart-store/testing/cart-mocks';
+import { CartContent } from '@app/models/cart-content';
+import { ProductInCart } from '@app/models/product-in-cart';
+import { ProductQuantity } from '@app/models/product-quantity';
+import { NotificationService } from '@app/services/notification.service';
+import { TitleService } from '@app/services/title.service';
+import { GlobalState } from '@app/store';
+import { click } from '@app/test-util/helpers';
 import { TestUtilModule } from '@app/test-util/test-util.module';
-import { StoreModule } from '@ngrx/store';
+import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { ViewCartComponent } from './view-cart.component';
-
-const storeConfig: any = {};
-storeConfig[cartFeatureKey] = reducer;
-
-const cartContent = {
-  '5f68523a4251e5e6aa229653': {
-    _id: '5f68523a4251e5e6aa229653',
-    image:
-      'https://ngx-storefront-backend.s3.eu-west-2.amazonaws.com/d2caf5a7-47fb-4d49-be99-80982d38c6bb.jpg',
-    name: 'Watch 001 Series',
-    price: 93,
-    quantity: 1,
-  },
-  '5f68523a4251e5e6aa229651': {
-    _id: '5f68523a4251e5e6aa229651',
-    image:
-      'https://ngx-storefront-backend.s3.eu-west-2.amazonaws.com/02c1061c-1e8b-4292-b185-ccd46d750346.jpg',
-    name: 'Watch 53 Series Unique',
-    price: 103,
-    quantity: 2,
-  },
-};
-const totalPrice = 299;
-const totalQuantity = 12;
-
-const setTestingCart = () => {
-  localStorage.setItem('cartContent', JSON.stringify(cartContent));
-  localStorage.setItem('totalQuantity', JSON.stringify(totalQuantity));
-  localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
-};
 
 describe('ViewCartComponent', () => {
   let component: ViewCartComponent;
   let fixture: ComponentFixture<ViewCartComponent>;
 
+  let titleServiceSpy = jasmine.createSpyObj('TitleService', ['set']);
+  let titleService: any;
+
+  let notifyServiceSpy = jasmine.createSpyObj('NotificationService', [
+    'push',
+    'dismissAll',
+  ]);
+  let notifyService: any;
+
+  let routerSpy = jasmine.createSpyObj('RouterService', ['navigate']);
+  let router: any;
+
+  let mockStore: MockStore<GlobalState>;
+  let mockSelectIsCartEmpty: MemoizedSelector<CartState, boolean>;
+  let mockSelectTotalPrice: MemoizedSelector<CartState, number>;
+  let mockSelectCartItems: MemoizedSelector<CartState, CartContent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ViewCartComponent],
-      imports: [
-        NoopAnimationsModule,
-        TestUtilModule,
-        RouterTestingModule,
-        StoreModule.forRoot(storeConfig),
+      imports: [TestUtilModule],
+      providers: [
+        { provide: TitleService, useValue: titleServiceSpy },
+        { provide: Router, useValue: routerSpy },
+        { provide: NotificationService, useValue: notifyServiceSpy },
+        provideMockStore(),
       ],
     }).compileComponents();
 
-    setTestingCart();
-    const readyCartState = reducer(initialState, loadCart());
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ViewCartComponent);
     component = fixture.componentInstance;
+
+    titleService = TestBed.inject(TitleService);
+    notifyService = TestBed.inject(NotificationService);
+    router = TestBed.inject(Router);
+
+    mockStore = TestBed.inject(MockStore);
+    mockStore.overrideSelector(selectIsCartEmpty, false);
+    mockStore.overrideSelector(selectTotalPrice, cartInitialForTest.totalPrice);
+    mockStore.overrideSelector(selectCartItems, cartInitialForTest.cartContent);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch delete item action', () => {});
+  it('sets the correct title', () => {
+    const title = 'Your Cart';
+    fixture.detectChanges();
+    expect(titleService.set).toHaveBeenCalledWith(title);
+  });
+
+  it('redirects to checkout', () => {
+    fixture.detectChanges();
+    const btn = fixture.debugElement.query(By.css('app-button'))?.nativeElement;
+    expect(btn).toBeTruthy('cannot find redirect button');
+    click(btn);
+    const spy = router.navigate as jasmine.Spy;
+    const args = spy.calls.first().args[0];
+    expect(args).toEqual(['checkout']);
+  });
+
+  it('should dispatch delete item action', () => {
+    const testId = '5f6852394251e5e6aa22964f';
+    const dispatchSpy = spyOn(mockStore, 'dispatch');
+
+    component.deleteItem(testId);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).toHaveBeenCalledWith(deleteOne({ payload: testId }));
+  });
+
+  it('should dispatch update totals action', () => {
+    const testData: ProductQuantity = { '5f6852394251e5e6aa22964f': 3 };
+    const dispatchSpy = spyOn(mockStore, 'dispatch');
+
+    component.updateTotals(testData);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).toHaveBeenCalledWith(
+      updateTotals({ payload: testData })
+    );
+  });
 });

@@ -10,9 +10,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoadingService } from '@app/services/loading.service';
 import { ProductsService } from '@app/services/products.service';
 import { HomePageState } from './home-page.reducer';
-import { ShopState } from '@app/store';
+import { GlobalState } from '@app/store';
 import { Store } from '@ngrx/store';
-import { loadingOff, loadingOn } from '@app/store/actions';
+import { loadingOff, loadingOn, setError } from '@app/store/actions';
 
 @Injectable()
 export class HomePageStateEffects {
@@ -31,9 +31,7 @@ export class HomePageStateEffects {
         HomePageStateActions.loadHomePageSuccess({ payload })
       ),
       tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
-      catchError((error: HttpErrorResponse) => {
-        return of(HomePageStateActions.loadHomePageFailure({ error }));
-      })
+      catchError((error: HttpErrorResponse) => of(setError({ error })))
     )
   );
 
@@ -41,6 +39,6 @@ export class HomePageStateEffects {
     private actions$: Actions,
     private reviewQuery: ReviewService,
     private productQuery: ProductsService,
-    private store: Store<ShopState>
+    private store: Store<GlobalState>
   ) {}
 }

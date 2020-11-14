@@ -20,6 +20,7 @@ import { SelectInputComponent } from '@app/ui-control/select-input/select-input.
 import { StarRatingComponent } from '@app/ui-control/star-rating/star-rating.component';
 import { TextareaComponent } from '@app/ui-control/textarea/textarea.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,31 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LazyLoadDirective,
     CartTableComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, NoopAnimationsModule, FormsModule],
+  exports: [
+    CommonModule,
+    NoopAnimationsModule,
+    FormsModule,
+
+    StarRatingComponent,
+    ButtonComponent,
+    ProductGridComponent,
+    CategoryGridComponent,
+    SaleLabelComponent,
+    PriceComponent,
+    InputComponent,
+    ReviewsComponent,
+    TextareaComponent,
+    RateItemComponent,
+    CartComponent,
+    BreadcrumbsComponent,
+    SelectInputComponent,
+    PaginationComponent,
+    NotificationsComponent,
+    IconComponent,
+    ReviewSliderComponent,
+    LazyLoadDirective,
+    CartTableComponent,
+  ],
 })
 export class TestUtilModule {}

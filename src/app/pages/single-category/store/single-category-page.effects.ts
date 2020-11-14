@@ -11,9 +11,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { QueryItemsReq } from '@app/models/query-items-req';
 import { SingleCategoryPageState } from './single-category-page.reducer';
-import { ShopState } from '@app/store';
+import { GlobalState } from '@app/store';
 import { Store } from '@ngrx/store';
-import { loadingOff, loadingOn } from '@app/store/actions';
+import { loadingOff, loadingOn, setError } from '@app/store/actions';
 
 @Injectable()
 export class SingleCategoryPageEffects {
@@ -39,18 +39,21 @@ export class SingleCategoryPageEffects {
         return SingleCategoryPageActions.loadPageDataSuccess({
           payload: updateStore,
         });
+        /*
+        // test network error 
+        return setError({
+          error: { message: 'Network Error', status: 500 },
+        } as HttpErrorResponse); */
       }),
       tap(() => setTimeout(() => this.store.dispatch(loadingOff()))),
 
-      catchError((error: HttpErrorResponse) => {
-        return of(SingleCategoryPageActions.loadPageDataFailure({ error }));
-      })
+      catchError((error: HttpErrorResponse) => of(setError({ error })))
     );
   });
 
   constructor(
     private actions$: Actions,
     private productQuery: ProductsService,
-    private store: Store<ShopState>
+    private store: Store<GlobalState>
   ) {}
 }

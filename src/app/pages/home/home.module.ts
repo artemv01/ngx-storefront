@@ -10,12 +10,23 @@ import * as fromHomePageState from './store/home-page.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { HomePageStateEffects } from './store/home-page.effects';
 
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { ReviewSliderComponent } from '@app/ui-control/review-slider/review-slider.component';
+
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto',
+};
+
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, ReviewSliderComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
     UiControlModule,
+    SwiperModule,
     StoreModule.forFeature(
       fromHomePageState.homePageStateFeatureKey,
       fromHomePageState.reducer
@@ -23,6 +34,12 @@ import { HomePageStateEffects } from './store/home-page.effects';
     EffectsModule.forFeature([HomePageStateEffects]),
     // SlickCarouselModule,
   ],
-  providers: [HomePageResolver],
+  providers: [
+    HomePageResolver,
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG,
+    },
+  ],
 })
 export class HomeModule {}

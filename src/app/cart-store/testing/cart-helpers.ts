@@ -1,11 +1,6 @@
 import { CartState } from '../cart.reducer';
 
-import {
-  cartFeatureKey,
-  initialState,
-  loadCart,
-  reducer,
-} from '@app/cart-store';
+import { initialState } from '@app/cart-store/cart.reducer';
 const cartContent = {
   '5f68523a4251e5e6aa229653': {
     _id: '5f68523a4251e5e6aa229653',

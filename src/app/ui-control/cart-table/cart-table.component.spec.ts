@@ -10,6 +10,10 @@ import { IconComponent } from '../icon/icon.component';
 
 import { CartTableComponent } from './cart-table.component';
 import { TestUtilModule } from '@app/test-util/test-util.module';
+import { ProductQuantity } from '@app/models/product-quantity';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 
 const CART_CONTENT: CartState['cartContent'] = {
   '5f68523a4251e5e6aa229653': {
@@ -34,15 +38,15 @@ const CART_CONTENT: CartState['cartContent'] = {
   template: `<app-cart-table
     [cartItems$]="cartItems$"
     (deleteItem)="deleteItem($event)"
-    (updateItem)="updateItem($event)"
+    (updateCart)="updateCart($event)"
   ></app-cart-table>`,
 })
 class TestHostComponent {
   cartItems$: Observable<CartState['cartContent']> = of(CART_CONTENT);
-  updateItemEvent: UpdateItem;
+  updateCartData: ProductQuantity;
   itemToDelete: Product['_id'];
-  updateItem(payload: UpdateItem) {
-    this.updateItemEvent = payload;
+  updateCart(payload: ProductQuantity) {
+    this.updateCartData = payload;
   }
   deleteItem(id: Product['_id']) {
     this.itemToDelete = id;
@@ -57,7 +61,12 @@ describe('CartTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CartTableComponent, TestHostComponent, IconComponent],
-      imports: [NoopAnimationsModule, TestUtilModule],
+      imports: [
+        NoopAnimationsModule,
+        TestUtilModule,
+        RouterTestingModule,
+        FormsModule,
+      ],
     }).compileComponents();
   });
 
@@ -77,7 +86,6 @@ describe('CartTableComponent', () => {
     let rows = hostF.nativeElement.querySelectorAll(
       '.cart-items-table tbody tr'
     );
-    expect(rows).toBeTruthy('Rows were not found');
     expect(rows.length).toBe(
       Object.keys(CART_CONTENT).length,
       'Wrong number of rows'
@@ -89,10 +97,36 @@ describe('CartTableComponent', () => {
     let rows = hostF.nativeElement.querySelectorAll(
       '.cart-items-table tbody tr'
     );
-    expect(rows).toBeTruthy('Rows were not found');
+    expect(rows.length).toBeTruthy('Rows were not found');
     const deleteBtn = rows[0].querySelector('app-icon');
     click(deleteBtn);
-    console.log(Object.keys(CART_CONTENT));
     expect(hostC.itemToDelete).toBe(Object.keys(CART_CONTENT)[0]);
+  });
+
+  it('should update items quantities', () => {
+    const expected = {
+      '5f68523a4251e5e6aa229653': 9,
+    };
+    hostF.detectChanges();
+
+    const updateBtn = hostF.debugElement.query(By.css('.update-totals-btn'));
+    expect(updateBtn).toBeTruthy();
+
+    let rows = hostF.debugElement.queryAll(
+      By.css('.cart-items-table tbody tr')
+    );
+    expect(rows.length).toBeTruthy('Rows were not found');
+    const input: HTMLInputElement = rows[0].nativeElement.querySelector(
+      'input[name=quantity]'
+    );
+    expect(input).toBeTruthy('Input was not found');
+
+    input.value = '9';
+
+    input.dispatchEvent(new Event('change'));
+    hostF.detectChanges();
+    click(updateBtn);
+    console.log(expected);
+    expect(hostC.updateCartData).toEqual(expected);
   });
 });

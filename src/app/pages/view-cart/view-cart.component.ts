@@ -14,11 +14,7 @@ import {
   selectIsCartEmpty,
   selectTotalPrice,
 } from '@app/cart-store/cart.selectors';
-import {
-  deleteOne,
-  updateOne,
-  updateTotals,
-} from '@app/cart-store/cart.actions';
+import { deleteOne, updateTotals } from '@app/cart-store/cart.actions';
 import { UpdateItem } from '@app/models/update-item';
 import { fadeInAnimation } from '@app/core/animations';
 import { ProductQuantity } from '@app/models/product-quantity';
@@ -49,16 +45,13 @@ export class ViewCartComponent implements OnInit, OnDestroy {
   }
 
   goToCheckout() {
-    // this.cartStore.dispatch(updateTotals());
     this.router.navigate(['checkout']);
   }
   updateTotals(payload: ProductQuantity) {
     this.cartStore.dispatch(updateTotals({ payload }));
     this.notify.push({ message: 'Cart totals has been updated.' });
   }
-  /* updateItem(payload: UpdateItem) {
-    this.cartStore.dispatch(updateOne({ payload }));
-  } */
+
   deleteItem(id: Product['_id']) {
     this.cartStore.dispatch(deleteOne({ payload: id }));
   }

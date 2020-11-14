@@ -2,6 +2,7 @@ import { CartState } from '@app/cart-store/cart.reducer';
 import { Order } from '@app/models/order';
 import { Product } from '@app/models/product';
 import { ProductInCart } from '@app/models/product-in-cart';
+import { ProductQuantity } from '@app/models/product-quantity';
 import { UpdateItem } from '@app/models/update-item';
 import { createAction, props } from '@ngrx/store';
 
@@ -16,11 +17,11 @@ export const addItemReady = createAction(
 );
 export const updateTotals = createAction(
   '[Cart] Update Cart Totals',
-  props<{ payload: Record<Product['_id'], number> }>()
+  props<{ payload: ProductQuantity }>()
 );
 export const updateTotalsReady = createAction(
   '[Cart] Update Cart Totals Ready',
-  props<{ payload: CartState }>()
+  props<{ payload: Partial<CartState> }>()
 );
 
 export const deleteOne = createAction(
@@ -32,14 +33,14 @@ export const deleteOneReady = createAction(
   props<{ payload: CartState }>()
 );
 
-export const updateOne = createAction(
+/* export const updateOne = createAction(
   '[Cart] Update One Cart Item',
   props<{ payload: UpdateItem }>()
 );
 export const updateOneReady = createAction(
   '[Cart] Update One Cart Item Ready',
   props<{ payload: Partial<CartState> }>()
-);
+); */
 
 export const cleanCart = createAction('[Cart] Clean Cart');
 export const cleanCartReady = createAction(
