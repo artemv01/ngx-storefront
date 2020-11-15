@@ -1,14 +1,7 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import {
-  trigger,
-  transition,
-  style,
-  animate,
-  state,
-} from '@angular/animations';
-import { Notification } from '@app/models/notification';
+
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NotificationService } from '@app/services/notification.service';
 
 @Component({
@@ -32,17 +25,17 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   typeMap = {
     success: 'bg-bgSuccess',
     info: 'bg-bgInfo',
-    danger: 'bg-bgDanger',
+    error: 'bg-bgDanger',
   };
   messageMap = {
     success: 'Success',
     info: 'Information',
-    danger: 'Error',
+    error: 'Error',
   };
   iconMap = {
     success: 'check_circle',
     info: 'info',
-    danger: 'error',
+    error: 'error',
   };
   destroy: Subject<null> = new Subject();
   constructor(public notify: NotificationService) {}

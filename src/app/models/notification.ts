@@ -1,5 +1,5 @@
 export interface Notification {
-  type?: 'success' | 'info' | 'danger';
+  type?: 'success' | 'info' | 'error';
   message?: string;
   show?: boolean;
   showMessage?: 'addToCartSuccess';

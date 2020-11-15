@@ -19,7 +19,7 @@ export class NotificationService {
     const key = new Date().getTime();
     this.notifications[key] = { ...data, key: key };
     this.emitter$.next(Object.values(this.notifications));
-    if (data.type !== 'danger') {
+    if (data.type !== 'error') {
       setTimeout(() => {
         delete this.notifications[key];
         this.emitter$.next(Object.values(this.notifications));

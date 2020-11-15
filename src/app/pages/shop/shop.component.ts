@@ -25,7 +25,7 @@ import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { SearchService } from '@app/services/search.service';
 import { GlobalState } from '@app/store';
-import * as ShopActions from '@app/store/actions';
+import * as GlobalActions from '@app/store/actions';
 import {
   selectCurrentPage,
   selectItemsTotal,
@@ -128,15 +128,15 @@ export class ShopComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.store.dispatch(ShopActions.loadingOffForce());
-        this.store.dispatch(ShopActions.setSearchMode({ set: false }));
+        this.store.dispatch(GlobalActions.loadingOffForce());
+        this.store.dispatch(GlobalActions.setSearchMode({ set: false }));
         this.notify.dismissAll();
         this.routeChange$.next(null);
       }
       if (event instanceof RouteConfigLoadStart) {
-        this.store.dispatch(ShopActions.loadingOn());
+        this.store.dispatch(GlobalActions.loadingOn());
       } else if (event instanceof RouteConfigLoadEnd) {
-        this.store.dispatch(ShopActions.loadingOffForce());
+        this.store.dispatch(GlobalActions.loadingOffForce());
       }
     });
 
@@ -147,7 +147,7 @@ export class ShopComponent implements OnInit, OnDestroy {
           this.filterParams.page = 1;
           this.filterParams.search = searchText;
           this.store.dispatch(
-            ShopActions.loadSearch({ payload: { ...this.filterParams } })
+            GlobalActions.loadSearch({ payload: { ...this.filterParams } })
           );
         })
       )
@@ -184,7 +184,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
   filterProducts() {
     this.store.dispatch(
-      ShopActions.loadSearch({ payload: { ...this.filterParams } })
+      GlobalActions.loadSearch({ payload: { ...this.filterParams } })
     );
   }
 
@@ -203,7 +203,7 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   setSearchMode(set = true) {
-    this.store.dispatch(ShopActions.setSearchMode({ set }));
+    this.store.dispatch(GlobalActions.setSearchMode({ set }));
   }
 
   scrollToElement($element): void {

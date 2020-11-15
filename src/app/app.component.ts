@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .subscribe((error: HttpErrorResponse) => {
         console.log(error);
         this.notify.push({
-          type: 'danger',
+          type: 'error',
           message:
             error?.status === 0 ? 'Network error &#128517;' : error.message,
         });

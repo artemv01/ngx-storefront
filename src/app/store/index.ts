@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Category } from '@app/models/category';
 import { deepCopy } from './helpers';
-import * as ShopActions from './actions';
+import * as GlobalActions from './actions';
 import { stat } from 'fs';
 
 export const featureKey = 'global';
@@ -40,42 +40,42 @@ export const initialState = {
 
 export const reducers = createReducer(
   initialState,
-  on(ShopActions.loadCategoriesSuccess, (state: GlobalState, action) => ({
+  on(GlobalActions.loadCategoriesSuccess, (state: GlobalState, action) => ({
     ...state,
     categories: action.payload,
   })),
-  on(ShopActions.loadSearch, (state: GlobalState, action) => ({
+  on(GlobalActions.loadSearch, (state: GlobalState, action) => ({
     ...state,
     searchLoading: true,
     searchMode: true,
   })),
-  on(ShopActions.loadSearchSuccess, (state: GlobalState, action) => ({
+  on(GlobalActions.loadSearchSuccess, (state: GlobalState, action) => ({
     ...state,
     ...action.payload,
     searchLoading: false,
   })),
-  on(ShopActions.setSearchMode, (state: GlobalState, action) => ({
+  on(GlobalActions.setSearchMode, (state: GlobalState, action) => ({
     ...state,
     searchMode: action.set,
   })),
 
-  on(ShopActions.loadingOn, (state: GlobalState, action) => {
+  on(GlobalActions.loadingOn, (state: GlobalState, action) => {
     const loadingCounter = state.loadingCounter + 1;
     return { ...state, loadingCounter, loading: true };
   }),
-  on(ShopActions.loadingOff, (state: GlobalState, action) => {
+  on(GlobalActions.loadingOff, (state: GlobalState, action) => {
     let loadingCounter =
       state.loadingCounter > 0 ? state.loadingCounter - 1 : 0;
     let loading = loadingCounter > 0;
     return { ...state, loadingCounter, loading };
   }),
-  on(ShopActions.loadingOffForce, (state: GlobalState, action) => ({
+  on(GlobalActions.loadingOffForce, (state: GlobalState, action) => ({
     ...state,
     loadingCounter: 0,
     loading: false,
   })),
 
-  on(ShopActions.setError, (state: GlobalState, action) => ({
+  on(GlobalActions.setError, (state: GlobalState, action) => ({
     ...state,
     error: action.error,
   }))
