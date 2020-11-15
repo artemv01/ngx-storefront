@@ -55,7 +55,7 @@ export class InputComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.placesConfig) {
-      var placesAutocomplete = places({
+      places({
         appId: environment.algoliaPlacesAppId,
         apiKey: environment.algoliaPlacesApiKey,
         container: this.inputEl.nativeElement as HTMLInputElement,

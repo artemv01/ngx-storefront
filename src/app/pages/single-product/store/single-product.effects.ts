@@ -6,7 +6,6 @@ import { forkJoin, of } from 'rxjs';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateReviewResp } from '@app/models/create-review-resp';
-import { LoadingService } from '@app/services/loading.service';
 import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { ReviewService } from '@app/services/review.service';

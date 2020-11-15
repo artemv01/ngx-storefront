@@ -1,13 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
 import { deleteOne, updateTotals } from '@app/cart-store/cart.actions';
 import {
-  cartFeatureKey,
   CartState,
-  reducer,
 } from '@app/cart-store/cart.reducer';
 import {
   selectCartItems,
@@ -16,14 +12,13 @@ import {
 } from '@app/cart-store/cart.selectors';
 import { cartInitialForTest } from '@app/cart-store/testing/cart-mocks';
 import { CartContent } from '@app/models/cart-content';
-import { ProductInCart } from '@app/models/product-in-cart';
 import { ProductQuantity } from '@app/models/product-quantity';
 import { NotificationService } from '@app/services/notification.service';
 import { TitleService } from '@app/services/title.service';
 import { GlobalState } from '@app/store';
 import { click } from '@app/test-util/helpers';
 import { TestUtilModule } from '@app/test-util/test-util.module';
-import { MemoizedSelector, Store, StoreModule } from '@ngrx/store';
+import { MemoizedSelector } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { ViewCartComponent } from './view-cart.component';

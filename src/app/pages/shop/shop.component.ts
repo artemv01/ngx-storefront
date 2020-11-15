@@ -1,10 +1,9 @@
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, delay, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, tap } from 'rxjs/operators';
 
 import {
   animate,
   query,
-  state,
   style,
   transition,
   trigger,
@@ -22,7 +21,6 @@ import { Product } from '@app/models/product';
 import { QueryItemsReq } from '@app/models/query-items-req';
 import { AlertService } from '@app/services/alert.service';
 import { NotificationService } from '@app/services/notification.service';
-import { ProductsService } from '@app/services/products.service';
 import { SearchService } from '@app/services/search.service';
 import { GlobalState } from '@app/store';
 import * as GlobalActions from '@app/store/actions';
@@ -121,7 +119,6 @@ export class ShopComponent implements OnInit, OnDestroy {
     public alertService: AlertService,
     private notify: NotificationService,
     private router: Router,
-    private productQuery: ProductsService,
     private store: Store<GlobalState>
   ) {}
 

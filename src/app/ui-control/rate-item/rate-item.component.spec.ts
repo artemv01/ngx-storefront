@@ -5,7 +5,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { click } from '@app/test-util/helpers';
 import { TestUtilModule } from '@app/test-util/test-util.module';
-import { count } from 'console';
 import { IconComponent } from '../icon/icon.component';
 import { RateItemComponent } from './rate-item.component';
 

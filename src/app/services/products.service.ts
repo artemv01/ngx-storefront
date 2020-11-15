@@ -1,9 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from '@app/models/product';
 import { Observable } from 'rxjs';
-import { catchError, delay } from 'rxjs/operators';
 
 import { environment as env } from '@root/environments/environment';
 import { QueryItemsReq } from '@app/models/query-items-req';
@@ -13,7 +11,7 @@ import { QueryItemsResp } from '@app/models/query-items-resp';
   providedIn: 'root',
 })
 export class ProductsService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   getOne(id: string | Product): Observable<Product> {
     return this.http.get<Product>(env.apiUrl + `product/${id}`);

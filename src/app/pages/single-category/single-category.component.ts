@@ -2,10 +2,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  AfterViewInit,
-  AfterViewChecked,
 } from '@angular/core';
-import { LoadingService } from '@app/services/loading.service';
 import {
   transition,
   style,

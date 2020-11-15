@@ -1,23 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CartService } from '@app/services/cart.service';
 import { Product } from '@app/models/product';
-import { environment } from '@root/environments/environment';
 import { Router } from '@angular/router';
 import { NotificationService } from '@app/services/notification.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 import { TitleService } from '@app/services/title.service';
 import { CartState } from '@app/cart-store/cart.reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   selectCartItems,
+  selectCartItemsMap,
   selectIsCartEmpty,
   selectTotalPrice,
 } from '@app/cart-store/cart.selectors';
 import { deleteOne, updateTotals } from '@app/cart-store/cart.actions';
-import { UpdateItem } from '@app/models/update-item';
 import { fadeInAnimation } from '@app/core/animations';
 import { ProductQuantity } from '@app/models/product-quantity';
+import { ProductInCart } from '@app/models/product-in-cart';
 
 @Component({
   selector: 'app-view-cart',
@@ -27,7 +25,7 @@ import { ProductQuantity } from '@app/models/product-quantity';
 })
 export class ViewCartComponent implements OnInit, OnDestroy {
   isCartEmpty$: Observable<boolean>;
-  cartItems$: Observable<CartState['cartContent']>;
+  cartItems$: Observable<Map<string, ProductInCart>>;
   totalPrice$: Observable<number>;
   constructor(
     public router: Router,
@@ -37,7 +35,7 @@ export class ViewCartComponent implements OnInit, OnDestroy {
   ) {
     this.isCartEmpty$ = cartStore.select(selectIsCartEmpty);
     this.totalPrice$ = cartStore.select(selectTotalPrice);
-    this.cartItems$ = cartStore.select(selectCartItems);
+    this.cartItems$ = cartStore.select(selectCartItemsMap);
   }
 
   ngOnInit(): void {

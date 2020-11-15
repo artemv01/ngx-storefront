@@ -1,4 +1,3 @@
-import { deepCopy } from '@app/store/helpers';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromCart from './cart.reducer';
 
@@ -21,6 +20,10 @@ export const selectTotalPrice = createSelector(
 export const selectCartItems = createSelector(
   selectCartState,
   (state: fromCart.CartState) => state.cartContent
+);
+export const selectCartItemsMap = createSelector(
+  selectCartState,
+  (state: fromCart.CartState) => new Map(Object.entries(state.cartContent))
 );
 
 export const selectIsOrderCreated = createSelector(

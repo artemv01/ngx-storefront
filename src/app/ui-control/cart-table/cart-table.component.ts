@@ -10,9 +10,9 @@ import {
 import { CartState } from '@app/cart-store/cart.reducer';
 import { fadeInAnimation } from '@app/core/animations';
 import { Product } from '@app/models/product';
+import { ProductInCart } from '@app/models/product-in-cart';
 import { ProductQuantity } from '@app/models/product-quantity';
 import { Observable } from 'rxjs';
-import { UpdateItem } from '../../models/update-item';
 
 @Component({
   selector: 'app-cart-table',
@@ -22,7 +22,7 @@ import { UpdateItem } from '../../models/update-item';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartTableComponent implements OnInit {
-  @Input('cartItems$') cartItems$: Observable<CartState['cartContent']>;
+  @Input('cartItems$') cartItems$: Observable<Map<string, ProductInCart>>;
 
   @Output('deleteItem') deleteItem = new EventEmitter<Product['_id']>();
 
@@ -47,10 +47,7 @@ export class CartTableComponent implements OnInit {
   }
 
   // for keyvalue pipe, preserve the original order of items
-  cartItemsOrderSort = (
-    a: KeyValue<number, string>,
-    b: KeyValue<number, string>
-  ): number => {
+  cartItemsOrderSort = () => {
     return 0;
   };
 }

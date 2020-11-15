@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { Review } from 'src/app/models/review';
-import { Category } from 'src/app/models/category';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { LoadingService } from '@app/services/loading.service';
-import { TitleService } from '@app/services/title.service';
-import { ProductsService } from '@app/services/products.service';
-import { ReviewService } from '@app/services/review.service';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { HomePageState } from './store/home-page.reducer';
 import {

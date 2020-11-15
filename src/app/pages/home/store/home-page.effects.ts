@@ -7,7 +7,6 @@ import { forkJoin, of } from 'rxjs';
 import * as HomePageStateActions from './home-page.actions';
 import { ReviewService } from '@app/services/review.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LoadingService } from '@app/services/loading.service';
 import { ProductsService } from '@app/services/products.service';
 import { HomePageState } from './home-page.reducer';
 import { GlobalState } from '@app/store';

@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CartService } from '@app/services/cart.service';
 import { Product } from '@app/models/product';
-import { environment } from '@root/environments/environment';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { CartState } from '@app/cart-store/cart.reducer';

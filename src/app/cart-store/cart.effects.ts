@@ -1,22 +1,14 @@
-import {
-  catchError,
-  concatMap,
-  delay,
-  map,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { catchError, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { Injectable } from '@angular/core';
-import { Product } from '@app/models/product';
 import { NotificationService } from '@app/services/notification.service';
 import { OrderService } from '@app/services/order.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { State, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 
 import * as CartActions from './cart.actions';
 import { CartState } from './cart.reducer';
-import { selectCart, selectCartItems, selectCartState } from './cart.selectors';
+import { selectCart, selectCartItems } from './cart.selectors';
 import { saveCartState } from './save-cart-state';
 import { deepCopy } from '@app/store/helpers';
 import { ProductInCart } from '@app/models/product-in-cart';
@@ -181,7 +173,6 @@ export class CartEffects {
     () =>
       this.actions$.pipe(
         ofType(CartActions.createOrder),
-        tap((action: any) => console.log(action.payload)),
 
         map((action) => this.orderQuery.create(action.payload)),
         catchError((error: HttpErrorResponse) => of(setError({ error }))),

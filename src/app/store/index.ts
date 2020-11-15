@@ -1,20 +1,8 @@
 import { Product } from '@app/models/product';
-import { Review } from '@app/models/review';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  MetaReducer,
-  on,
-} from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { createReducer, on } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Category } from '@app/models/category';
-import { deepCopy } from './helpers';
 import * as GlobalActions from './actions';
-import { stat } from 'fs';
 
 export const featureKey = 'global';
 export interface GlobalState {
@@ -44,7 +32,7 @@ export const reducers = createReducer(
     ...state,
     categories: action.payload,
   })),
-  on(GlobalActions.loadSearch, (state: GlobalState, action) => ({
+  on(GlobalActions.loadSearch, (state: GlobalState) => ({
     ...state,
     searchLoading: true,
     searchMode: true,
@@ -59,17 +47,17 @@ export const reducers = createReducer(
     searchMode: action.set,
   })),
 
-  on(GlobalActions.loadingOn, (state: GlobalState, action) => {
+  on(GlobalActions.loadingOn, (state: GlobalState) => {
     const loadingCounter = state.loadingCounter + 1;
     return { ...state, loadingCounter, loading: true };
   }),
-  on(GlobalActions.loadingOff, (state: GlobalState, action) => {
+  on(GlobalActions.loadingOff, (state: GlobalState) => {
     let loadingCounter =
       state.loadingCounter > 0 ? state.loadingCounter - 1 : 0;
     let loading = loadingCounter > 0;
     return { ...state, loadingCounter, loading };
   }),
-  on(GlobalActions.loadingOffForce, (state: GlobalState, action) => ({
+  on(GlobalActions.loadingOffForce, (state: GlobalState) => ({
     ...state,
     loadingCounter: 0,
     loading: false,

@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { forkJoin, Observable } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, first, tap } from 'rxjs/operators';
 import { loadHomePage } from './store/home-page.actions';
 import { HomePageState } from './store/home-page.reducer';
 import { selectHomePageLoaded } from './store/home-page.selectors';

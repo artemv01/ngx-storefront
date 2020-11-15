@@ -1,12 +1,7 @@
 import { Observable, of } from 'rxjs';
 
 import {
-  ComponentFixture,
-  fakeAsync,
-  flush,
-  flushMicrotasks,
   TestBed,
-  tick,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -31,7 +26,6 @@ import {
   deleteOneReady,
   loadCart,
 } from '../cart.actions';
-import { CartState } from '../cart.reducer';
 import { getTestingCart, setTestingCart } from './cart-helpers';
 import { CartEffects } from '../cart.effects';
 import { OrderService } from '@app/services/order.service';

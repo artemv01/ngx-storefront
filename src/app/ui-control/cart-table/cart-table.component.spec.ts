@@ -4,8 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CartState } from '@app/cart-store/cart.reducer';
 import { click } from '@app/test-util/helpers';
 import { Product } from '@app/models/product';
-import { UpdateItem } from '@app/models/update-item';
-import { from, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IconComponent } from '../icon/icon.component';
 
 import { CartTableComponent } from './cart-table.component';
@@ -126,7 +125,6 @@ describe('CartTableComponent', () => {
     input.dispatchEvent(new Event('change'));
     hostF.detectChanges();
     click(updateBtn);
-    console.log(expected);
     expect(hostC.updateCartData).toEqual(expected);
   });
 });

@@ -22,7 +22,7 @@
                     <ng-container *ngIf="showPagination$ | async">
                         <div class="text-sm text-gray-700 flex items-center mt-4 mb-2 mr-4 md:my-0">
                             Total
-                            {{itemsTotal}}
+                            {{itemsTotal$ | async}}
                             entries</div>
                         <app-pagination [pagesTotal]="pagesTotal$ | async"
                             [attr.disabled]="(itemsLoading$ | async)"

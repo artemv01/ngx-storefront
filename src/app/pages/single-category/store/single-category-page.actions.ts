@@ -1,7 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Product } from '@app/models/product';
 import { QueryItemsReq } from '@app/models/query-items-req';
-import { QueryItemsResp } from '@app/models/query-items-resp';
 import { createAction, props } from '@ngrx/store';
 import { SingleCategoryPageState } from './single-category-page.reducer';
 

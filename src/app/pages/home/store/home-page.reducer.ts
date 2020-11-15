@@ -1,7 +1,6 @@
 import { Product } from '@app/models/product';
 import { Review } from '@app/models/review';
-import { deepCopy } from '@app/store/helpers';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as HomePageStateActions from './home-page.actions';
 
 export const homePageStateFeatureKey = 'homePageState';

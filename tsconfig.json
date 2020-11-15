@@ -12,6 +12,10 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    "types": ["node"],
+
     "paths": {
         "@app/*": ["./src/app/*"],
         "@root/*": ["./src/*"],
@@ -20,5 +24,9 @@
       "es2018",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

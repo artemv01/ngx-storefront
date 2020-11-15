@@ -4,8 +4,6 @@ import * as CartSelectors from '@app/cart-store/cart.actions';
 import { CartState } from '@app/cart-store/cart.reducer';
 import { Product } from '@app/models/product';
 import { ProductInCart } from '@app/models/product-in-cart';
-import { CartService } from '@app/services/cart.service';
-import { NotificationService } from '@app/services/notification.service';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -34,17 +32,14 @@ export class ProductGridComponent implements OnInit {
   @Input('rating') rating = true;
   @Input('columnsNumber') columnsNumber = 3;
   @Output() actionBtn = new EventEmitter<any>();
-  constructor(
-    public cartStore: Store<CartState>,
-    private notify: NotificationService
-  ) {}
+  constructor(public cartStore: Store<CartState>) {}
 
   ngOnInit(): void {
     this.columns = 'lg:w-1/' + this.columnsNumber;
   }
 
   addToCart(product: Product) {
-    const { _id, image, name, ...other } = product;
+    const { _id, image, name } = product;
     let price = product.onSale ? product.salePrice : product.price;
     const payload: ProductInCart = {
       _id,

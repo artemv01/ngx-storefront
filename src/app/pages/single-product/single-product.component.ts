@@ -6,16 +6,14 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { takeUntil, mergeMap, map, filter, first, tap } from 'rxjs/operators';
-import { Subject, forkJoin, Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntil, map, filter, first } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 
 import { Product } from '@app/models/product';
-import { CartService } from '@app/services/cart.service';
 import { environment } from '@root/environments/environment';
 import { Category } from '@app/models/category';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoadingService } from '@app/services/loading.service';
 import { NotificationService } from '@app/services/notification.service';
 import { Breadcrumbs } from '@app/models/breadcrumbs';
 import { TitleService } from '@app/services/title.service';
@@ -29,7 +27,6 @@ import {
   selectRelatedProducts,
   selectReviewLoading,
   selectSingleProduct,
-  selectSingleProductPage,
 } from './store/single-product.selectors';
 import { SingleProductState } from './store/single-product.reducer';
 import { createReview } from './store/single-product.actions';

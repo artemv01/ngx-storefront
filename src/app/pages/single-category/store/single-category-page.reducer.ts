@@ -1,6 +1,5 @@
 import { Product } from '@app/models/product';
-import { deepCopy } from '@app/store/helpers';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as SingleCategoryPageActions from './single-category-page.actions';
 
 export const singleCategoryPageFeatureKey = 'singleCategoryPage';

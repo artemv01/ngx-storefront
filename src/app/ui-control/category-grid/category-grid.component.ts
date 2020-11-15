@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Category } from '@app/models/category';
 @Component({
   selector: 'app-category-grid',

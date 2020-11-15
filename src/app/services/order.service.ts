@@ -1,11 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { Category } from '@app/models/category';
 import { Order } from '@app/models/order';
-import { Product } from '@app/models/product';
 import { environment as env } from '@root/environments/environment';
 
 @Injectable({

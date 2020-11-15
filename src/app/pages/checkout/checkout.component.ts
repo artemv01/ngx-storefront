@@ -1,12 +1,11 @@
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { ReconfigurableOptions } from 'places.js';
-import { concatMap, filter, first, map, finalize } from 'rxjs/operators';
+import { filter, first, map, finalize } from 'rxjs/operators';
 
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import {
-  cleanCart,
   createOrder,
   resetOrderCreated,
 } from '@app/cart-store/cart.actions';
@@ -17,7 +16,6 @@ import {
   selectTotalPrice,
 } from '@app/cart-store/cart.selectors';
 import { Product } from '@app/models/product';
-import { CartService } from '@app/services/cart.service';
 import { OrderService } from '@app/services/order.service';
 import { TitleService } from '@app/services/title.service';
 import { Store } from '@ngrx/store';

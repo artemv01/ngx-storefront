@@ -1,10 +1,6 @@
 import { CartContent } from '@app/models/cart-content';
-import { Product } from '@app/models/product';
-import { ProductInCart } from '@app/models/product-in-cart';
-import { deepCopy } from '@app/store/helpers';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as CartActions from './cart.actions';
-import { saveCartState } from './save-cart-state';
 
 export const cartFeatureKey = 'cart';
 

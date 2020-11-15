@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 import { TestBed } from '@angular/core/testing';
 import { CategoryService } from '@app/services/category.service';
-import { NotificationService } from '@app/services/notification.service';
 import { ProductsService } from '@app/services/products.service';
 import { TestUtilModule } from '@app/test-util/test-util.module';
 import { provideMockActions } from '@ngrx/effects/testing';

@@ -1,6 +1,6 @@
 import { Product } from '@app/models/product';
 import { deepCopy } from '@app/store/helpers';
-import { Action, createReducer, on, State } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as SingleProductActions from './single-product.actions';
 
 export const singleProductFeatureKey = 'singleProduct';

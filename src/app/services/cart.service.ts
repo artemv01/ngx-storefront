@@ -1,6 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Product } from '@app/models/product';
-import { Subject, BehaviorSubject } from 'rxjs';
 
 type Price = number;
 

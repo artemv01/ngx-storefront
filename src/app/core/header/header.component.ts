@@ -6,14 +6,10 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 import { SearchService } from '@app/services/search.service';
 import { NotificationService } from '@app/services/notification.service';
-import { Router } from '@angular/router';
-import { CategoryService } from '@app/services/category.service';
 import { GlobalState } from '@app/store';
 import { Store } from '@ngrx/store';
 import { selectCategories } from '@app/store/selectors';

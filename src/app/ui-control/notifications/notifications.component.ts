@@ -21,7 +21,7 @@ import { NotificationService } from '@app/services/notification.service';
     ]),
   ],
 })
-export class NotificationsComponent implements OnInit, OnDestroy {
+export class NotificationsComponent implements OnDestroy {
   typeMap = {
     success: 'bg-bgSuccess',
     info: 'bg-bgInfo',
@@ -39,10 +39,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   };
   destroy: Subject<null> = new Subject();
   constructor(public notify: NotificationService) {}
-
-  ngOnInit(): void {
-    this.notify.emitter$.subscribe((value) => console.log(value));
-  }
 
   ngOnDestroy() {
     this.destroy.next(null);

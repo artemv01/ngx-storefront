@@ -7,8 +7,8 @@ import {
 import { Product } from '@app/models/product';
 
 import { Store } from '@ngrx/store';
-import { forkJoin, Observable } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, first, map, tap } from 'rxjs/operators';
 import { loadSingleProductPage } from './store/single-product.actions';
 import { SingleProductState } from './store/single-product.reducer';
 import { selectProduct } from './store/single-product.selectors';

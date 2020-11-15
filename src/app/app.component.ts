@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { loadCart } from './cart-store/cart.actions';
 import { CartState } from './cart-store/cart.reducer';
 import { fadeAnimation } from './core/animations';
@@ -39,7 +39,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       .select(selectError)
       .pipe(filter((error) => !!error))
       .subscribe((error: HttpErrorResponse) => {
-        console.log(error);
         this.notify.push({
           type: 'error',
           message:

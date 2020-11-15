@@ -19,7 +19,7 @@ import { SaleLabelComponent } from '@app/ui-control/sale-label/sale-label.compon
 import { SelectInputComponent } from '@app/ui-control/select-input/select-input.component';
 import { StarRatingComponent } from '@app/ui-control/star-rating/star-rating.component';
 import { TextareaComponent } from '@app/ui-control/textarea/textarea.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({

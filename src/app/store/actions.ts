@@ -1,10 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Review } from '@app/models/review';
 import { createAction, props } from '@ngrx/store';
-import { Product } from '@app/models/product';
 import { Category } from '@app/models/category';
-import { CreateReviewResp } from '@app/models/create-review-resp';
-import { QueryItemsResp } from '@app/models/query-items-resp';
 import { GlobalState } from '.';
 import { QueryItemsReq } from '@app/models/query-items-req';
 

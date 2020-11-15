@@ -1,9 +1,7 @@
 import { CartState } from '@app/cart-store/cart.reducer';
 import { Order } from '@app/models/order';
-import { Product } from '@app/models/product';
 import { ProductInCart } from '@app/models/product-in-cart';
 import { ProductQuantity } from '@app/models/product-quantity';
-import { UpdateItem } from '@app/models/update-item';
 import { createAction, props } from '@ngrx/store';
 
 export const loadCart = createAction('[Cart] Load Cart');

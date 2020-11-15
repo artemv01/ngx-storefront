@@ -1,14 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  EventEmitter,
-  Output,
-  forwardRef,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { isNull } from '@angular/compiler/src/output/output_ast';
 
 const RATE_ITEM_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -109,7 +100,5 @@ export class RateItemComponent implements OnInit, ControlValueAccessor {
         this.ratingState[lastIndex] = 'star_half';
       }
     }
-
-    console.log(this.ratingState);
   }
 }

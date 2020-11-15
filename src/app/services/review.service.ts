@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { Review } from '@app/models/review';
 import { environment as env } from '@root/environments/environment';
 import { CreateReviewResp } from '@app/models/create-review-resp';
-import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
