@@ -22,25 +22,23 @@ export const reducer = createReducer(
 
   on(
     SingleProductActions.loadSingleProductPageSuccess,
-    (state: SingleProductState, action) => {
-      const stateCopy = deepCopy<SingleProductState>(state);
-      return { ...stateCopy, ...action.payload };
-    }
+    (state: SingleProductState, action) => ({ ...state, ...action.payload })
   ),
-  on(SingleProductActions.createReview, (state: SingleProductState, action) => {
-    const stateCopy = deepCopy<SingleProductState>(state);
-    stateCopy.createReviewLoading = true;
-    return stateCopy;
-  }),
+  on(
+    SingleProductActions.createReview,
+    (state: SingleProductState, action) => ({
+      ...state,
+      createReviewLoading: true,
+    })
+  ),
   on(
     SingleProductActions.createReviewSuccess,
     (state: SingleProductState, action) => {
-      const stateCopy = deepCopy<SingleProductState>(state);
-      stateCopy.product.reviews = action.payload.reviews;
-      stateCopy.product.rating = action.payload.rating;
-      stateCopy.product.ratingCount = action.payload.ratingCount;
-      stateCopy.createReviewLoading = false;
-      return stateCopy;
+      const product = deepCopy<Product>(state.product);
+      product.reviews = action.payload.reviews;
+      product.rating = action.payload.rating;
+      product.ratingCount = action.payload.ratingCount;
+      return { ...state, product, createReviewLoading: false };
     }
   )
 );

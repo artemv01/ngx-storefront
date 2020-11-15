@@ -177,9 +177,6 @@ export class SingleProductComponent
   }
 
   zoomImage(e) {
-    if (!this.product.image) {
-      return;
-    }
     let zoomer = e.currentTarget;
     let offsetX, offsetY;
     if (e.offsetX) {

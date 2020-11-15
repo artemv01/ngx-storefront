@@ -13,7 +13,7 @@ export const addItem = createAction(
 );
 export const addItemReady = createAction(
   '[Cart] Add Item To Cart Ready',
-  props<{ payload: CartState }>()
+  props<{ payload: Partial<CartState> }>()
 );
 export const updateTotals = createAction(
   '[Cart] Update Cart Totals',

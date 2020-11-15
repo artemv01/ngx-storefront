@@ -39,34 +39,41 @@ export class CartEffects {
     this.actions$.pipe(
       ofType(CartActions.addItem),
       withLatestFrom(this.store.select(selectCart)),
+
+      map(([action, cartState]: [any, CartState]) => {
+        const content = deepCopy(cartState.cartContent);
+        let totalPrice = cartState.totalPrice;
+        let totalQuantity = cartState.totalQuantity;
+        const product: ProductInCart = action.payload;
+        if (content[product._id]) {
+          const currentQuantity = content[product._id].quantity;
+
+          totalPrice -= content[product._id].price * currentQuantity;
+
+          content[product._id].quantity += product.quantity;
+          totalPrice +=
+            content[product._id].quantity * content[product._id].price;
+          totalQuantity += product.quantity;
+        } else {
+          content[product._id] = product;
+          totalPrice += product.quantity * product.price;
+          totalQuantity += product.quantity;
+        }
+
+        const newCart = {
+          cartContent: content,
+          totalPrice,
+          totalQuantity,
+        };
+
+        saveCartState(newCart);
+        return CartActions.addItemReady({ payload: newCart });
+      }),
       tap(() =>
         this.notify.push({
           showMessage: 'addToCartSuccess',
         })
-      ),
-      map(([action, cartState]: [any, CartState]) => {
-        const cart = deepCopy(cartState);
-        const product: ProductInCart = action.payload;
-        if (cart.cartContent[product._id]) {
-          const currentQuantity = cart.cartContent[product._id].quantity;
-
-          cart.totalPrice -=
-            cart.cartContent[product._id].price * currentQuantity;
-
-          cart.cartContent[product._id].quantity += product.quantity;
-          cart.totalPrice +=
-            cart.cartContent[product._id].quantity *
-            cart.cartContent[product._id].price;
-          cart.totalQuantity += product.quantity;
-        } else {
-          cart.cartContent[product._id] = product;
-          cart.totalPrice += product.quantity * product.price;
-          cart.totalQuantity += product.quantity;
-        }
-
-        saveCartState(cart);
-        return CartActions.addItemReady({ payload: cart });
-      })
+      )
     )
   );
 

@@ -57,7 +57,7 @@ describe('RateItemComponent', () => {
     }
   });
 
-  /*  fit('should display the rating correctly', () => {
+  /*  it('should display the rating correctly', () => {
     const stars = hostF.debugElement.queryAll(By.css('.star-elem'));
     expect(stars[0].nativeElement.querySelector('i').textContent).toBe('star');
     expect(stars[1].nativeElement.querySelector('i').textContent).toBe('star');

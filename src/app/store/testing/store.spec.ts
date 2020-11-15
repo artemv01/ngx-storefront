@@ -50,7 +50,7 @@ describe('ShopStore effects', () => {
     productService = TestBed.inject(ProductsService);
   });
 
-  fit('loads categories - loadCategories$', () => {
+  it('loads categories - loadCategories$', () => {
     const cats$ = cold('a', { a: CATEGORIES });
     categoryService.getMany.and.returnValue(cats$);
 
@@ -66,7 +66,7 @@ describe('ShopStore effects', () => {
     expect(store.dispatch).toHaveBeenCalledWith(loadingOff());
   });
 
-  fit('loads search results - loadSearch$', () => {
+  it('loads search results - loadSearch$', () => {
     const cats$ = cold('a', { a: CATEGORIES });
     categoryService.getMany.and.returnValue(cats$);
 

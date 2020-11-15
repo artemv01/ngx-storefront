@@ -30,28 +30,24 @@ export const reducer = createReducer(
   on(
     CartActions.loadCart,
     (state: CartState): CartState => {
-      const sc = deepCopy(state);
       let cartContent = localStorage.getItem('cartContent');
       let totalPrice = localStorage.getItem('totalPrice');
       let totalQuantity = localStorage.getItem('totalQuantity');
-      const cartState: Partial<CartState> = {
+      const loadedCartState: Partial<CartState> = {
         cartContent: cartContent ? JSON.parse(cartContent) : {},
         totalPrice: totalPrice ? JSON.parse(totalPrice) : 0,
         totalQuantity: totalQuantity ? JSON.parse(totalQuantity) : 0,
       };
       return {
-        ...sc,
-        ...cartState,
+        ...state,
+        ...loadedCartState,
       };
     }
   ),
 
   on(
     CartActions.addItemReady,
-    (state: CartState, action): CartState => {
-      const sc: CartState = deepCopy(state);
-      return { ...sc, ...action.payload };
-    }
+    (state: CartState, action): CartState => ({ ...state, ...action.payload })
   ),
 
   on(
@@ -69,18 +65,12 @@ export const reducer = createReducer(
 
   on(
     CartActions.deleteOneReady,
-    (state: CartState, action): CartState => {
-      const sc: CartState = deepCopy(state);
-      return { ...sc, ...action.payload };
-    }
+    (state: CartState, action): CartState => ({ ...state, ...action.payload })
   ),
 
   on(
     CartActions.cleanCartReady,
-    (state: CartState, action): CartState => {
-      const sc: CartState = deepCopy(state);
-      return { ...sc, ...action.payload };
-    }
+    (state: CartState, action): CartState => ({ ...state, ...action.payload })
   ),
 
   /* on(
@@ -96,16 +86,17 @@ export const reducer = createReducer(
       };
     }
   ), */
-  on(CartActions.createOrder, (state) => {
-    const sc = deepCopy(state);
-    return { ...sc, createOrderLoading: true };
-  }),
-  on(CartActions.orderCreated, (state) => {
-    const sc = deepCopy(state);
-    return { ...sc, orderCreated: true, createOrderLoading: false };
-  }),
-  on(CartActions.resetOrderCreated, (state) => {
-    const sc = deepCopy(state);
-    return { ...sc, orderCreated: false };
-  })
+  on(CartActions.createOrder, (state) => ({
+    ...state,
+    createOrderLoading: true,
+  })),
+  on(CartActions.orderCreated, (state) => ({
+    ...state,
+    orderCreated: true,
+    createOrderLoading: false,
+  })),
+  on(CartActions.resetOrderCreated, (state) => ({
+    ...state,
+    orderCreated: false,
+  }))
 );

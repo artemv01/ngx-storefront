@@ -28,12 +28,13 @@ export const initialState: SingleCategoryPageState = {
 export const reducer = createReducer(
   initialState,
 
-  on(SingleCategoryPageActions.loadPageData, (state, action) => {
-    const copy = deepCopy(state);
-    return { ...copy, loading: true };
-  }),
-  on(SingleCategoryPageActions.loadPageDataSuccess, (state, action) => {
-    const copy = deepCopy(state);
-    return { ...copy, ...action.payload, loading: false };
-  })
+  on(SingleCategoryPageActions.loadPageData, (state, action) => ({
+    ...state,
+    loading: true,
+  })),
+  on(SingleCategoryPageActions.loadPageDataSuccess, (state, action) => ({
+    ...state,
+    ...action.payload,
+    loading: false,
+  }))
 );

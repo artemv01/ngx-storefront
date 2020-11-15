@@ -62,8 +62,6 @@ export const testAddItem = {
     },
     totalPrice: 543,
     totalQuantity: 4,
-    orderCreated: false,
-    createOrderLoading: false,
   },
 };
 export const testDeleteOne = {

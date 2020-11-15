@@ -40,23 +40,24 @@ export const initialState = {
 
 export const reducers = createReducer(
   initialState,
-  on(ShopActions.loadCategoriesSuccess, (state: GlobalState, action) => {
-    const stateCopy = deepCopy<GlobalState>(state);
-    stateCopy.categories = action.payload;
-    return stateCopy;
-  }),
-  on(ShopActions.loadSearch, (state: GlobalState, action) => {
-    const stateCopy = deepCopy<GlobalState>(state);
-    return { ...stateCopy, searchLoading: true, searchMode: true };
-  }),
-  on(ShopActions.loadSearchSuccess, (state: GlobalState, action) => {
-    const stateCopy = deepCopy<GlobalState>(state);
-    return { ...stateCopy, ...action.payload, searchLoading: false };
-  }),
-  on(ShopActions.setSearchMode, (state: GlobalState, action) => {
-    const stateCopy = deepCopy<GlobalState>(state);
-    return { ...stateCopy, searchMode: action.set };
-  }),
+  on(ShopActions.loadCategoriesSuccess, (state: GlobalState, action) => ({
+    ...state,
+    categories: action.payload,
+  })),
+  on(ShopActions.loadSearch, (state: GlobalState, action) => ({
+    ...state,
+    searchLoading: true,
+    searchMode: true,
+  })),
+  on(ShopActions.loadSearchSuccess, (state: GlobalState, action) => ({
+    ...state,
+    ...action.payload,
+    searchLoading: false,
+  })),
+  on(ShopActions.setSearchMode, (state: GlobalState, action) => ({
+    ...state,
+    searchMode: action.set,
+  })),
 
   on(ShopActions.loadingOn, (state: GlobalState, action) => {
     const loadingCounter = state.loadingCounter + 1;

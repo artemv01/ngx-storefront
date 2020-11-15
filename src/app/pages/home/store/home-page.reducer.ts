@@ -25,10 +25,10 @@ export const reducer = createReducer(
 
   on(
     HomePageStateActions.loadHomePageSuccess,
-    (state: HomePageState, action) => {
-      const stateCopy = deepCopy<HomePageState>(state);
-
-      return { ...stateCopy, ...action.payload, loaded: true };
-    }
+    (state: HomePageState, action) => ({
+      ...state,
+      ...action.payload,
+      loaded: true,
+    })
   )
 );
