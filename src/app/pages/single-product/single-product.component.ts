@@ -56,7 +56,7 @@ export class SingleProductComponent
 
   addToCartQuantity = 1;
 
-  captchaToken = 'abc   ';
+  captchaToken: string;
   reviewForm = this.fb.group({
     authorName: ['', [Validators.required]],
     authorEmail: ['', [Validators.required, Validators.email]],

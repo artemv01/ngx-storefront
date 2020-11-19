@@ -161,7 +161,7 @@
                             </div>
                             <div class="">
                                 <app-button
-                                    [disabled]="reviewForm.invalid || !rating.value || !captchaToken || postReviewLoading$"
+                                    [disabled]="reviewForm.invalid || !rating.value || !captchaToken || (postReviewLoading$ | async)"
                                     [class.loading]="postReviewLoading$ | async"
                                     #submitReviewBtn
                                     addClass="btn-primary"
