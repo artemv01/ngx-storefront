@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { deleteOne, updateTotals } from '@app/cart-store/cart.actions';
-import {
-  CartState,
-} from '@app/cart-store/cart.reducer';
+import { CartState } from '@app/cart-store/cart.reducer';
 import {
   selectCartItems,
+  selectCartItemsMap,
   selectIsCartEmpty,
   selectTotalPrice,
 } from '@app/cart-store/cart.selectors';
@@ -66,7 +65,10 @@ describe('ViewCartComponent', () => {
     mockStore = TestBed.inject(MockStore);
     mockStore.overrideSelector(selectIsCartEmpty, false);
     mockStore.overrideSelector(selectTotalPrice, cartInitialForTest.totalPrice);
-    mockStore.overrideSelector(selectCartItems, cartInitialForTest.cartContent);
+    mockStore.overrideSelector(
+      selectCartItemsMap,
+      new Map(Object.entries(cartInitialForTest.cartContent))
+    );
   });
 
   it('should create', () => {
