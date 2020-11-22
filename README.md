@@ -1,18 +1,18 @@
-# An eCommerce application built on Angular & NestJS & TailwindCSS (the Customer UI part)
+# An eCommerce application on Angular & TailwindCSS
 
-Ngx-storefront is an example of a modern eCommerce application built on TypeScript stack. The project consists of 3 parts:
+Ngx-storefront is an example of a modern eCommerce application built on the MEAN stack. The project consists of 3 parts:
 
-*   the Customer UI [artemv01/ngx-storefront][ngx-storefront]
+*   the Customer application [artemv01/ngx-storefront][ngx-storefront]
 *   the REST API [artemv01/ngx-storefront-api][ngx-storefront-api]
-*   and the Admin UI (coming soon)
+*   and the Admin application [artemv01/ngx-admin][ngx-admin]
 
-This is a repository for the customer UI. 
+This is a repository for the customer application. 
 
 ## Technology stack
 
 ![Stack image][stack]
 
-The technology stack used for the customer UI consists of:
+The technology stack used for this project:
 * [Angular][angular]
 * [NgRx][ngrx]
 * [TailwindCSS][tailwind]
@@ -37,38 +37,12 @@ The project is on its initial stage and there are still some important features 
 *   Coupon system
 *   Some others
 
-Unit tests are work in progress.
+Unit tests are a work in progress.
 
 
 ## Setting up development environment
 
-
-### Launch the REST API
-
-```
-git clone https://github.com/artemv01/ngx-storefront-api.git
-cd ngx-storefront-api
-cp .env.example .env
-# Open the .env file with your favorite  text editor (in this example vim)
-# Set the required params as per the documentation in .env file
-vim .env
-npm install
-npm run start:dev
-```
-
-
-### Start the Customer UI
-```
-git clone https://github.com/artemv01/ngx-storefront.git
-cd ngx-storefront
-cp .env.example .env
-# Open the .env file with your favorite  text editor (in this example vim)
-# Set the required params as per the documentation in .env file
-vim .env
-npm run db:seed
-npm install
-npm run start
-```
+> This section is a work in progress.
 
 ## Contributing
 
@@ -95,3 +69,4 @@ Feel free to use my code on your project. It would be great if you put a referen
 [ngx-storefront-api]: https://github.com/artemv01/ngx-storefront-api
 [stack]: src/assets/img/stack.png
 [ngrx]: https://ngrx.io/
+[ngx-admin]: https://github.com/artemv01/ngx-admin
